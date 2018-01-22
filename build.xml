@@ -45,7 +45,7 @@
         <property name="native" location="natives"/>
         <!-- <echo message="${native}" /> -->
 
-        <java classname="com.github.capstone.GameLauncher" fork="true">
+        <java classname="com.github.capstone.Game" fork="true">
             <sysproperty key="java.library.path" value="${native}"/>
             <!-- <sysproperty key="java.awt.headless" value="true" /> -->
 
