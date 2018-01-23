@@ -6,12 +6,12 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Rectangle;
 import org.newdawn.slick.opengl.Texture;
 
-public class Title
+public class TitleSprite
 {
     private Texture sprite;
     private Rectangle box;
 
-    public Title()
+    public TitleSprite()
     {
         this.sprite = Helper.loadTexture("title");
         this.box = new Rectangle(0, 0, sprite.getImageWidth(), sprite.getImageHeight());

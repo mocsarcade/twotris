@@ -5,6 +5,7 @@ import com.github.capstone.Manager.ScreenshotManager;
 import com.github.capstone.Scene.Button;
 import com.github.capstone.Scene.Menu;
 import com.github.capstone.Scene.Scene;
+import com.github.capstone.Scene.Game;
 import com.github.capstone.Util.Config;
 import com.github.capstone.Util.FileUtils;
 import org.lwjgl.LWJGLException;
@@ -22,7 +23,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.nio.ByteBuffer;
 
-public class Game
+public class Twotris
 {
     public static void main(String[] args)
     {
@@ -34,15 +35,15 @@ public class Game
 
         // Sets the LWJGL Libraries path to the natives folder
         System.setProperty("org.lwjgl.librarypath", new File("natives").getAbsolutePath());
-        new Game();
+        new Twotris();
     }
 
-    private static Game instance;
+    private static Twotris instance;
     public Config config;
     public ScreenshotManager screenshotManager;
     private boolean fullscreen;
 
-    public Game()
+    public Twotris()
     {
         instance = this;
         this.config = new Config();
@@ -52,7 +53,7 @@ public class Game
         initGame();
     }
 
-    public static Game getInstance()
+    public static Twotris getInstance()
     {
         return instance;
     }
@@ -60,7 +61,7 @@ public class Game
     private void initGame()
     {
         Menu menu = new Menu();
-//        menu.addButton(new Button(256, 64, "Play", new Color(200, 200, 200), new Color(85, 124, 0)), new Dungeon());
+        menu.addButton(new Button(256, 64, "Play Co-Op", new Color(200, 200, 200), new Color(64, 0, 72)), new Game());
         menu.addButton(new Button(256, 64, "Quit Game", new Color(200, 200, 200), new Color(64, 0, 72)), null);
         menu.adjustButtons();
         Scene currScene = menu;

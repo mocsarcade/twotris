@@ -6,7 +6,7 @@ package com.github.capstone.Manager;
  * Code obtained from https://github.com/ctanis/cpsc3520_fa17/blob/master/pongy/src/AudioManager.java
  */
 
-import com.github.capstone.Game;
+import com.github.capstone.Twotris;
 import org.lwjgl.openal.AL;
 import org.newdawn.slick.openal.Audio;
 import org.newdawn.slick.openal.AudioLoader;
@@ -143,7 +143,7 @@ public class AudioManager
          */
         public void play()
         {
-            play(Game.getInstance().config.volume);
+            play(Twotris.getInstance().config.volume);
         }
 
         /**

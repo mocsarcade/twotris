@@ -1,6 +1,6 @@
 package com.github.capstone.Scene;
 
-import com.github.capstone.Game;
+import com.github.capstone.Twotris;
 import com.github.capstone.Manager.AudioManager;
 import com.github.capstone.Util.Helper;
 import org.lwjgl.opengl.Display;
@@ -12,7 +12,7 @@ public abstract class Scene
     // return false if the game should be quit
     public abstract boolean drawFrame(float delta);
 
-    // null typically means Game should load menu
+    // null typically means Twotris should load menu
     public Scene nextScene()
     {
         return null;
@@ -31,7 +31,7 @@ public abstract class Scene
         boolean keepGoing = true;
         do
         {
-            Display.sync(Game.getInstance().config.targetFPS);
+            Display.sync(Twotris.getInstance().config.targetFPS);
             long now = Helper.getTime();
             long delta = now - lastloop;
             lastloop = now;

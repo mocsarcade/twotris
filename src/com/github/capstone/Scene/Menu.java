@@ -1,6 +1,6 @@
 package com.github.capstone.Scene;
 
-import com.github.capstone.Game;
+import com.github.capstone.Twotris;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
@@ -36,7 +36,7 @@ public class Menu extends Scene
     {
         GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
         GL11.glClearColor(0.25F, 0.25F, 0.25F, 0F);
-        Title title = new Title();
+        TitleSprite title = new TitleSprite();
         // Screen resize handler
         if (Display.wasResized())
         {
@@ -52,17 +52,17 @@ public class Menu extends Scene
 
         if (Keyboard.isKeyDown(Keyboard.KEY_F2))
         {
-            Game.getInstance().screenshotManager.takeScreenshot();
+            Twotris.getInstance().screenshotManager.takeScreenshot();
         }
         if (Keyboard.isKeyDown(Keyboard.KEY_F11))
         {
             if (Display.isFullscreen())
             {
-                Game.getInstance().setDisplayMode(Game.getInstance().config.resolutionWidth, Game.getInstance().config.resolutionHeight, false);
+                Twotris.getInstance().setDisplayMode(Twotris.getInstance().config.resolutionWidth, Twotris.getInstance().config.resolutionHeight, false);
             }
             else
             {
-                Game.getInstance().setDisplayMode(Toolkit.getDefaultToolkit().getScreenSize().width, Toolkit.getDefaultToolkit().getScreenSize().height, true);
+                Twotris.getInstance().setDisplayMode(Toolkit.getDefaultToolkit().getScreenSize().width, Toolkit.getDefaultToolkit().getScreenSize().height, true);
             }
             Display.setResizable(true);
             GL11.glViewport(0, 0, Display.getWidth(), Display.getHeight());
