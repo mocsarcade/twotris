@@ -14,10 +14,13 @@ public class Menu extends Scene
 {
     private LinkedHashMap<Button, Scene> buttons;
     private Scene nextScene;
+    private TitleSprite titleSprite;
 
-    public Menu()
+
+    public Menu(String title)
     {
         buttons = new LinkedHashMap<>();
+        titleSprite = new TitleSprite(title);
         try
         {
             Mouse.setNativeCursor(null);
@@ -36,7 +39,6 @@ public class Menu extends Scene
     {
         GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
         GL11.glClearColor(0.25F, 0.25F, 0.25F, 0F);
-        TitleSprite title = new TitleSprite();
         // Screen resize handler
         if (Display.wasResized())
         {
@@ -46,7 +48,7 @@ public class Menu extends Scene
             GL11.glOrtho(0, Display.getWidth(), Display.getHeight(), 0, 1, -1);
         }
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, 0);
-        title.draw();
+        titleSprite.draw();
         updateButtons();
         drawButtons();
 

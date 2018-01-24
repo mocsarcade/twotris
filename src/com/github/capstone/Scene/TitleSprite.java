@@ -11,9 +11,9 @@ public class TitleSprite
     private Texture sprite;
     private Rectangle box;
 
-    public TitleSprite()
+    public TitleSprite(String texture)
     {
-        this.sprite = Helper.loadTexture("title");
+        this.sprite = Helper.loadTexture(texture);
         this.box = new Rectangle(0, 0, sprite.getImageWidth(), sprite.getImageHeight());
     }
 

@@ -1,23 +1,31 @@
 package com.github.capstone.Scene;
 
+import com.github.capstone.Entity.EntityBase;
+import com.github.capstone.Entity.EntityPiece;
 import com.github.capstone.Twotris;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.TrueTypeFont;
+import org.newdawn.slick.opengl.TextureImpl;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Game extends Scene
 {
     private boolean isGameOver;
     private int score;
     private TrueTypeFont font;
+    private ArrayList<EntityBase> entities;
 
     public Game()
     {
+        entities = new ArrayList<>();
+        entities.add(new EntityPiece(32, 32));
+
         this.isGameOver = false;
-        this.font = new TrueTypeFont(new Font("Arial", Font.PLAIN, 32), false);
+        this.font = new TrueTypeFont(new Font("Arial", Font.PLAIN, 14), false);
     }
 
     @Override
@@ -34,6 +42,12 @@ public class Game extends Scene
             GL11.glOrtho(0, Display.getWidth(), Display.getHeight(), 0, 1, -1);
         }
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, 0);
+
+        // TODO: Insert working logic here
+        for(EntityBase e : entities)
+        {
+            e.update(delta);
+        }
 
         if (Keyboard.isKeyDown(Keyboard.KEY_F2))
         {
@@ -55,12 +69,21 @@ public class Game extends Scene
             GL11.glLoadIdentity();
             GL11.glOrtho(0, Display.getWidth(), Display.getHeight(), 0, 1, -1);
         }
-
         if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE))
         {
             return false;
         }
+        if ((Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) && Keyboard.isKeyDown(Keyboard.KEY_EQUALS))
+        {
+            this.score++;
+        }
 
+        // TODO: Put working draw code here:
+        for(EntityBase e : entities)
+        {
+            e.draw();
+        }
+        TextureImpl.bindNone();
         font.drawString(0, 0, "" + this.score);
         return !isGameOver;
     }
@@ -68,7 +91,7 @@ public class Game extends Scene
     @Override
     public Scene nextScene()
     {
-        Menu menu = new Menu();
+        Menu menu = new Menu("paused");
         if (isGameOver)
         {
             menu.addButton(new Button(256, 64, "Play Again", new org.newdawn.slick.Color(200, 200, 200), new org.newdawn.slick.Color(85, 124, 0)), new Game());
@@ -77,7 +100,7 @@ public class Game extends Scene
         {
             menu.addButton(new Button(256, 64, "Resume", new org.newdawn.slick.Color(200, 200, 200), new org.newdawn.slick.Color(85, 124, 0)), this);
         }
-        menu.addButton(new Button(256, 64, "Exit", new org.newdawn.slick.Color(200, 200, 200), new org.newdawn.slick.Color(85, 124, 0)), null);
+        menu.addButton(new Button(256, 64, "Save & Quit", new org.newdawn.slick.Color(200, 200, 200), new org.newdawn.slick.Color(85, 124, 0)), new MainMenu());
         menu.adjustButtons();
         return menu;
     }

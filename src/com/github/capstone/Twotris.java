@@ -2,10 +2,7 @@ package com.github.capstone;
 
 import com.github.capstone.Manager.AudioManager;
 import com.github.capstone.Manager.ScreenshotManager;
-import com.github.capstone.Scene.Button;
-import com.github.capstone.Scene.Menu;
-import com.github.capstone.Scene.Scene;
-import com.github.capstone.Scene.Game;
+import com.github.capstone.Scene.*;
 import com.github.capstone.Util.Config;
 import com.github.capstone.Util.FileUtils;
 import org.lwjgl.LWJGLException;
@@ -60,11 +57,8 @@ public class Twotris
 
     private void initGame()
     {
-        Menu menu = new Menu();
-        menu.addButton(new Button(256, 64, "Play Co-Op", new Color(200, 200, 200), new Color(64, 0, 72)), new Game());
-        menu.addButton(new Button(256, 64, "Quit Game", new Color(200, 200, 200), new Color(64, 0, 72)), null);
-        menu.adjustButtons();
-        Scene currScene = menu;
+        MainMenu mainMenu = new MainMenu();
+        Scene currScene = mainMenu;
 
         while (currScene.go())
         {
@@ -72,7 +66,7 @@ public class Twotris
 
             if (currScene == null)
             {
-                currScene = menu;
+                currScene = mainMenu;
             }
         }
 
