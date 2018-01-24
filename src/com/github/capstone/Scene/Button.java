@@ -1,15 +1,16 @@
 package com.github.capstone.Scene;
 
-import com.github.capstone.Manager.AudioManager;
+import com.github.capstone.Util.Helper;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Rectangle;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.TrueTypeFont;
+import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureImpl;
 
-import java.awt.Font;
+import java.awt.*;
 
 public class Button
 {
@@ -19,23 +20,33 @@ public class Button
     private Color textColor;
     private TrueTypeFont font;
     private boolean hovering;
+    private Texture sprite;
+    private float wr, hr;
 
-    public Button(int w, int h, String text)
-    {
-        this(0, 0, w, h, text, new Color(0, 0, 0), new Color(0.9F, 0.9F, 0.9F));
-    }
-
-    public Button(int w, int h, String text, Color textColor, Color color)
+    Button(int w, int h, String text, Color textColor, Color color)
     {
         this(0, 0, w, h, text, textColor, color);
     }
 
-    public Button(int x, int y, int w, int h, String text, Color textColor, Color color)
+    private Button(int x, int y, int w, int h, String text, Color textColor, Color color)
     {
+        this.sprite = null;
         this.box = new Rectangle(x, y, w, h);
         this.buttonText = text;
         this.color = color;
         this.textColor = textColor;
+        this.font = new TrueTypeFont(new Font("Arial", Font.PLAIN, 32), false);
+    }
+
+    Button(int x, int y, String text)
+    {
+        this.sprite = Helper.loadTexture("gui/button");
+        this.wr = 1.0F * sprite.getImageWidth() / sprite.getTextureWidth();
+        this.hr = 1.0F * sprite.getImageHeight() / sprite.getTextureHeight();
+        this.box = new Rectangle(x, y, sprite.getImageWidth(), sprite.getImageHeight());
+        this.buttonText = text;
+        this.color = new Color(255, 255, 255);
+        this.textColor = new Color(255, 255, 255);
         this.font = new TrueTypeFont(new Font("Arial", Font.PLAIN, 32), false);
     }
 
@@ -49,7 +60,7 @@ public class Button
             {
                 Thread.sleep(100);
             }
-            catch (InterruptedException e)
+            catch (InterruptedException ignored)
             {
             }
             return true;
@@ -65,27 +76,55 @@ public class Button
 
     public void draw()
     {
-        TextureImpl.bindNone();
-        float x = (float) box.getX();
-        float y = (float) box.getY();
-        float w = (float) box.getWidth();
-        float h = (float) box.getHeight();
+        float x = (float) this.box.getX();
+        float y = (float) this.box.getY();
+        float w = (float) this.box.getWidth();
+        float h = (float) this.box.getHeight();
 
-        if (this.hovering)
+        if (this.sprite != null)
         {
-            GL11.glColor3f(color.r + (0.1F), color.g + (0.1F), color.b + (0.1F));
+            GL11.glBindTexture(GL11.GL_TEXTURE_2D, sprite.getTextureID());
+            GL11.glColor3f(1F, 1F, 1F);
+            if (this.hovering)
+            {
+                GL11.glColor3f(0.9F, 0.9F, 0.9F);
+            }
+            GL11.glBegin(GL11.GL_QUADS);
+
+            GL11.glTexCoord2f(0F, 0F);
+            GL11.glVertex2f(x, y);
+
+            GL11.glTexCoord2f(wr, 0F);
+            GL11.glVertex2f(x + w, y);
+
+            GL11.glTexCoord2f(wr, hr);
+            GL11.glVertex2f(x + w, y + h);
+
+            GL11.glTexCoord2f(0F, hr);
+            GL11.glVertex2f(x, y + h);
+
+
+            GL11.glEnd();
+            GL11.glBindTexture(GL11.GL_TEXTURE_2D, 0);
         }
         else
         {
-            GL11.glColor3f(color.r, color.g, color.b);
+            if (this.hovering)
+            {
+                GL11.glColor3f(color.r + (0.1F), color.g + (0.1F), color.b + (0.1F));
+            }
+            else
+            {
+                GL11.glColor3f(color.r, color.g, color.b);
+            }
+            GL11.glBegin(GL11.GL_QUADS);
+            GL11.glVertex2f(x, y);
+            GL11.glVertex2f(x + w, y);
+            GL11.glVertex2f(x + w, y + h);
+            GL11.glVertex2f(x, y + h);
+            GL11.glEnd();
         }
-        GL11.glBegin(GL11.GL_QUADS);
-        GL11.glVertex2f(x, y);
-        GL11.glVertex2f(x + w, y);
-        GL11.glVertex2f(x + w, y + h);
-        GL11.glVertex2f(x, y + h);
-        GL11.glEnd();
-
+        TextureImpl.bindNone();
         font.drawString(x + (w / 2) - (font.getWidth(buttonText) / 2), y + (h / 2) - (font.getHeight(buttonText) / 2), buttonText, textColor);
     }
 

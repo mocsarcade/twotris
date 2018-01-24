@@ -44,7 +44,7 @@ public class Game extends Scene
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, 0);
 
         // TODO: Insert working logic here
-        for(EntityBase e : entities)
+        for (EntityBase e : entities)
         {
             e.update(delta);
         }
@@ -79,7 +79,7 @@ public class Game extends Scene
         }
 
         // TODO: Put working draw code here:
-        for(EntityBase e : entities)
+        for (EntityBase e : entities)
         {
             e.draw();
         }
@@ -91,16 +91,16 @@ public class Game extends Scene
     @Override
     public Scene nextScene()
     {
-        Menu menu = new Menu("paused");
+        Menu menu = new Menu("gui/paused");
         if (isGameOver)
         {
-            menu.addButton(new Button(256, 64, "Play Again", new org.newdawn.slick.Color(200, 200, 200), new org.newdawn.slick.Color(85, 124, 0)), new Game());
+            menu.addButton(new Button(0, 0, "Play Again"), new Game());
         }
         else
         {
-            menu.addButton(new Button(256, 64, "Resume", new org.newdawn.slick.Color(200, 200, 200), new org.newdawn.slick.Color(85, 124, 0)), this);
+            menu.addButton(new Button(0, 0, "Resume"), this);
         }
-        menu.addButton(new Button(256, 64, "Save & Quit", new org.newdawn.slick.Color(200, 200, 200), new org.newdawn.slick.Color(85, 124, 0)), new MainMenu());
+        menu.addButton(new Button(0, 0, "Save & Quit"), new MainMenu());
         menu.adjustButtons();
         return menu;
     }
