@@ -2,6 +2,7 @@ package com.github.capstone.Scene;
 
 import com.github.capstone.Entity.EntityBase;
 import com.github.capstone.Entity.EntityPiece;
+import com.github.capstone.Entity.EntityTetromino;
 import com.github.capstone.Twotris;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
@@ -22,7 +23,7 @@ public class Game extends Scene
     public Game()
     {
         entities = new ArrayList<>();
-        entities.add(new EntityPiece(32, 32));
+        entities.add(new EntityTetromino());
 
         this.isGameOver = false;
         this.font = new TrueTypeFont(new Font("Arial", Font.PLAIN, 14), false);

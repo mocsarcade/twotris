@@ -1,41 +1,24 @@
 package com.github.capstone.Entity;
 
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.util.Color;
 import org.lwjgl.util.Rectangle;
-
-import java.util.Random;
 
 public class EntityPiece extends EntityBase
 {
     private Rectangle hitbox;
+    private Color color;
 
-    public EntityPiece(int w, int h)
+    public EntityPiece(int x, int y, int size)
     {
-        this.hitbox = new Rectangle(0, 0, w, h);
-        this.hitbox.setLocation((Display.getHeight() / 2) - (this.hitbox.getWidth() / 2), (Display.getHeight() / 2) - (this.hitbox.getHeight() / 2));
+        this.hitbox = new Rectangle(x, y, size, size);
+        this.color = new Color(0, 128, 255);
+//        this.hitbox.setLocation((Display.getHeight() / 2) - (this.hitbox.getWidth() / 2), (Display.getHeight() / 2) - (this.hitbox.getHeight() / 2));
     }
 
     @Override
     public void update(float delta)
     {
-        if (Keyboard.isKeyDown(Keyboard.KEY_W))
-        {
-            this.hitbox.translate(0, -1);
-        }
-        if (Keyboard.isKeyDown(Keyboard.KEY_S))
-        {
-            this.hitbox.translate(0, 1);
-        }
-        if (Keyboard.isKeyDown(Keyboard.KEY_A))
-        {
-            this.hitbox.translate(-1, 0);
-        }
-        if (Keyboard.isKeyDown(Keyboard.KEY_D))
-        {
-            this.hitbox.translate(1, 0);
-        }
     }
 
     @Override
@@ -46,7 +29,7 @@ public class EntityPiece extends EntityBase
         float w = (float) this.hitbox.getWidth();
         float h = (float) this.hitbox.getHeight();
 
-        GL11.glColor3f(1, 1, 1);
+        GL11.glColor3f(color.getRed() / 255F, color.getGreen() / 255F, color.getBlue() / 255F);
         GL11.glBegin(GL11.GL_QUADS);
 
         GL11.glVertex2f(x, y);
