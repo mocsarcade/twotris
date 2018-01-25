@@ -46,8 +46,8 @@ public class Button
         this.box = new Rectangle(x, y, sprite.getImageWidth(), sprite.getImageHeight());
         this.buttonText = text;
         this.color = new Color(255, 255, 255);
-        this.textColor = new Color(255, 255, 255);
-        this.font = new TrueTypeFont(new Font("Arial", Font.PLAIN, 32), false);
+        this.textColor = new Color(0, 182, 164);
+        this.font = Helper.getFont();
     }
 
     public boolean isClicked()

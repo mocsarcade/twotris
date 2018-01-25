@@ -1,5 +1,6 @@
 package com.github.capstone.Entity;
 
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.util.Rectangle;
 
@@ -11,6 +12,7 @@ public class EntityTetromino extends EntityBase
     private State state;
     private EntityPiece[][] pieceMatrix;
     private Rectangle hitBox;
+    private int size = 32;
 
     public EntityTetromino()
     {
@@ -23,58 +25,59 @@ public class EntityTetromino extends EntityBase
     {
         // TODO: X and Y values should be adjusted based on where in the "Grid" they are.
         // Ex: new EntityPiece(0 * gridPlace, size * gridPlace, size)
-        int size = 32;
 
         switch (this.type)
         {
             case L:
-                this.hitBox = new Rectangle(0, 0, 2 * size, 3 * size);
+                this.hitBox = new Rectangle(0, 0, 2 * this.size, 3 * this.size);
                 return new EntityPiece[][]{
-                        {new EntityPiece(0, 0, size), null},
-                        {new EntityPiece(0, size, size), null},
-                        {new EntityPiece(0, 2 * size, size), new EntityPiece(size, 2 * size, size)}
+                        {new EntityPiece(0, 0, this.size), null},
+                        {new EntityPiece(0, this.size, this.size), null},
+                        {new EntityPiece(0, 2 * this.size, this.size), new EntityPiece(this.size, 2 * this.size, this.size)}
                 };
             case S:
-                this.hitBox = new Rectangle(0, 0, 2 * size, 3 * size);
+                this.hitBox = new Rectangle(0, 0, 2 * this.size, 3 * this.size);
                 return new EntityPiece[][]{
-                        {new EntityPiece(0, 0, size), null, null},
-                        {new EntityPiece(0, size, size), new EntityPiece(size, size, size), null},
-                        {null, new EntityPiece(size, 2 * size, size), null}
+                        {new EntityPiece(0, 0, this.size), null, null},
+                        {new EntityPiece(0, this.size, this.size), new EntityPiece(this.size, this.size, this.size), null},
+                        {null, new EntityPiece(this.size, 2 * this.size, this.size), null}
                 };
             case J:
-                this.hitBox = new Rectangle(0, 0, 2 * size, 3 * size);
+                this.hitBox = new Rectangle(0, 0, 2 * this.size, 3 * this.size);
                 return new EntityPiece[][]{
-                        {null, new EntityPiece(size, 0, size)},
-                        {null, new EntityPiece(size, size, size)},
-                        {new EntityPiece(0, 2 * size, size), new EntityPiece(size, 2 * size, size)}
+                        {null, new EntityPiece(this.size, 0, this.size)},
+                        {null, new EntityPiece(this.size, this.size, this.size)},
+                        {new EntityPiece(0, 2 * this.size, this.size), new EntityPiece(this.size, 2 * this.size, this.size)}
                 };
             case T:
-                this.hitBox = new Rectangle(0, 0, 3 * size, 2 * size);
+                this.hitBox = new Rectangle(0, 0, 3 * this.size, 2 * this.size);
                 return new EntityPiece[][]{
-                        {new EntityPiece(0, 0, size), new EntityPiece(size, 0, size), new EntityPiece(2 * size, 0, size)},
-                        {null, new EntityPiece(size, size, size), null}
+                        {new EntityPiece(0, 0, this.size), new EntityPiece(this.size, 0, this.size), new EntityPiece(2 * this.size, 0, this.size)},
+                        {null, new EntityPiece(this.size, this.size, this.size), null}
                 };
             case O:
-                this.hitBox = new Rectangle(0, 0, 2 * size, 2 * size);
+                this.hitBox = new Rectangle(0, 0, 2 * this.size, 2 * this.size);
                 return new EntityPiece[][]{
-                        {new EntityPiece(0, 0, size), new EntityPiece(size, 0, size)},
-                        {new EntityPiece(0, size, size), new EntityPiece(size, size, size)}
+                        {new EntityPiece(0, 0, this.size), new EntityPiece(this.size, 0, this.size)},
+                        {new EntityPiece(0, this.size, this.size), new EntityPiece(this.size, this.size, this.size)}
                 };
             case I:
-                this.hitBox = new Rectangle(0, 0, 4 * size, size);
+                this.hitBox = new Rectangle(0, 0, 4 * this.size, this.size);
                 return new EntityPiece[][]{
-                        {new EntityPiece(0, 0, size), new EntityPiece(size, 0, size), new EntityPiece(2 * size, 0, size), new EntityPiece(3 * size, 0, size)}
+                        {new EntityPiece(0, 0, this.size), new EntityPiece(this.size, 0, this.size), new EntityPiece(2 * this.size, 0, this.size), new EntityPiece(3 * this.size, 0, this.size)}
                 };
             case Z:
-                this.hitBox = new Rectangle(0, 0, 2 * size, 3 * size);
+                this.hitBox = new Rectangle(0, 0, 2 * this.size, 3 * this.size);
                 return new EntityPiece[][]{
-                        {null, new EntityPiece(size, 0, size)},
-                        {new EntityPiece(0, size, size), new EntityPiece(size, size, size)},
-                        {new EntityPiece(0, 2 * size, size), null}
+                        {null, new EntityPiece(this.size, 0, this.size)},
+                        {new EntityPiece(0, this.size, this.size), new EntityPiece(this.size, this.size, this.size)},
+                        {new EntityPiece(0, 2 * this.size, this.size), null}
                 };
         }
         return new EntityPiece[][]{};
     }
+
+
 
     public void update(float delta)
     {
@@ -89,6 +92,10 @@ public class EntityTetromino extends EntityBase
                         if (this.hitBox.getY() + this.getHitBox().getHeight() < Display.getHeight())
                         {
                             row.getHitBox().translate(0, 1);
+                            if (Keyboard.isKeyDown(Keyboard.KEY_R))
+                            {
+                                rotate();
+                            }
                         }
                         else
                         {
@@ -116,10 +123,24 @@ public class EntityTetromino extends EntityBase
         }
     }
 
-    public void rotate()
+    private void rotate()
     {
         // TODO: Rotate the pieceMatrix clockwise...
         // TODO: This should not only update the pieceMatrix, but also the hitboxes of the individual pieces
+        EntityPiece[][] temp = new EntityPiece[pieceMatrix[0].length][pieceMatrix.length];
+
+        for (int i = 0; i < pieceMatrix[0].length; i++)
+        {
+            for (int j = pieceMatrix.length - 1; j >= 0; j--)
+            {
+                temp[i][j] = pieceMatrix[j][i];
+                if (temp[i][j] != null)
+                {
+                    temp[i][j].getHitBox().translate(i * this.size, j * this.size);
+                }
+            }
+        }
+        pieceMatrix = temp;
     }
 
     public Rectangle getHitBox()

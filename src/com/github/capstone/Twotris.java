@@ -10,9 +10,11 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.Color;
+import org.newdawn.slick.opengl.ImageIOImageData;
 import org.newdawn.slick.opengl.PNGDecoder;
 import org.newdawn.slick.util.ResourceLoader;
 
+import javax.imageio.ImageIO;
 import java.awt.Toolkit;
 import java.io.File;
 import java.io.IOException;
@@ -40,7 +42,7 @@ public class Twotris
     public ScreenshotManager screenshotManager;
     private boolean fullscreen;
 
-    public Twotris()
+    private Twotris()
     {
         instance = this;
         this.config = new Config();
@@ -198,7 +200,7 @@ public class Twotris
         }
     }
 
-    public void initIcon()
+    private void initIcon()
     {
         try
         {

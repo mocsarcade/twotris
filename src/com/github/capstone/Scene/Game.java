@@ -33,7 +33,7 @@ public class Game extends Scene
     public boolean drawFrame(float delta)
     {
         GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
-        GL11.glClearColor(0.25F, 0.25F, 0.25F, 0F);
+        GL11.glClearColor(0.15F, 0.15F, 0.15F, 0F);
         // Screen resize handler
         if (Display.wasResized())
         {
