@@ -9,11 +9,16 @@ public class EntityPiece extends EntityBase
     private Rectangle hitbox;
     private Color color;
 
-    public EntityPiece(int x, int y, int size)
+    EntityPiece(int x, int y, int size)
     {
         this.hitbox = new Rectangle(x, y, size, size);
         this.color = new Color(0, 128, 255);
-//        this.hitbox.setLocation((Display.getHeight() / 2) - (this.hitbox.getWidth() / 2), (Display.getHeight() / 2) - (this.hitbox.getHeight() / 2));
+    }
+
+    @Override
+    public String toString()
+    {
+        return "Piece";
     }
 
     @Override

@@ -1,9 +1,11 @@
 package com.github.capstone.Entity;
 
+import com.github.capstone.Util.Helper;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.util.Rectangle;
 
+import java.util.Arrays;
 import java.util.Random;
 
 public class EntityTetromino extends EntityBase
@@ -13,6 +15,7 @@ public class EntityTetromino extends EntityBase
     private EntityPiece[][] pieceMatrix;
     private Rectangle hitBox;
     private int size = 32;
+    private long lastKeypress = 0;
 
     public EntityTetromino()
     {
@@ -77,8 +80,6 @@ public class EntityTetromino extends EntityBase
         return new EntityPiece[][]{};
     }
 
-
-
     public void update(float delta)
     {
         if (this.state == State.FALLING)
@@ -92,9 +93,10 @@ public class EntityTetromino extends EntityBase
                         if (this.hitBox.getY() + this.getHitBox().getHeight() < Display.getHeight())
                         {
                             row.getHitBox().translate(0, 1);
-                            if (Keyboard.isKeyDown(Keyboard.KEY_R))
+                            if (Keyboard.isKeyDown(Keyboard.KEY_R) && (Helper.getTime() - lastKeypress > 500))
                             {
                                 rotate();
+                                lastKeypress = Helper.getTime();
                             }
                         }
                         else
@@ -125,21 +127,24 @@ public class EntityTetromino extends EntityBase
 
     private void rotate()
     {
-        // TODO: Rotate the pieceMatrix clockwise...
-        // TODO: This should not only update the pieceMatrix, but also the hitboxes of the individual pieces
         EntityPiece[][] temp = new EntityPiece[pieceMatrix[0].length][pieceMatrix.length];
-
-        for (int i = 0; i < pieceMatrix[0].length; i++)
+        for (int i = 0; i < this.pieceMatrix[0].length; i++)
         {
-            for (int j = pieceMatrix.length - 1; j >= 0; j--)
+            for (int j = 0; j < this.pieceMatrix.length; j++)
             {
-                temp[i][j] = pieceMatrix[j][i];
+                temp[i][this.pieceMatrix.length - 1 - j] = this.pieceMatrix[j][i];
                 if (temp[i][j] != null)
                 {
-                    temp[i][j].getHitBox().translate(i * this.size, j * this.size);
+                    temp[i][j].getHitBox().translate(i, j);
                 }
             }
         }
+
+        // Rotate the hitbox too:
+        int w = this.hitBox.getWidth();
+        this.hitBox.setWidth(this.hitBox.getHeight());
+        this.hitBox.setHeight(w);
+        // Swap matrices
         pieceMatrix = temp;
     }
 
