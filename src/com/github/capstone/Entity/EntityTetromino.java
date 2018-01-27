@@ -5,7 +5,6 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.util.Rectangle;
 
-import java.util.Arrays;
 import java.util.Random;
 
 public class EntityTetromino extends EntityBase
@@ -14,14 +13,18 @@ public class EntityTetromino extends EntityBase
     private State state;
     private EntityPiece[][] pieceMatrix;
     private Rectangle hitBox;
-    private int size = 32;
-    private long lastKeypress = 0;
+    private int size;
+    private int rotation;
+    private long lastKeypress;
 
     public EntityTetromino()
     {
         this.type = Type.Z;
         this.state = State.FALLING;
         this.pieceMatrix = generateFromType();
+        this.size = 32;
+        this.rotation = 0;
+        this.lastKeypress = 0;
     }
 
     private EntityPiece[][] generateFromType()
@@ -133,19 +136,56 @@ public class EntityTetromino extends EntityBase
             for (int j = 0; j < this.pieceMatrix.length; j++)
             {
                 temp[i][this.pieceMatrix.length - 1 - j] = this.pieceMatrix[j][i];
-                if (temp[i][j] != null)
-                {
-                    temp[i][j].getHitBox().translate(i, j);
-                }
             }
         }
+
+        switch (this.type)
+        {
+            case Z:
+                if (this.rotation == 0)
+                {
+                    // TODO: Find a way to make x and y += something..?
+                    /*
+                    ##
+                     ##*/
+                    this.pieceMatrix = new EntityPiece[][]{
+                            {},
+                            {}
+                    };
+                }
+                else if (this.rotation == 90)
+                {
+                    this.pieceMatrix = new EntityPiece[][]{
+                            {null, new EntityPiece(this.size, 0, this.size)},
+                            {new EntityPiece(0, this.size, this.size), new EntityPiece(this.size, this.size, this.size)},
+                            {new EntityPiece(0, 2 * this.size, this.size), null}
+                    };
+                }
+                else if (this.rotation == 180)
+                {
+                    this.pieceMatrix = new EntityPiece[][]{
+                            {null, new EntityPiece(this.size, 0, this.size)},
+                            {new EntityPiece(0, this.size, this.size), new EntityPiece(this.size, this.size, this.size)},
+                            {new EntityPiece(0, 2 * this.size, this.size), null}
+                    };
+                }
+                else if (this.rotation == 270)
+                {
+                    this.pieceMatrix = new EntityPiece[][]{
+                            {null, new EntityPiece(this.size, 0, this.size)},
+                            {new EntityPiece(0, this.size, this.size), new EntityPiece(this.size, this.size, this.size)},
+                            {new EntityPiece(0, 2 * this.size, this.size), null}
+                    };
+                }
+        }
+
+        // Increment rotation by 90 degrees unless it's going to be more than 360deg
+        this.rotation = this.rotation + 90 >= 360 ? 0 : this.rotation + 90;
 
         // Rotate the hitbox too:
         int w = this.hitBox.getWidth();
         this.hitBox.setWidth(this.hitBox.getHeight());
         this.hitBox.setHeight(w);
-        // Swap matrices
-        pieceMatrix = temp;
     }
 
     public Rectangle getHitBox()
