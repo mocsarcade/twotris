@@ -155,6 +155,35 @@ public class EntityTetromino extends EntityBase
             else
             {
                 this.getHitBox().setY(Display.getHeight() - this.getHitBox().getHeight());
+
+                // Correct individual pieces too..
+                int offset = 0;
+                for (EntityPiece[] column : pieceMatrix)
+                {
+                    for (EntityPiece row : column)
+                    {
+                        if (row != null)
+                        {
+                            if (row.getHitBox().getY() + row.getHitBox().getHeight() > Display.getHeight())
+                            {
+                                offset = Math.abs((row.getHitBox().getY() + row.getHitBox().getHeight()) - Display.getHeight());
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                for (EntityPiece[] column : pieceMatrix)
+                {
+                    for (EntityPiece row : column)
+                    {
+                        if (row != null)
+                        {
+                            row.getHitBox().translate(0, -offset);
+                        }
+                    }
+                }
+
                 this.state = State.IDLE;
             }
             this.getHitBox().translate(0, this.speed);
