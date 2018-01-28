@@ -34,49 +34,49 @@ public class EntityTetromino extends EntityBase
         switch (this.type)
         {
             case L:
-                this.hitBox = new Rectangle(0, 0, 2 * this.size, 3 * this.size);
+                this.hitBox = new Rectangle(Display.getHeight() / 2, 0, 2 * this.size, 3 * this.size);
                 return new EntityPiece[][]{
-                        {new EntityPiece(0, 0, this.size), null},
-                        {new EntityPiece(0, this.size, this.size), null},
-                        {new EntityPiece(0, 2 * this.size, this.size), new EntityPiece(this.size, 2 * this.size, this.size)}
+                        {new EntityPiece((Display.getHeight() / 2), 0, this.size), null},
+                        {new EntityPiece((Display.getHeight() / 2), this.size, this.size), null},
+                        {new EntityPiece((Display.getHeight() / 2), 2 * this.size, this.size), new EntityPiece((Display.getHeight() / 2) + this.size, 2 * this.size, this.size)}
                 };
             case S:
-                this.hitBox = new Rectangle(0, 0, 2 * this.size, 3 * this.size);
+                this.hitBox = new Rectangle(Display.getHeight() / 2, 0, 2 * this.size, 3 * this.size);
                 return new EntityPiece[][]{
-                        {new EntityPiece(0, 0, this.size), null, null},
-                        {new EntityPiece(0, this.size, this.size), new EntityPiece(this.size, this.size, this.size), null},
-                        {null, new EntityPiece(this.size, 2 * this.size, this.size), null}
+                        {new EntityPiece((Display.getHeight() / 2), 0, this.size), null, null},
+                        {new EntityPiece((Display.getHeight() / 2), this.size, this.size), new EntityPiece((Display.getHeight() / 2) + this.size, this.size, this.size), null},
+                        {null, new EntityPiece((Display.getHeight() / 2) + this.size, 2 * this.size, this.size), null}
                 };
             case J:
-                this.hitBox = new Rectangle(0, 0, 2 * this.size, 3 * this.size);
+                this.hitBox = new Rectangle(Display.getHeight() / 2, 0, 2 * this.size, 3 * this.size);
                 return new EntityPiece[][]{
-                        {null, new EntityPiece(this.size, 0, this.size)},
-                        {null, new EntityPiece(this.size, this.size, this.size)},
-                        {new EntityPiece(0, 2 * this.size, this.size), new EntityPiece(this.size, 2 * this.size, this.size)}
+                        {null, new EntityPiece((Display.getHeight() / 2) + this.size, 0, this.size)},
+                        {null, new EntityPiece((Display.getHeight() / 2) + this.size, this.size, this.size)},
+                        {new EntityPiece((Display.getHeight() / 2), 2 * this.size, this.size), new EntityPiece((Display.getHeight() / 2) + this.size, 2 * this.size, this.size)}
                 };
             case T:
-                this.hitBox = new Rectangle(0, 0, 3 * this.size, 2 * this.size);
+                this.hitBox = new Rectangle(Display.getHeight() / 2, 0, 3 * this.size, 2 * this.size);
                 return new EntityPiece[][]{
-                        {new EntityPiece(0, 0, this.size), new EntityPiece(this.size, 0, this.size), new EntityPiece(2 * this.size, 0, this.size)},
-                        {null, new EntityPiece(this.size, this.size, this.size), null}
+                        {new EntityPiece((Display.getHeight() / 2), 0, this.size), new EntityPiece((Display.getHeight() / 2) + this.size, 0, this.size), new EntityPiece((Display.getHeight() / 2) + (2 * this.size), 0, this.size)},
+                        {null, new EntityPiece((Display.getHeight() / 2) + this.size, this.size, this.size), null}
                 };
             case O:
-                this.hitBox = new Rectangle(0, 0, 2 * this.size, 2 * this.size);
+                this.hitBox = new Rectangle(Display.getHeight() / 2, 0, 2 * this.size, 2 * this.size);
                 return new EntityPiece[][]{
-                        {new EntityPiece(0, 0, this.size), new EntityPiece(this.size, 0, this.size)},
-                        {new EntityPiece(0, this.size, this.size), new EntityPiece(this.size, this.size, this.size)}
+                        {new EntityPiece((Display.getHeight() / 2), 0, this.size), new EntityPiece((Display.getHeight() / 2) + this.size, 0, this.size)},
+                        {new EntityPiece((Display.getHeight() / 2), this.size, this.size), new EntityPiece((Display.getHeight() / 2) + this.size, this.size, this.size)}
                 };
             case I:
-                this.hitBox = new Rectangle(0, 0, 4 * this.size, this.size);
+                this.hitBox = new Rectangle(Display.getHeight() / 2, 0, 4 * this.size, this.size);
                 return new EntityPiece[][]{
-                        {new EntityPiece(0, 0, this.size), new EntityPiece(this.size, 0, this.size), new EntityPiece(2 * this.size, 0, this.size), new EntityPiece(3 * this.size, 0, this.size)}
+                        {new EntityPiece((Display.getHeight() / 2), 0, this.size), new EntityPiece((Display.getHeight() / 2) + this.size, 0, this.size), new EntityPiece((Display.getHeight() / 2) + (2 * this.size), 0, this.size), new EntityPiece((Display.getHeight() / 2) + (3 * this.size), 0, this.size)}
                 };
             case Z:
-                this.hitBox = new Rectangle(0, 0, 2 * this.size, 3 * this.size);
+                this.hitBox = new Rectangle(Display.getHeight() / 2, 0, 2 * this.size, 3 * this.size);
                 return new EntityPiece[][]{
-                        {null, new EntityPiece(this.size, 0, this.size)},
-                        {new EntityPiece(0, this.size, this.size), new EntityPiece(this.size, this.size, this.size)},
-                        {new EntityPiece(0, 2 * this.size, this.size), null}
+                        {null, new EntityPiece((Display.getHeight() / 2) + this.size, 0, this.size)},
+                        {new EntityPiece((Display.getHeight() / 2), this.size, this.size), new EntityPiece((Display.getHeight() / 2) + this.size, this.size, this.size)},
+                        {new EntityPiece((Display.getHeight() / 2), 2 * this.size, this.size), null}
                 };
         }
         return new EntityPiece[][]{};
