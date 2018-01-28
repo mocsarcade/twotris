@@ -5,6 +5,7 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.util.Rectangle;
 
+import java.util.Arrays;
 import java.util.Random;
 
 public class EntityTetromino extends EntityBase
@@ -14,6 +15,7 @@ public class EntityTetromino extends EntityBase
     private EntityPiece[][] pieceMatrix;
     private Rectangle hitBox;
     private int size;
+    private int speed;
     private int rotation;
     private long lastKeypress;
 
@@ -21,8 +23,9 @@ public class EntityTetromino extends EntityBase
     {
         this.type = Type.Z;
         this.state = State.FALLING;
-        this.pieceMatrix = generateFromType();
         this.size = 32;
+        this.speed = 1;
+        this.pieceMatrix = generateFromType();
         this.rotation = 0;
         this.lastKeypress = 0;
     }
@@ -93,24 +96,68 @@ public class EntityTetromino extends EntityBase
                 {
                     if (row != null)
                     {
-                        if (this.hitBox.getY() + this.getHitBox().getHeight() < Display.getHeight())
-                        {
-                            row.getHitBox().translate(0, 1);
-                            if (Keyboard.isKeyDown(Keyboard.KEY_R) && (Helper.getTime() - lastKeypress > 500))
-                            {
-                                rotate();
-                                lastKeypress = Helper.getTime();
-                            }
-                        }
-                        else
-                        {
-                            this.state = State.IDLE;
-                        }
+                        row.getHitBox().translate(0, this.speed);
                         row.update(delta);
                     }
                 }
             }
-            this.getHitBox().translate(0, 1);
+            if (this.hitBox.getY() + this.getHitBox().getHeight() < Display.getHeight())
+            {
+                if (Helper.getTime() - lastKeypress > 250)
+                {
+                    if (Keyboard.isKeyDown(Keyboard.KEY_R))
+                    {
+                        rotate();
+                        lastKeypress = Helper.getTime();
+                    }
+                    if (Keyboard.isKeyDown(Keyboard.KEY_A))
+                    {
+                        lastKeypress = Helper.getTime();
+                        this.getHitBox().translate(-32, 0);
+                        for (EntityPiece[] column : pieceMatrix)
+                        {
+                            for (EntityPiece row : column)
+                            {
+                                if (row != null)
+                                {
+                                    row.getHitBox().translate(-32, 0);
+                                }
+                            }
+                        }
+                    }
+                    else if (Keyboard.isKeyDown(Keyboard.KEY_D))
+                    {
+                        lastKeypress = Helper.getTime();
+                        this.getHitBox().translate(32, 0);
+                        for (EntityPiece[] column : pieceMatrix)
+                        {
+                            for (EntityPiece row : column)
+                            {
+                                if (row != null)
+                                {
+                                    row.getHitBox().translate(32, 0);
+                                }
+                            }
+                        }
+                    }
+                }
+
+                // Let the acceleration happen anytime, not just every 500ms
+                if (Keyboard.isKeyDown(Keyboard.KEY_SPACE))
+                {
+                    this.speed = 2;
+                }
+                else
+                {
+                    this.speed = 1;
+                }
+            }
+            else
+            {
+                this.getHitBox().setY(Display.getHeight() - this.getHitBox().getHeight());
+                this.state = State.IDLE;
+            }
+            this.getHitBox().translate(0, this.speed);
         }
     }
 
@@ -130,52 +177,42 @@ public class EntityTetromino extends EntityBase
 
     private void rotate()
     {
-        EntityPiece[][] temp = new EntityPiece[pieceMatrix[0].length][pieceMatrix.length];
-        for (int i = 0; i < this.pieceMatrix[0].length; i++)
-        {
-            for (int j = 0; j < this.pieceMatrix.length; j++)
-            {
-                temp[i][this.pieceMatrix.length - 1 - j] = this.pieceMatrix[j][i];
-            }
-        }
-
         switch (this.type)
         {
             case Z:
                 if (this.rotation == 0)
                 {
-                    // TODO: Find a way to make x and y += something..?
-                    /*
-                    ##
-                     ##*/
                     this.pieceMatrix = new EntityPiece[][]{
-                            {},
-                            {}
+                            {new EntityPiece(this.getHitBox().getX(), this.getHitBox().getY(), this.size), new EntityPiece(this.getHitBox().getX() + this.size, this.getHitBox().getY(), this.size), null},
+                            {null, new EntityPiece(this.getHitBox().getX() + this.size, this.getHitBox().getY() + this.size, this.size), new EntityPiece(this.getHitBox().getX() + (2 * this.size), this.getHitBox().getY() + this.size, this.size)}
                     };
+                    break;
                 }
                 else if (this.rotation == 90)
                 {
                     this.pieceMatrix = new EntityPiece[][]{
-                            {null, new EntityPiece(this.size, 0, this.size)},
-                            {new EntityPiece(0, this.size, this.size), new EntityPiece(this.size, this.size, this.size)},
-                            {new EntityPiece(0, 2 * this.size, this.size), null}
+                            {null, new EntityPiece(this.getHitBox().getX() + this.size, this.getHitBox().getY(), this.size)},
+                            {new EntityPiece(this.getHitBox().getX(), this.getHitBox().getY() + this.size, this.size), new EntityPiece(this.getHitBox().getX() + this.size, this.getHitBox().getY() + this.size, this.size)},
+                            {new EntityPiece(this.getHitBox().getX(), this.getHitBox().getY() + (2 * this.size), this.size), null}
                     };
+                    break;
                 }
                 else if (this.rotation == 180)
                 {
                     this.pieceMatrix = new EntityPiece[][]{
-                            {null, new EntityPiece(this.size, 0, this.size)},
-                            {new EntityPiece(0, this.size, this.size), new EntityPiece(this.size, this.size, this.size)},
-                            {new EntityPiece(0, 2 * this.size, this.size), null}
+                            {new EntityPiece(this.getHitBox().getX(), this.getHitBox().getY(), this.size), new EntityPiece(this.getHitBox().getX() + this.size, this.getHitBox().getY(), this.size), null},
+                            {null, new EntityPiece(this.getHitBox().getX() + this.size, this.getHitBox().getY() + this.size, this.size), new EntityPiece(this.getHitBox().getX() + (2 * this.size), this.getHitBox().getY() + this.size, this.size)}
                     };
+                    break;
                 }
                 else if (this.rotation == 270)
                 {
                     this.pieceMatrix = new EntityPiece[][]{
-                            {null, new EntityPiece(this.size, 0, this.size)},
-                            {new EntityPiece(0, this.size, this.size), new EntityPiece(this.size, this.size, this.size)},
-                            {new EntityPiece(0, 2 * this.size, this.size), null}
+                            {null, new EntityPiece(this.getHitBox().getX() + this.size, this.getHitBox().getY(), this.size)},
+                            {new EntityPiece(this.getHitBox().getX(), this.getHitBox().getY() + this.size, this.size), new EntityPiece(this.getHitBox().getX() + this.size, this.getHitBox().getY() + this.size, this.size)},
+                            {new EntityPiece(this.getHitBox().getX(), this.getHitBox().getY() + (2 * this.size), this.size), null}
                     };
+                    break;
                 }
         }
 
