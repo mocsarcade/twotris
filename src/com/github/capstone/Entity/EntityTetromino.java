@@ -5,7 +5,6 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.util.Rectangle;
 
-import java.util.Arrays;
 import java.util.Random;
 
 public class EntityTetromino extends EntityBase
@@ -21,7 +20,7 @@ public class EntityTetromino extends EntityBase
 
     public EntityTetromino()
     {
-        this.type = Type.Z;
+        this.type = randomType();
         this.state = State.FALLING;
         this.size = 32;
         this.speed = 1;
@@ -32,9 +31,6 @@ public class EntityTetromino extends EntityBase
 
     private EntityPiece[][] generateFromType()
     {
-        // TODO: X and Y values should be adjusted based on where in the "Grid" they are.
-        // Ex: new EntityPiece(0 * gridPlace, size * gridPlace, size)
-
         switch (this.type)
         {
             case L:
@@ -208,20 +204,73 @@ public class EntityTetromino extends EntityBase
     {
         switch (this.type)
         {
-            case Z:
+            case L:
                 if (this.rotation == 0)
                 {
                     this.pieceMatrix = new EntityPiece[][]{
-                            {new EntityPiece(this.getHitBox().getX(), this.getHitBox().getY(), this.size), new EntityPiece(this.getHitBox().getX() + this.size, this.getHitBox().getY(), this.size), null},
-                            {null, new EntityPiece(this.getHitBox().getX() + this.size, this.getHitBox().getY() + this.size, this.size), new EntityPiece(this.getHitBox().getX() + (2 * this.size), this.getHitBox().getY() + this.size, this.size)}
+                            {new EntityPiece(this.getHitBox().getX(), this.getHitBox().getY(), this.size), new EntityPiece(this.getHitBox().getX() + this.size, this.getHitBox().getY(), this.size), new EntityPiece(this.getHitBox().getX() + (2 * this.size), this.getHitBox().getY(), this.size)},
+                            {new EntityPiece(this.getHitBox().getX(), this.getHitBox().getY() + this.size, this.size), null, null}
                     };
                     break;
                 }
                 else if (this.rotation == 90)
                 {
                     this.pieceMatrix = new EntityPiece[][]{
-                            {null, new EntityPiece(this.getHitBox().getX() + this.size, this.getHitBox().getY(), this.size)},
-                            {new EntityPiece(this.getHitBox().getX(), this.getHitBox().getY() + this.size, this.size), new EntityPiece(this.getHitBox().getX() + this.size, this.getHitBox().getY() + this.size, this.size)},
+                            {new EntityPiece(this.getHitBox().getX(), this.getHitBox().getY(), this.size), new EntityPiece(this.getHitBox().getX() + this.size, this.getHitBox().getY(), this.size)},
+                            {null, new EntityPiece(this.getHitBox().getX() + this.size, this.getHitBox().getY() + this.size, this.size)},
+                            {null, new EntityPiece(this.getHitBox().getX() + this.size, this.getHitBox().getY() + (2 * this.size), this.size)}
+                    };
+                    break;
+                }
+                else if (this.rotation == 180)
+                {
+                    this.pieceMatrix = new EntityPiece[][]{
+                            {null, null, new EntityPiece(this.getHitBox().getX() + (this.size * 2), this.getHitBox().getY(), this.size)},
+                            {new EntityPiece(this.getHitBox().getX(), this.getHitBox().getY() + this.size, this.size), new EntityPiece(this.getHitBox().getX() + this.size, this.getHitBox().getY() + this.size, this.size), new EntityPiece(this.getHitBox().getX() + (2 * this.size), this.getHitBox().getY() + this.size, this.size)}
+                    };
+                    break;
+                }
+                else if (this.rotation == 270)
+                {
+                    this.pieceMatrix = new EntityPiece[][]{
+                            {new EntityPiece(this.getHitBox().getX(), this.getHitBox().getY(), this.size), null},
+                            {new EntityPiece(this.getHitBox().getX(), this.getHitBox().getY() + this.size, this.size), null},
+                            {new EntityPiece(this.getHitBox().getX(), this.getHitBox().getY() + (2 * this.size), this.size), new EntityPiece(this.getHitBox().getX() + this.size, this.getHitBox().getY() + (2 * this.size), this.size)}
+                    };
+                    break;
+                }
+            case S:
+                if (this.rotation == 0 || this.rotation == 180)
+                {
+                    this.pieceMatrix = new EntityPiece[][]{
+                            {null, new EntityPiece(this.getHitBox().getX() + this.size, this.getHitBox().getY(), this.size), new EntityPiece(this.getHitBox().getX() + (2 * this.size), this.getHitBox().getY(), this.size)},
+                            {new EntityPiece(this.getHitBox().getX(), this.getHitBox().getY() + this.size, this.size), new EntityPiece(this.getHitBox().getX() + this.size, this.getHitBox().getY() + this.size, this.size), null}
+                    };
+                    break;
+                }
+                else if (this.rotation == 90 || this.rotation == 270)
+                {
+                    this.pieceMatrix = new EntityPiece[][]{
+                            {new EntityPiece(this.getHitBox().getX(), this.getHitBox().getY(), this.size), null, null},
+                            {new EntityPiece(this.getHitBox().getX(), this.getHitBox().getY() + this.size, this.size), new EntityPiece(this.getHitBox().getX() + this.size, this.getHitBox().getY() + this.size, this.size), null},
+                            {null, new EntityPiece(this.getHitBox().getX() + this.size, this.getHitBox().getY() + (2 * this.size), this.size), null}
+                    };
+                    break;
+                }
+            case J:
+                if (this.rotation == 0)
+                {
+                    this.pieceMatrix = new EntityPiece[][]{
+                            {new EntityPiece(this.getHitBox().getX(), this.getHitBox().getY(), this.size), null, null},
+                            {new EntityPiece(this.getHitBox().getX(), this.getHitBox().getY() + this.size, this.size), new EntityPiece(this.getHitBox().getX() + this.size, this.getHitBox().getY() + this.size, this.size), new EntityPiece(this.getHitBox().getX() + (2 * this.size), this.getHitBox().getY() + this.size, this.size)}
+                    };
+                    break;
+                }
+                else if (this.rotation == 90)
+                {
+                    this.pieceMatrix = new EntityPiece[][]{
+                            {new EntityPiece(this.getHitBox().getX(), this.getHitBox().getY(), this.size), new EntityPiece(this.getHitBox().getX() + this.size, this.getHitBox().getY(), this.size)},
+                            {new EntityPiece(this.getHitBox().getX(), this.getHitBox().getY() + this.size, this.size), null},
                             {new EntityPiece(this.getHitBox().getX(), this.getHitBox().getY() + (2 * this.size), this.size), null}
                     };
                     break;
@@ -229,12 +278,85 @@ public class EntityTetromino extends EntityBase
                 else if (this.rotation == 180)
                 {
                     this.pieceMatrix = new EntityPiece[][]{
+                            {new EntityPiece(this.getHitBox().getX(), this.getHitBox().getY(), this.size), new EntityPiece(this.getHitBox().getX() + this.size, this.getHitBox().getY(), this.size), new EntityPiece(this.getHitBox().getX() + (2 * this.size), this.getHitBox().getY(), this.size)},
+                            {null, null, new EntityPiece(this.getHitBox().getX() + (2 * this.size), this.getHitBox().getY() + this.size, this.size)}
+                    };
+                    break;
+                }
+                else if (this.rotation == 270)
+                {
+                    this.pieceMatrix = new EntityPiece[][]{
+                            {null, new EntityPiece(this.getHitBox().getX() + this.size, this.getHitBox().getY(), this.size)},
+                            {null, new EntityPiece(this.getHitBox().getX() + this.size, this.getHitBox().getY() + this.size, this.size)},
+                            {new EntityPiece(this.getHitBox().getX(), this.getHitBox().getY() + (2 * this.size), this.size), new EntityPiece(this.getHitBox().getX() + this.size, this.getHitBox().getY() + (2 * this.size), this.size)}
+                    };
+                    break;
+                }
+            case T:
+                if (this.rotation == 0)
+                {
+                    this.pieceMatrix = new EntityPiece[][]{
+                            {null, new EntityPiece(this.getHitBox().getX() + this.size, this.getHitBox().getY(), this.size)},
+                            {new EntityPiece(this.getHitBox().getX(), this.getHitBox().getY() + this.size, this.size), new EntityPiece(this.getHitBox().getX() + this.size, this.getHitBox().getY() + this.size, this.size)},
+                            {null, new EntityPiece(this.getHitBox().getX() + this.size, this.getHitBox().getY() + (2 * this.size), this.size)}
+                    };
+                    break;
+                }
+                else if (this.rotation == 90)
+                {
+                    this.pieceMatrix = new EntityPiece[][]{
+                            {null, new EntityPiece(this.getHitBox().getX() + this.size, this.getHitBox().getY(), this.size)},
+                            {new EntityPiece(this.getHitBox().getX(), this.getHitBox().getY() + this.size, this.size), new EntityPiece(this.getHitBox().getX() + this.size, this.getHitBox().getY() + this.size, this.size), new EntityPiece(this.getHitBox().getX() + (2 * this.size), this.getHitBox().getY() + this.size, this.size)}
+                    };
+                    break;
+                }
+                else if (this.rotation == 180)
+                {
+                    this.pieceMatrix = new EntityPiece[][]{
+                            {new EntityPiece(this.getHitBox().getX(), this.getHitBox().getY(), this.size), null},
+                            {new EntityPiece(this.getHitBox().getX(), this.getHitBox().getY() + this.size, this.size), new EntityPiece(this.getHitBox().getX() + this.size, this.getHitBox().getY() + this.size, this.size)},
+                            {new EntityPiece(this.getHitBox().getX(), this.getHitBox().getY() + (2 * this.size), this.size), null}
+                    };
+                    break;
+                }
+                else if (this.rotation == 270)
+                {
+                    this.pieceMatrix = new EntityPiece[][]{
+                            {new EntityPiece(this.getHitBox().getX(), this.getHitBox().getY(), this.size), new EntityPiece(this.getHitBox().getX() + this.size, this.getHitBox().getY(), this.size), new EntityPiece(this.getHitBox().getX() + (2 * this.size), this.getHitBox().getY(), this.size)},
+                            {null, new EntityPiece(this.getHitBox().getX() + this.size, this.getHitBox().getY() + this.size, this.size), null}
+                    };
+                    break;
+                }
+            case O:
+                break;
+            case I:
+                if (this.rotation == 0 || this.rotation == 180)
+                {
+                    this.pieceMatrix = new EntityPiece[][]{
+                            {new EntityPiece(this.getHitBox().getX(), this.getHitBox().getY(), this.size)},
+                            {new EntityPiece(this.getHitBox().getX(), this.getHitBox().getY() + this.size, this.size)},
+                            {new EntityPiece(this.getHitBox().getX(), this.getHitBox().getY() + (2 * this.size), this.size)},
+                            {new EntityPiece(this.getHitBox().getX(), this.getHitBox().getY() + (3 * this.size), this.size)}
+                    };
+                    break;
+                }
+                else if (this.rotation == 90 || this.rotation == 270)
+                {
+                    this.pieceMatrix = new EntityPiece[][]{
+                            {new EntityPiece(this.getHitBox().getX(), this.getHitBox().getY(), this.size), new EntityPiece(this.getHitBox().getX() + this.size, this.getHitBox().getY(), this.size), new EntityPiece(this.getHitBox().getX() + (2 * this.size), this.getHitBox().getY(), this.size), new EntityPiece(this.getHitBox().getX() + (3 * this.size), this.getHitBox().getY(), this.size)}
+                    };
+                    break;
+                }
+            case Z:
+                if (this.rotation == 0 || this.rotation == 180)
+                {
+                    this.pieceMatrix = new EntityPiece[][]{
                             {new EntityPiece(this.getHitBox().getX(), this.getHitBox().getY(), this.size), new EntityPiece(this.getHitBox().getX() + this.size, this.getHitBox().getY(), this.size), null},
                             {null, new EntityPiece(this.getHitBox().getX() + this.size, this.getHitBox().getY() + this.size, this.size), new EntityPiece(this.getHitBox().getX() + (2 * this.size), this.getHitBox().getY() + this.size, this.size)}
                     };
                     break;
                 }
-                else if (this.rotation == 270)
+                else if (this.rotation == 90 || this.rotation == 270)
                 {
                     this.pieceMatrix = new EntityPiece[][]{
                             {null, new EntityPiece(this.getHitBox().getX() + this.size, this.getHitBox().getY(), this.size)},
@@ -268,29 +390,11 @@ public class EntityTetromino extends EntityBase
 
     public enum State
     {
-        FALLING, IDLE;
+        FALLING, IDLE
     }
 
     public enum Type
     {
-        L("L"),
-        S("S"),
-        J("J"),
-        T("T"),
-        O("O"),
-        I("I"),
-        Z("Z");
-
-        private String name;
-
-        Type(String name)
-        {
-            this.name = name;
-        }
-
-        public String getName()
-        {
-            return this.name;
-        }
+        L, S, J, T, O, I, Z
     }
 }
