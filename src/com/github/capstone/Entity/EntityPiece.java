@@ -4,15 +4,13 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Color;
 import org.lwjgl.util.Rectangle;
 
-public class EntityPiece extends EntityBase
+public class EntityPiece
 {
     private Rectangle hitbox;
-    private Color color;
 
     EntityPiece(int x, int y, int size)
     {
         this.hitbox = new Rectangle(x, y, size, size);
-        this.color = new Color(0, 128, 255);
     }
 
     @Override
@@ -21,13 +19,11 @@ public class EntityPiece extends EntityBase
         return "Piece";
     }
 
-    @Override
     public void update(float delta)
     {
     }
 
-    @Override
-    public void draw()
+    public void draw(Color color)
     {
         float x = (float) this.hitbox.getX();
         float y = (float) this.hitbox.getY();
@@ -45,7 +41,6 @@ public class EntityPiece extends EntityBase
         GL11.glEnd();
     }
 
-    @Override
     public Rectangle getHitBox()
     {
         return this.hitbox;

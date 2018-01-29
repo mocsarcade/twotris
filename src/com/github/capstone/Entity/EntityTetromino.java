@@ -1,8 +1,10 @@
 package com.github.capstone.Entity;
 
 import com.github.capstone.Util.Helper;
+import com.github.capstone.Util.Pallete;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
+import org.lwjgl.util.Color;
 import org.lwjgl.util.Rectangle;
 
 import java.util.Random;
@@ -16,6 +18,7 @@ public class EntityTetromino extends EntityBase
     private int size;
     private int speed;
     private int rotation;
+    private Color color;
     private long lastKeypress;
 
     public EntityTetromino()
@@ -27,6 +30,7 @@ public class EntityTetromino extends EntityBase
         this.pieceMatrix = generateFromType();
         this.rotation = 0;
         this.lastKeypress = 0;
+        this.color = Pallete.values()[type.index].color;
     }
 
     private EntityPiece[][] generateFromType()
@@ -194,7 +198,7 @@ public class EntityTetromino extends EntityBase
             {
                 if (row != null)
                 {
-                    row.draw();
+                    row.draw(this.color);
                 }
             }
         }
@@ -395,6 +399,19 @@ public class EntityTetromino extends EntityBase
 
     public enum Type
     {
-        L, S, J, T, O, I, Z
+        L(0),
+        S(1),
+        J(2),
+        T(3),
+        O(4),
+        I(5),
+        Z(6);
+
+        private int index;
+
+        Type(int i)
+        {
+            this.index = i;
+        }
     }
 }
