@@ -3,6 +3,7 @@ package com.github.capstone.Scene;
 import com.github.capstone.Entity.EntityBase;
 import com.github.capstone.Entity.EntityTetromino;
 import com.github.capstone.Twotris;
+import com.github.capstone.Util.Helper;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
@@ -26,7 +27,7 @@ public class Game extends Scene
         entities.add(new EntityTetromino());
 
         this.isGameOver = false;
-        this.font = new TrueTypeFont(new Font("Arial", Font.PLAIN, 14), false);
+        this.font = Helper.getFont();
     }
 
     @Override
@@ -74,10 +75,6 @@ public class Game extends Scene
         {
             return false;
         }
-        if ((Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) && Keyboard.isKeyDown(Keyboard.KEY_EQUALS))
-        {
-            this.score++;
-        }
 
         // TODO: Put working draw code here:
         for (EntityBase e : entities)
@@ -100,6 +97,7 @@ public class Game extends Scene
         else
         {
             menu.addButton(new Button(0, 0, "Resume"), this);
+            menu.addButton(new Button(0, 0, "Options"), new Options(this));
         }
         menu.addButton(new Button(0, 0, "Save & Quit"), new MainMenu());
         menu.adjustButtons();

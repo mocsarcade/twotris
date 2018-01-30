@@ -1,6 +1,5 @@
 package com.github.capstone.Scene;
 
-import com.github.capstone.Twotris;
 import com.github.capstone.Manager.AudioManager;
 import com.github.capstone.Util.Helper;
 import org.lwjgl.opengl.Display;

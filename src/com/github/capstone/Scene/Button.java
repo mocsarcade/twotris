@@ -35,7 +35,7 @@ public class Button
         this.buttonText = text;
         this.color = color;
         this.textColor = textColor;
-        this.font = new TrueTypeFont(new Font("Arial", Font.PLAIN, 32), false);
+        this.font = Helper.getFont();
     }
 
     public Button(int x, int y, String text)

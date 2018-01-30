@@ -113,14 +113,14 @@ public class EntityTetromino extends EntityBase
                     if (Keyboard.isKeyDown(Keyboard.KEY_A))
                     {
                         lastKeypress = Helper.getTime();
-                        this.getHitBox().translate(-32, 0);
+                        this.getHitBox().translate(-size, 0);
                         for (EntityPiece[] column : pieceMatrix)
                         {
                             for (EntityPiece row : column)
                             {
                                 if (row != null)
                                 {
-                                    row.getHitBox().translate(-32, 0);
+                                    row.getHitBox().translate(-size, 0);
                                 }
                             }
                         }
@@ -128,14 +128,14 @@ public class EntityTetromino extends EntityBase
                     else if (Keyboard.isKeyDown(Keyboard.KEY_D))
                     {
                         lastKeypress = Helper.getTime();
-                        this.getHitBox().translate(32, 0);
+                        this.getHitBox().translate(size, 0);
                         for (EntityPiece[] column : pieceMatrix)
                         {
                             for (EntityPiece row : column)
                             {
                                 if (row != null)
                                 {
-                                    row.getHitBox().translate(32, 0);
+                                    row.getHitBox().translate(size, 0);
                                 }
                             }
                         }

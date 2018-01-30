@@ -13,14 +13,16 @@ public class Options extends Scene
 {
     private Button back;
     private LinkedHashMap<Button, String> buttons;
+    private Scene next;
 
 
-    Options()
+    Options(Scene lastScene)
     {
         buttons = new LinkedHashMap<>();
         Twotris.getInstance().config.addButtonsToOptionsGUI(this);
         back = new Button(256, 64, "Back");
         this.adjustButtons();
+        this.next = lastScene;
     }
 
     public void addButton(String option)
@@ -131,6 +133,6 @@ public class Options extends Scene
 
     public Scene nextScene()
     {
-        return new MainMenu();
+        return next;
     }
 }
