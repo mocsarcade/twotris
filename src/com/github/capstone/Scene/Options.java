@@ -1,7 +1,6 @@
 package com.github.capstone.Scene;
 
 import com.github.capstone.Twotris;
-import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
@@ -10,29 +9,23 @@ import org.lwjgl.opengl.GL11;
 import java.awt.Toolkit;
 import java.util.LinkedHashMap;
 
-public class Menu extends Scene
+public class Options extends Scene
 {
-    private LinkedHashMap<Button, Scene> buttons;
-    private Scene nextScene;
-    private TitleSprite titleSprite;
+    private Button back;
+    private LinkedHashMap<Button, String> buttons;
 
 
-    public Menu(String title)
+    Options()
     {
         buttons = new LinkedHashMap<>();
-        titleSprite = new TitleSprite(title);
-        try
-        {
-            Mouse.setNativeCursor(null);
-        }
-        catch (LWJGLException ignored)
-        {
-        }
+        Twotris.getInstance().config.addButtonsToOptionsGUI(this);
+        back = new Button(256, 64, "Back");
+        this.adjustButtons();
     }
 
-    public void addButton(Button button, Scene scene)
+    public void addButton(String option)
     {
-        buttons.put(button, scene);
+        this.buttons.put(new Button(256, 64, option), option);
     }
 
     public boolean drawFrame(float delta)
@@ -48,7 +41,6 @@ public class Menu extends Scene
             GL11.glOrtho(0, Display.getWidth(), Display.getHeight(), 0, 1, -1);
         }
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, 0);
-        titleSprite.draw();
         updateButtons();
         drawButtons();
 
@@ -76,16 +68,19 @@ public class Menu extends Scene
 
         if (Mouse.isButtonDown(0))
         {
-            for (Button b : buttons.keySet())
+            if (back.isClicked())
             {
-                if (b.isClicked())
+                return false;
+            }
+            else
+            {
+                for (Button b : buttons.keySet())
                 {
-                    nextScene = buttons.get(b);
-                    if (nextScene == null)
+                    if (b.isClicked())
                     {
-                        System.exit(0);
+                        String prop = buttons.get(b).substring(0, buttons.get(b).indexOf(":"));
+                        Twotris.getInstance().config.toggleOption(prop, b);
                     }
-                    return false;
                 }
             }
         }
@@ -95,6 +90,7 @@ public class Menu extends Scene
 
     public void updateButtons()
     {
+        back.update();
         for (Button b : buttons.keySet())
         {
             b.update();
@@ -107,6 +103,8 @@ public class Menu extends Scene
 
     public void drawButtons()
     {
+        back.draw();
+
         for (Button b : buttons.keySet())
         {
             b.draw();
@@ -115,17 +113,24 @@ public class Menu extends Scene
 
     public void adjustButtons()
     {
-        int lastY = titleSprite.getHitBox().getY() + titleSprite.getHitBox().getHeight() + 16;
+        int lastY = 32;
+        boolean isLeft = true;
         for (Button b : buttons.keySet())
         {
-            int x = (Display.getWidth() / 2) - (b.getHitBox().getWidth() / 2);
+            int offset = isLeft ? Display.getWidth() / 4 : 3 * (Display.getWidth() / 4);
+            int x = offset - (b.getHitBox().getWidth() / 2);
             b.getHitBox().setLocation(x, lastY);
-            lastY += b.getHitBox().getHeight() + 16;
+            isLeft = !isLeft;
+            if (isLeft)
+            {
+                lastY += b.getHitBox().getHeight() + 16;
+            }
         }
+        back.getHitBox().setLocation(16, Display.getHeight() - back.getHitBox().getHeight() - 16);
     }
 
     public Scene nextScene()
     {
-        return nextScene;
+        return new MainMenu();
     }
 }

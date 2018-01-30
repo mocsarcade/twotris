@@ -1,7 +1,6 @@
 package com.github.capstone.Scene;
 
 import com.github.capstone.Entity.EntityBase;
-import com.github.capstone.Entity.EntityPiece;
 import com.github.capstone.Entity.EntityTetromino;
 import com.github.capstone.Twotris;
 import org.lwjgl.input.Keyboard;
@@ -10,7 +9,8 @@ import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.opengl.TextureImpl;
 
-import java.awt.*;
+import java.awt.Font;
+import java.awt.Toolkit;
 import java.util.ArrayList;
 
 public class Game extends Scene
@@ -58,7 +58,7 @@ public class Game extends Scene
         {
             if (Display.isFullscreen())
             {
-                Twotris.getInstance().setDisplayMode(Twotris.getInstance().config.resolutionWidth, Twotris.getInstance().config.resolutionHeight, false);
+                Twotris.getInstance().setDisplayMode(800, 600, false);
             }
             else
             {

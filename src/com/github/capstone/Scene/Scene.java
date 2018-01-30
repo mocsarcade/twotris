@@ -31,7 +31,7 @@ public abstract class Scene
         boolean keepGoing = true;
         do
         {
-            Display.sync(Twotris.getInstance().config.targetFPS);
+            Display.sync(60);
             long now = Helper.getTime();
             long delta = now - lastloop;
             lastloop = now;

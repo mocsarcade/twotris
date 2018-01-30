@@ -7,6 +7,9 @@ package com.github.capstone.Util;
  * That being said: this file was written on my own, but how I learned it previous was via Google.
  */
 
+import com.github.capstone.Scene.Button;
+import com.github.capstone.Scene.Options;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -16,32 +19,34 @@ import java.util.Properties;
 
 public class Config
 {
-    public int resolutionWidth;
-    public int resolutionHeight;
-    public int targetFPS;
-    public String difficulty;
     public float volume;
+    private String volume_label = "Volume";
+
+    public boolean colorblind;
+    private String colorblind_label = "Colorblind";
 
     public Config()
     {
         loadConfig();
     }
 
+    public void addButtonsToOptionsGUI(Options options)
+    {
+        options.addButton(volume_label + ":" + (int)(volume * 100));
+        options.addButton(colorblind_label + ":" + colorblind);
+    }
+
     public void loadConfig()
     {
         try
         {
-            File configFile = new File("settings.properties");
+            File configFile = new File("twotris.settings");
             FileReader reader = new FileReader(configFile);
             Properties props = new Properties();
             props.load(reader);
 
-            String[] resolutions = props.getProperty("windowed_resolution", "800x600").split("x");
-            this.resolutionWidth = Integer.parseInt(resolutions[0]);
-            this.resolutionHeight = Integer.parseInt(resolutions[1]);
-            this.targetFPS = Integer.parseInt(props.getProperty("target_FPS", "60"));
-            this.difficulty = props.getProperty("difficulty", "normal");
-            this.volume = Integer.parseInt(props.getProperty("volume", "50")) / 100F; // divide by one hundred because users understand 0 -> 100 better than 0.0 -> 1.0
+            this.volume = Integer.parseInt(props.getProperty(volume_label, "50")) / 100F; // divide by one hundred because users understand 0 -> 100 better than 0.0 -> 1.0
+            this.colorblind = Boolean.parseBoolean(props.getProperty(colorblind_label, "false"));
 
             reader.close();
         }
@@ -64,23 +69,56 @@ public class Config
 
     public void createConfig() throws IOException
     {
-        File configFile = new File("settings.properties");
+        File configFile = new File("twotris.settings");
 
         Properties props = new Properties();
-        props.setProperty("windowed_resolution", "800x600");
-        props.setProperty("target_FPS", "60");
-        props.setProperty("difficulty", "normal");
-        props.setProperty("volume", "50");
 
-        String[] resolutions = props.getProperty("windowed_resolution", "800x600").split("x");
-        this.resolutionWidth = Integer.parseInt(resolutions[0]);
-        this.resolutionHeight = Integer.parseInt(resolutions[1]);
-        this.targetFPS = Integer.parseInt(props.getProperty("target_FPS", "60"));
-        this.difficulty = props.getProperty("difficulty", "normal");
-        this.volume = Integer.parseInt(props.getProperty("volume", "50")) / 100F; // divide by one hundred because users understand 0->100 better than 0.0 to 1.0
+        props.setProperty(volume_label, "50");
+        props.setProperty(colorblind_label, "false");
+
+        this.volume = Integer.parseInt(props.getProperty(volume_label, "50")) / 100F; // divide by one hundred because users understand 0 -> 100 better than 0.0 -> 1.0
+        this.colorblind = Boolean.parseBoolean(props.getProperty(colorblind_label, "false"));
+
 
         FileWriter writer = new FileWriter(configFile);
-        props.store(writer, "game settings");
+        props.store(writer, "Twotris Settings");
         writer.close();
+    }
+
+    public void updateConfig()
+    {
+        try
+        {
+            File configFile = new File("twotris.settings");
+            FileReader reader = new FileReader(configFile);
+            Properties props = new Properties();
+            props.load(reader);
+
+            props.setProperty(volume_label, "" + (int) (volume * 100));
+            props.setProperty(colorblind_label, "" + colorblind);
+
+            props.store(new FileWriter(configFile), "Twotris Settings");
+            loadConfig();
+        }
+        catch (IOException ignored)
+        {
+
+        }
+    }
+
+    public void toggleOption(String option, Button button)
+    {
+        if (option.equalsIgnoreCase("volume"))
+        {
+            this.volume = this.volume == 1 ? 0 : this.volume + 0.1F;
+            button.setButtonText(volume_label + ":" + (int) (this.volume * 100));
+            this.updateConfig();
+        }
+        else if (option.equalsIgnoreCase("colorblind"))
+        {
+            this.colorblind = !this.colorblind;
+            button.setButtonText(colorblind_label + ":" + this.colorblind);
+            this.updateConfig();
+        }
     }
 }

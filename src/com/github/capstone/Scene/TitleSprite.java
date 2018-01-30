@@ -9,23 +9,23 @@ import org.newdawn.slick.opengl.Texture;
 public class TitleSprite
 {
     private Texture sprite;
-    private Rectangle box;
+    private Rectangle hitBox;
 
     public TitleSprite(String texture)
     {
         this.sprite = Helper.loadTexture(texture);
-        this.box = new Rectangle(0, 0, sprite.getImageWidth(), sprite.getImageHeight());
+        this.hitBox = new Rectangle(0, 0, sprite.getImageWidth(), sprite.getImageHeight());
     }
 
     public void draw()
     {
-        this.box.setX((Display.getWidth() / 2) - (this.box.getWidth() / 2));
-        this.box.setY(Display.getHeight() / 16);
+        this.hitBox.setX((Display.getWidth() / 2) - (this.hitBox.getWidth() / 2));
+        this.hitBox.setY(Display.getHeight() / 16);
 
-        float x = (float) box.getX();
-        float y = (float) box.getY();
-        float w = (float) box.getWidth();
-        float h = (float) box.getHeight();
+        float x = (float) hitBox.getX();
+        float y = (float) hitBox.getY();
+        float w = (float) hitBox.getWidth();
+        float h = (float) hitBox.getHeight();
 
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, sprite.getTextureID());
         GL11.glColor3f(1F, 1F, 1F);
@@ -50,5 +50,10 @@ public class TitleSprite
         GL11.glEnd();
 
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, 0);
+    }
+
+    public Rectangle getHitBox()
+    {
+        return this.hitBox;
     }
 }

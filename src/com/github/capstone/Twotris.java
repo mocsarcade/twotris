@@ -2,19 +2,17 @@ package com.github.capstone;
 
 import com.github.capstone.Manager.AudioManager;
 import com.github.capstone.Manager.ScreenshotManager;
-import com.github.capstone.Scene.*;
+import com.github.capstone.Scene.MainMenu;
+import com.github.capstone.Scene.Scene;
 import com.github.capstone.Util.Config;
 import com.github.capstone.Util.FileUtils;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
-import org.newdawn.slick.Color;
-import org.newdawn.slick.opengl.ImageIOImageData;
 import org.newdawn.slick.opengl.PNGDecoder;
 import org.newdawn.slick.util.ResourceLoader;
 
-import javax.imageio.ImageIO;
 import java.awt.Toolkit;
 import java.io.File;
 import java.io.IOException;
@@ -78,12 +76,12 @@ public class Twotris
 
     public void initGL()
     {
-        setDisplayMode(this.config.resolutionWidth, this.config.resolutionHeight, fullscreen);
+        setDisplayMode(800, 600, fullscreen);
         // TODO: Official name goes here:
         Display.setTitle("Senior Capstone");
         // Centers the window
-        Display.setLocation((Toolkit.getDefaultToolkit().getScreenSize().width / 2) - (this.config.resolutionWidth / 2),
-                (Toolkit.getDefaultToolkit().getScreenSize().height / 2) - (this.config.resolutionHeight / 2));
+        Display.setLocation((Toolkit.getDefaultToolkit().getScreenSize().width / 2) - (800 / 2),
+                (Toolkit.getDefaultToolkit().getScreenSize().height / 2) - (600 / 2));
 
         initIcon();
 
@@ -102,10 +100,10 @@ public class Twotris
         GL11.glClearColor(0F, 0F, 0F, 0.0f);
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-        GL11.glViewport(0, 0, this.config.resolutionWidth, this.config.resolutionHeight);
+        GL11.glViewport(0, 0, 800, 600);
         GL11.glMatrixMode(GL11.GL_PROJECTION);
         GL11.glLoadIdentity();
-        GL11.glOrtho(0, this.config.resolutionWidth, this.config.resolutionHeight, 0, 1, -1);
+        GL11.glOrtho(0, 800, 600, 0, 1, -1);
         GL11.glMatrixMode(GL11.GL_MODELVIEW);
     }
 

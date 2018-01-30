@@ -10,7 +10,7 @@ import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureImpl;
 
-import java.awt.*;
+import java.awt.Font;
 
 public class Button
 {
@@ -23,7 +23,7 @@ public class Button
     private Texture sprite;
     private float wr, hr;
 
-    Button(int w, int h, String text, Color textColor, Color color)
+    public Button(int w, int h, String text, Color textColor, Color color)
     {
         this(0, 0, w, h, text, textColor, color);
     }
@@ -38,7 +38,7 @@ public class Button
         this.font = new TrueTypeFont(new Font("Arial", Font.PLAIN, 32), false);
     }
 
-    Button(int x, int y, String text)
+    public Button(int x, int y, String text)
     {
         this.sprite = Helper.loadTexture("gui/button");
         this.wr = 1.0F * sprite.getImageWidth() / sprite.getTextureWidth();
@@ -131,5 +131,10 @@ public class Button
     public Rectangle getHitBox()
     {
         return box;
+    }
+
+    public void setButtonText(String newText)
+    {
+        this.buttonText = newText;
     }
 }
