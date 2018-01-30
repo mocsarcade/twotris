@@ -96,11 +96,8 @@ public class Options extends Scene
         for (Button b : buttons.keySet())
         {
             b.update();
-            if (Display.wasResized())
-            {
-                adjustButtons();
-            }
         }
+        adjustButtons();
     }
 
     public void drawButtons()
