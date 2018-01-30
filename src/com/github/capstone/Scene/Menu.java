@@ -98,11 +98,8 @@ public class Menu extends Scene
         for (Button b : buttons.keySet())
         {
             b.update();
-            if (Display.wasResized())
-            {
-                adjustButtons();
-            }
         }
+        adjustButtons();
     }
 
     public void drawButtons()
@@ -115,7 +112,7 @@ public class Menu extends Scene
 
     public void adjustButtons()
     {
-        int lastY = titleSprite.getHitBox().getY() + titleSprite.getHitBox().getHeight() + 16;
+        int lastY = titleSprite.getHitBox().getY() + titleSprite.getHitBox().getHeight() + 32;
         for (Button b : buttons.keySet())
         {
             int x = (Display.getWidth() / 2) - (b.getHitBox().getWidth() / 2);
