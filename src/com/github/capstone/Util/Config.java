@@ -23,17 +23,25 @@ public class Config
     private String volume_label = "Volume";
 
     public boolean colorblind;
-    private String colorblind_label = "Colorblind";
+    private String colorblind_label = "Colors";
+
+    public String font;
+    private String font_label = "Font";
+    private LoopArrayList<String> font_options;
 
     public Config()
     {
+        font_options = new LoopArrayList<>();
+        font_options.add("Blocks");
+        font_options.add("Chickenpox");
         loadConfig();
     }
 
     public void addButtonsToOptionsGUI(Options options)
     {
-        options.addButton(volume_label + ":" + (int)(volume * 100));
+        options.addButton(volume_label + ":" + (int) (volume * 100));
         options.addButton(colorblind_label + ":" + colorblind);
+        options.addButton(font_label + ":" + font);
     }
 
     public void loadConfig()
@@ -47,6 +55,7 @@ public class Config
 
             this.volume = Integer.parseInt(props.getProperty(volume_label, "50")) / 100F; // divide by one hundred because users understand 0 -> 100 better than 0.0 -> 1.0
             this.colorblind = Boolean.parseBoolean(props.getProperty(colorblind_label, "false"));
+            this.font = props.getProperty(font_label, "Chickenpox");
 
             reader.close();
         }
@@ -75,10 +84,11 @@ public class Config
 
         props.setProperty(volume_label, "50");
         props.setProperty(colorblind_label, "false");
+        props.setProperty(font_label, "Chickenpox");
 
         this.volume = Integer.parseInt(props.getProperty(volume_label, "50")) / 100F; // divide by one hundred because users understand 0 -> 100 better than 0.0 -> 1.0
         this.colorblind = Boolean.parseBoolean(props.getProperty(colorblind_label, "false"));
-
+        this.font = props.getProperty(font_label, "Chickenpox");
 
         FileWriter writer = new FileWriter(configFile);
         props.store(writer, "Twotris Settings");
@@ -96,6 +106,7 @@ public class Config
 
             props.setProperty(volume_label, "" + (int) (volume * 100));
             props.setProperty(colorblind_label, "" + colorblind);
+            props.setProperty(font_label, font);
 
             props.store(new FileWriter(configFile), "Twotris Settings");
             loadConfig();
@@ -114,10 +125,18 @@ public class Config
             button.setButtonText(volume_label + ":" + (int) (this.volume * 100));
             this.updateConfig();
         }
-        else if (option.equalsIgnoreCase("colorblind"))
+        else if (option.equalsIgnoreCase("colors"))
         {
             this.colorblind = !this.colorblind;
             button.setButtonText(colorblind_label + ":" + this.colorblind);
+            this.updateConfig();
+        }
+        else if (option.equalsIgnoreCase("font"))
+        {
+            this.font = font_options.getNextOption(this.font);
+            button.setButtonText(font_label + ":" + this.font);
+            Helper.fontName = this.font.toLowerCase();
+            button.setFont(Helper.getFont());
             this.updateConfig();
         }
     }

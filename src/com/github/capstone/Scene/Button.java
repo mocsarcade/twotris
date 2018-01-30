@@ -50,6 +50,11 @@ public class Button
         this.font = Helper.getFont();
     }
 
+    public void setFont(TrueTypeFont font)
+    {
+        this.font = font;
+    }
+
     public boolean isClicked()
     {
         Rectangle mouse = new Rectangle(Mouse.getX(), Display.getHeight() - Mouse.getY(), 1, 1);

@@ -1,5 +1,6 @@
 package com.github.capstone.Util;
 
+import com.github.capstone.Twotris;
 import org.lwjgl.Sys;
 import org.lwjgl.util.Color;
 import org.newdawn.slick.TrueTypeFont;
@@ -14,6 +15,8 @@ import java.util.Random;
 
 public class Helper
 {
+    public static String fontName = Twotris.getInstance().config.font;
+
     public static long getTime()
     {
         return (Sys.getTime() * 1000) / Sys.getTimerResolution();
@@ -54,11 +57,11 @@ public class Helper
     {
         try
         {
-            File fontFile = new File("natives/blocks.ttf".replace("/", File.separator)).getAbsoluteFile();
+            File fontFile = new File("natives/fontname.ttf".replace("/", File.separator).replace("fontname", fontName)).getAbsoluteFile();
             if (!fontFile.exists())
             {
                 System.out.println("Font did not exist; copying...");
-                FileUtils.copyStream(ResourceLoader.getResourceAsStream("assets/blocks.ttf"), new File("natives/blocks.ttf".replace("/", File.separator)));
+                FileUtils.copyStream(ResourceLoader.getResourceAsStream("assets/" + fontName + ".ttf"), new File("natives/fontname.ttf".replace("/", File.separator).replace("fontname", fontName)));
             }
 
             Font awtFont = Font.createFont(Font.TRUETYPE_FONT, fontFile).deriveFont(32F);
