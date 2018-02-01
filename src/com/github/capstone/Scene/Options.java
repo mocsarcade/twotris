@@ -1,6 +1,7 @@
 package com.github.capstone.Scene;
 
 import com.github.capstone.Twotris;
+import com.github.capstone.Util.Helper;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
@@ -72,6 +73,8 @@ public class Options extends Scene
         {
             if (back.isClicked())
             {
+                this.reloadFont();
+                next.reloadFont();
                 return false;
             }
             else
@@ -132,4 +135,15 @@ public class Options extends Scene
     {
         return next;
     }
+
+    @Override
+    public void reloadFont()
+    {
+        for (Button b : buttons.keySet())
+        {
+            b.reloadFont();
+        }
+        back.reloadFont();
+    }
+
 }

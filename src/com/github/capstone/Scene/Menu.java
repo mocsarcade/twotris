@@ -1,6 +1,7 @@
 package com.github.capstone.Scene;
 
 import com.github.capstone.Twotris;
+import com.github.capstone.Util.Helper;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
@@ -124,5 +125,14 @@ public class Menu extends Scene
     public Scene nextScene()
     {
         return nextScene;
+    }
+
+    @Override
+    public void reloadFont()
+    {
+        for (Button b : buttons.keySet())
+        {
+            b.reloadFont();
+        }
     }
 }

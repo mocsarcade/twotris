@@ -103,4 +103,10 @@ public class Game extends Scene
         menu.adjustButtons();
         return menu;
     }
+
+    @Override
+    public void reloadFont()
+    {
+        this.font = Helper.getFont();
+    }
 }

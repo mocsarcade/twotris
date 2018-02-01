@@ -3,6 +3,7 @@ package com.github.capstone.Scene;
 import com.github.capstone.Manager.AudioManager;
 import com.github.capstone.Util.Helper;
 import org.lwjgl.opengl.Display;
+import org.newdawn.slick.TrueTypeFont;
 
 public abstract class Scene
 {
@@ -49,4 +50,6 @@ public abstract class Scene
 
         return true;
     }
+
+    public abstract void reloadFont();
 }

@@ -35,6 +35,8 @@ public class Config
         font_options.add("Blocks");
         font_options.add("Chickenpox");
         font_options.add("PixelMecha");
+        font_options.add("Heavy");
+
         loadConfig();
     }
 

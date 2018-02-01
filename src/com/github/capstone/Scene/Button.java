@@ -142,4 +142,9 @@ public class Button
     {
         this.buttonText = newText;
     }
+
+    public void reloadFont()
+    {
+        this.font = Helper.getFont();
+    }
 }
