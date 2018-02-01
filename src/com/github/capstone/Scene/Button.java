@@ -1,5 +1,6 @@
 package com.github.capstone.Scene;
 
+import com.github.capstone.Manager.AudioManager;
 import com.github.capstone.Util.Helper;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
@@ -63,11 +64,12 @@ public class Button
             // Sleep before processing the action
             try
             {
-                Thread.sleep(100);
+                Thread.sleep(300);
             }
             catch (InterruptedException ignored)
             {
             }
+            AudioManager.getInstance().play("select");
             return true;
         }
         return false;

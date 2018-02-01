@@ -10,6 +10,7 @@ import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
+import org.newdawn.slick.openal.Audio;
 import org.newdawn.slick.opengl.PNGDecoder;
 import org.newdawn.slick.util.ResourceLoader;
 
@@ -47,6 +48,7 @@ public class Twotris
         this.screenshotManager = new ScreenshotManager();
         this.fullscreen = false;
         initGL();
+        initSounds();
         initGame();
     }
 
@@ -54,6 +56,23 @@ public class Twotris
     {
         return instance;
     }
+
+    private void initSounds()
+    {
+        System.out.println("Loading sounds..");
+        try
+        {
+            AudioManager.getInstance().loadSample("pause", "assets/sounds/menu/game_pause.wav".replace("/", File.separator));
+            AudioManager.getInstance().loadSample("resume", "assets/sounds/menu/game_resume.wav".replace("/", File.separator));
+            AudioManager.getInstance().loadSample("select", "assets/sounds/menu/menu_select.wav".replace("/", File.separator));
+        }
+        catch (IOException e)
+        {
+            System.out.println(e.getMessage());
+        }
+        System.out.println("Sounds Loaded!");
+    }
+
 
     private void initGame()
     {
