@@ -34,6 +34,7 @@ public class Config
         font_options = new LoopArrayList<>();
         font_options.add("Blocks");
         font_options.add("Chickenpox");
+        font_options.add("PixelMecha");
         loadConfig();
     }
 
