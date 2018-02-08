@@ -20,7 +20,13 @@ public class Game extends Scene
     private int score;
     private TrueTypeFont font;
     private ArrayList<EntityBase> entities;
-
+/**
+@Game
+This constructor method creates an arraylist of entities and adds a new Tetromino entity to it. Also, sets ‘gameover’ to false and gets the font from the helper. 
+@param none 
+@return none
+@throws none
+*/
     public Game()
     {
         entities = new ArrayList<>();
@@ -29,7 +35,13 @@ public class Game extends Scene
         this.isGameOver = false;
         this.font = Helper.getFont();
     }
-
+/**
+@drawFrame
+This method Is able to resize the screen, and is responsible for updating the entities by delta, adjusting fullscreen, the score displayed, and controls when the game is over. 
+@param delta
+@return isGameOver true/false. 
+@throws none
+*/
     @Override
     public boolean drawFrame(float delta)
     {
@@ -85,7 +97,13 @@ public class Game extends Scene
         font.drawString(0, 0, "" + this.score);
         return !isGameOver;
     }
-
+/**
+@nextScene
+This method controls the pause menu, allowing for access to the main menu, resuming the game, or heading directly to the options menu. 
+@param none 
+@return menu 
+@throws none
+*/
     @Override
     public Scene nextScene()
     {
@@ -103,7 +121,13 @@ public class Game extends Scene
         menu.adjustButtons();
         return menu;
     }
-
+/**
+@reloadFont
+This method is used for reloading the game’s font.  
+@param none 
+@return none
+@throws none
+*/
     @Override
     public void reloadFont()
     {

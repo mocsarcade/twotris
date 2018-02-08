@@ -28,6 +28,12 @@ public class Config
     public String font;
     private String font_label = "Font";
     private LoopArrayList<String> font_options;
+/**
+@Config
+This constructor method creates a font_options LoopArrayList, adds font options to the list, and then loads the configuration.  
+@return none
+@throws none
+*/
 
     public Config()
     {
@@ -39,14 +45,26 @@ public class Config
 
         loadConfig();
     }
-
+/**
+@addButtonstoOptionsGUI
+This method adds buttons to the options interface, including volume control, color options, and the font option button.  
+@param options An Options entity
+@return none
+@throws none
+*/ 
     public void addButtonsToOptionsGUI(Options options)
     {
         options.addButton(volume_label + ":" + (int) (volume * 100));
         options.addButton(colorblind_label + ":" + colorblind);
         options.addButton(font_label + ":" + font);
     }
-
+/**
+@loadConfig
+This method loads the configuration file from the text file, initializing the three buttons options, then closes the reader.  
+@param none
+@return none
+@throws none
+*/
     public void loadConfig()
     {
         try
@@ -78,7 +96,13 @@ public class Config
             e.printStackTrace();
         }
     }
-
+/**
+@createConfig
+This method creates a new file, called twotris.settings and a props properties. The props gets set with volume, colors, and fonts. Then these three options are further refined , such as adjusting volume from 0.0-1.0 to 0-100. 
+@param none 
+@return none
+@throws IOException
+*/
     public void createConfig() throws IOException
     {
         File configFile = new File("twotris.settings");
@@ -97,7 +121,13 @@ public class Config
         props.store(writer, "Twotris Settings");
         writer.close();
     }
-
+/**
+@updateConfig
+This method updates the existing config files if the selections are changed. 
+@param none
+@return none
+@throws none
+*/
     public void updateConfig()
     {
         try
@@ -119,7 +149,14 @@ public class Config
 
         }
     }
-
+/**
+@toggleOption
+This method gathers an option String, and a button and is responsible for adjusting the string visible in the actual button. 
+@param option A string equal to volume, colors, or font, which controls the corresponding option.  
+@param button The button attached to the option mentioned above.  
+@return none
+@throws none
+*/
     public void toggleOption(String option, Button button)
     {
         if (option.equalsIgnoreCase("volume"))
