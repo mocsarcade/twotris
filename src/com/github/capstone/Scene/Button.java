@@ -12,6 +12,9 @@ import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureImpl;
 
 import java.awt.Font;
+/**
+This class creates a button, setting the font, can detect whether a button has been clicked, and is able to update the button and detect the hitbox. 
+*/
 
 public class Button
 {
@@ -23,12 +26,35 @@ public class Button
     private boolean hovering;
     private Texture sprite;
     private float wr, hr;
+/**
+			@Button
+This constructor method creates a new button with the given parameters, without supplying the x and y.  
+			@param w The width of the button as an integer. 
+			@param h The height of the button as an integer. 
+			@param text The String of text meant to go onto the button. 
+			@param textColor The color of the text. 
+			@param color The color of the button. 
+			@return none
+			@throws none
+		*/
 
     public Button(int w, int h, String text, Color textColor, Color color)
     {
         this(0, 0, w, h, text, textColor, color);
     }
-
+/**
+			@Button
+This constructor method creates a new button with the given parameters. 
+			@param x The location of the button in the x axis. 
+			@param y The location of the button in the y axis. 
+			@param w The width of the button as an integer. 
+			@param h The height of the button as an integer. 
+			@param text The String of text meant to go onto the button. 
+			@param textColor The color of the text. 
+			@param color The color of the button. 
+			@return none
+			@throws none
+		*/
     private Button(int x, int y, int w, int h, String text, Color textColor, Color color)
     {
         this.sprite = null;
@@ -38,7 +64,15 @@ public class Button
         this.textColor = textColor;
         this.font = Helper.getFont();
     }
-
+	/**
+			@Button
+This constructor method creates a new button with the given parameters, as well as pulling in a texture, and uses the texture width/height instead of supplying them manually. 
+@param x The location of the button in the x axis. 
+@param y The location of the button in the y axis.  
+@param text The String of text meant to go onto the button.  
+			@return none
+			@throws none
+		*/
     public Button(int x, int y, String text)
     {
         this.sprite = Helper.loadTexture("gui/button");
@@ -50,12 +84,24 @@ public class Button
         this.textColor = new Color(0, 182, 164);
         this.font = Helper.getFont();
     }
-
+/**
+@setFont
+This method sets the font given.  
+@param font TrueTypeFont supplied 
+@return none
+@throws none
+*/
     public void setFont(TrueTypeFont font)
     {
         this.font = font;
     }
-
+/**
+@isClicked
+This method is used to detect whether the button has been clicked by testing whether the hitbox of the mouse has intercepted the hitbox of the button.  
+@param delta
+@return true/false depending on if the mouse has indeed encountered the button’s hitbox. 
+@throws none
+*/
     public boolean isClicked()
     {
         Rectangle mouse = new Rectangle(Mouse.getX(), Display.getHeight() - Mouse.getY(), 1, 1);
@@ -74,13 +120,25 @@ public class Button
         }
         return false;
     }
-
+/**
+@update
+This method is used for updating the button’s position.  
+@param none
+@return none
+@throws none
+*/
     public void update()
     {
         Rectangle mouse = new Rectangle(Mouse.getX(), Display.getHeight() - Mouse.getY(), 1, 1);
         this.hovering = box.intersects(mouse);
     }
-
+/**
+@draw
+This method is used for drawing the button, setting the color, and size/shape. 
+@param none
+@return none
+@throws none
+*/
     public void draw()
     {
         float x = (float) this.box.getX();
@@ -134,17 +192,35 @@ public class Button
         TextureImpl.bindNone();
         font.drawString(x + (w / 2) - (font.getWidth(buttonText) / 2), y + (h / 2) - (font.getHeight(buttonText) / 2), buttonText, textColor);
     }
-
+/**
+@getHitBox
+This method is used for getting the hitbox the button possesses. 
+@param none
+@return hitbox
+@throws none
+*/
     public Rectangle getHitBox()
     {
         return box;
     }
-
+/**
+@setButtonText
+This method is used for setting the button’s inner text. 
+@param newText The text supplied to replace whatever text previously inhabited the button. 
+@return none
+@throws none
+*/
     public void setButtonText(String newText)
     {
         this.buttonText = newText;
     }
-
+/**
+@reloadFont
+This method is used for reloading the button’s font.  
+@param none 
+@return none
+@throws none
+*/
     public void reloadFont()
     {
         this.font = Helper.getFont();

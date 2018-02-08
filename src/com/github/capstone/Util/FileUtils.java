@@ -20,6 +20,14 @@ import java.util.jar.JarFile;
  */
 public class FileUtils
 {
+/**
+@copyFile
+This method returns either a copied stream or a false Boolean value if the copy fails. 
+@param toCopy the file to be copied. 
+@param destFile where the file is to go. 
+@return FileUtils.copyStream() 
+@throws none
+*/ 
     public static boolean copyFile(final File toCopy, final File destFile)
     {
         try
@@ -32,7 +40,14 @@ public class FileUtils
         }
         return false;
     }
-
+/**
+@copyFilesRecursively 
+This method returns either a copied stream or a false Boolean value if the copy fails. 
+@param toCopy the file to be copied. 
+@param destFile where the file is to go. 
+@return FileUtils.copyStream() 
+@throws none
+*/ 
     private static boolean copyFilesRecusively(final File toCopy, final File destDir)
     {
         assert destDir.isDirectory();
@@ -58,7 +73,14 @@ public class FileUtils
         }
         return true;
     }
-
+/**
+@copyJarResourcesRecursively
+This method returns either a copied stream or a false Boolean value if the copy fails. 
+@param destdir where the file is to be copied. 
+@param JarURLConnection 
+@return Boolean true if the action completes correctly, false if not. 
+@throws none
+*/ 
     public static boolean copyJarResourcesRecursively(final File destDir, final JarURLConnection jarConnection) throws IOException
     {
 
@@ -93,7 +115,14 @@ public class FileUtils
         }
         return true;
     }
-
+/**
+@copyResourcesRecursively
+This method returns either a copied resource or a false Boolean value if the copy fails. 
+@param originURL the original URL 
+@param destination the file the result is to go. 
+@return  FileUtils.copyJarResourcesRecursively() 
+@throws none
+*/ 
     public static boolean copyResourcesRecursively(final URL originUrl, final File destination)
     {
         try
@@ -116,7 +145,14 @@ public class FileUtils
         }
         return false;
     }
-
+/**
+@copyStream
+This method returns either a copied stream or a false Boolean value if the copy fails. 
+@param is input stream to be copied
+@param f file where the stream is to go. 
+@return FileUtils.copyStream() 
+@throws none
+*/ 
     public static boolean copyStream(final InputStream is, final File f)
     {
         try
@@ -129,7 +165,14 @@ public class FileUtils
         }
         return false;
     }
-
+/**
+@copyStream
+This method returns either a copied stream into a new stream or a false Boolean value if the copy fails. 
+@param is input stream to be copied
+@param os Output Stream 
+@return FileUtils.copyStream() 
+@throws none
+*/ 
     private static boolean copyStream(final InputStream is, final OutputStream os)
     {
         try
@@ -151,12 +194,25 @@ public class FileUtils
         }
         return false;
     }
-
+/**
+@ensueDirectoryExists
+This method returns a positive Boolean if the directory exists, or makes the directory if it doesn’t.. 
+@param f A file to be tested.  
+@return f.exists() or makes the directory.  
+@throws none
+*/
     private static boolean ensureDirectoryExists(final File f)
     {
         return f.exists() || f.mkdir();
     }
-
+/**
+@removeStart
+This method removes a string from another string. 
+@param str A string to be tested. 
+@param remove The section of string to be removed. 
+@return str Either the original string, or the updated string with ‘remove’ taken out.  
+@throws none
+*/ 
     public static String removeStart(String str, String remove)
     {
         if (isEmpty(str) || isEmpty(remove))
@@ -169,7 +225,13 @@ public class FileUtils
         }
         return str;
     }
-
+/**
+@isEmpty
+This method tests whether a character sequence is empty or not. 
+@param cs character sequence to be tested. 
+@return null or zero. True if empty, false if not.  
+@throws none
+*/ 
     public static boolean isEmpty(CharSequence cs)
     {
         return cs == null || cs.length() == 0;

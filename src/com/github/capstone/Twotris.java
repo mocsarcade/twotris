@@ -21,6 +21,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.nio.ByteBuffer;
 
+
 public class Twotris
 {
     public static void main(String[] args)
@@ -40,7 +41,13 @@ public class Twotris
     public Config config;
     public ScreenshotManager screenshotManager;
     private boolean fullscreen;
-
+/**
+@Twotris
+This is a constructor method, creating a config, a screenshot manager, and not initially setting the game to fullscreen. Also initializes the sounds, the display and the game itself. 
+@param none
+@return none
+@throws none
+*/
     private Twotris()
     {
         instance = this;
@@ -51,12 +58,24 @@ public class Twotris
         initSounds();
         initGame();
     }
-
+/**
+@getInstance
+This method returns an instance 
+@param none
+@return instance
+@throws none
+*/
     public static Twotris getInstance()
     {
         return instance;
     }
-
+/**
+@initSounds
+This method loads the sounds for menus.  
+@param none
+@return none
+@throws none
+*/
     private void initSounds()
     {
         System.out.println("Loading sounds..");
@@ -73,7 +92,13 @@ public class Twotris
         System.out.println("Sounds Loaded!");
     }
 
-
+/**
+@initGame
+This method creates the main menu, and proceeds to the next scene when prompted, destroying the old instance of the audio manager and display. 
+@param none
+@return none
+@throws none
+*/
     private void initGame()
     {
         MainMenu mainMenu = new MainMenu();
@@ -92,7 +117,13 @@ public class Twotris
         AudioManager.getInstance().destroy();
         Display.destroy();
     }
-
+/**
+@initGL
+This method is used for displaying the game and centering the window. 
+@param none
+@return none
+@throws none
+*/
     public void initGL()
     {
         setDisplayMode(800, 600, fullscreen);
@@ -126,13 +157,15 @@ public class Twotris
         GL11.glMatrixMode(GL11.GL_MODELVIEW);
     }
 
-    /**
-     * SOURCE: http://wiki.lwjgl.org/wiki/LWJGL_Basics_5_(Fullscreen).html
-     *
-     * @param width      The width of the display required
-     * @param height     The height of the display required
-     * @param fullscreen True if we want fullscreen mode
-     */
+  /**
+@setDisplayMode
+This method is used for displaying the game, and is sourced from: http://wiki.lwjgl.org/wiki/LWJGL_Basics_5_(Fullscreen).html
+@param width      The width of the display required
+@param height     The height of the display required
+@param fullscreen True if we want fullscreen mode
+@return none
+@throws none
+*/
     public void setDisplayMode(int width, int height, boolean fullscreen)
     {
         if ((Display.getDisplayMode().getWidth() == width) && (Display.getDisplayMode().getHeight() == height) && (Display.isFullscreen() == fullscreen))
@@ -194,11 +227,13 @@ public class Twotris
         }
     }
 
-    /**
-     * SOURCE: http://forum.lwjgl.org/index.php?topic=3422.0
-     *
-     * @return The ByteBuffer of the PNG located at the passed URL
-     */
+   /**
+@loadIcon
+This method is used for displaying the icon image. Sourced from: http://forum.lwjgl.org/index.php?topic=3422.0 
+@param url the URL of the file needed
+@return The ByteBuffer of the PNG located at the passed URL
+@throws IOException
+*/
     private ByteBuffer loadIcon(URL url) throws IOException
     {
         System.out.println("Loaded icon " + url.getPath().replace("/C:/", "C:/"));
@@ -216,7 +251,13 @@ public class Twotris
             is.close();
         }
     }
-
+/**
+@initIcon
+This method is used for initializing the icon, setting the image found in loadIcon as the actual icon. 
+@param none
+@return none
+@throws none
+*/
     private void initIcon()
     {
         try

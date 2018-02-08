@@ -17,7 +17,13 @@ public class Menu extends Scene
     private Scene nextScene;
     private TitleSprite titleSprite;
 
-
+/**
+@Menu
+This constructor method adds button to a linkedhashmap and creates a titlesprite. 
+@param title The String include for the title.  
+@return none
+@throws none
+*/
     public Menu(String title)
     {
         buttons = new LinkedHashMap<>();
@@ -30,12 +36,25 @@ public class Menu extends Scene
         {
         }
     }
-
+/**
+@addButton
+This method receives a button and a scene, putting the button into the scene. 
+@param button A button given to the method
+@param Scene the scene the button is to be placed inside of. 
+@return none
+@throws none
+*/
     public void addButton(Button button, Scene scene)
     {
         buttons.put(button, scene);
     }
-
+/**
+@drawFrame
+This method Is able to resize the screen, and is responsible for updating the entities by delta, adjusting fullscreen, the score displayed, and controls when the game is over. 
+@param delta
+@return isButtonDown true/false. 
+@throws none
+*/
     public boolean drawFrame(float delta)
     {
         GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
@@ -93,7 +112,14 @@ public class Menu extends Scene
 
         return true;
     }
-
+/**
+@updateButtons
+This method receives a button and a scene, putting the button into the scene. 
+@param button A button given to the method
+@param Scene the scene the button is to be placed inside of. 
+@return none
+@throws none
+*/
     public void updateButtons()
     {
         for (Button b : buttons.keySet())
@@ -102,7 +128,13 @@ public class Menu extends Scene
         }
         adjustButtons();
     }
-
+/**
+@drawButtons
+This method draws all buttons in keyset. 
+@param none
+@return none
+@throws none
+*/
     public void drawButtons()
     {
         for (Button b : buttons.keySet())
@@ -110,7 +142,13 @@ public class Menu extends Scene
             b.draw();
         }
     }
-
+/**
+@adjustButtons
+This method adjusts the size of the buttons within the keySet. 
+@param none
+@return none
+@throws none
+*/
     public void adjustButtons()
     {
         int lastY = titleSprite.getHitBox().getY() + titleSprite.getHitBox().getHeight() + 32;
@@ -121,12 +159,24 @@ public class Menu extends Scene
             lastY += b.getHitBox().getHeight() + 16;
         }
     }
-
+/**
+@nextScene
+This method controls the pause menu, allowing for access to the main menu, resuming the game, or heading directly to the options menu. 
+@param none 
+@return menu 
+@throws none
+*/
     public Scene nextScene()
     {
         return nextScene;
     }
-
+/**
+@reloadFont
+This method is used for reloading the fonts of all the button in keySet.  
+@param none 
+@return none
+@throws none
+*/
     @Override
     public void reloadFont()
     {

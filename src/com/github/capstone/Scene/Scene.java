@@ -12,18 +12,35 @@ public abstract class Scene
     // return false if the game should be quit
     public abstract boolean drawFrame(float delta);
 
-    // null typically means Twotris should load menu
+    /**
+@nextScene
+The null indicates that Twotris should load the menu. 
+@param none 
+@return null
+@throws none
+*/
     public Scene nextScene()
     {
         return null;
     }
-
+/**
+@exit 
+This exits the selection, setting doExit as true. 
+@param none 
+@return none
+@throws none
+*/
     protected void exit()
     {
         doExit = true;
     }
-
-    // returns false when game should be exited
+/**
+@go
+This returns false when the game should be exited.  
+@param none 
+@return none
+@throws none
+*/
     public boolean go()
     {
         long lastloop = Helper.getTime();
@@ -50,6 +67,12 @@ public abstract class Scene
 
         return true;
     }
-
+/**
+@reloadFont
+This method is used for reloading the font, but is not implemented in the abstract. 
+@param none 
+@return none
+@throws none
+*/
     public abstract void reloadFont();
 }
