@@ -2,6 +2,7 @@ package com.github.capstone.Scene;
 
 import com.github.capstone.Entity.EntityBase;
 import com.github.capstone.Entity.EntityTetromino;
+import com.github.capstone.Manager.PieceManager;
 import com.github.capstone.Twotris;
 import com.github.capstone.Util.Helper;
 import org.lwjgl.input.Keyboard;
@@ -19,27 +20,24 @@ public class Game extends Scene
     private boolean isGameOver;
     private int score;
     private TrueTypeFont font;
-    private ArrayList<EntityBase> entities;
 /**
 @Game
-This constructor method creates an arraylist of entities and adds a new Tetromino entity to it. Also, sets ‘gameover’ to false and gets the font from the helper. 
-@param none 
+This constructor method initializes the piece manager. Also, sets ‘gameover’ to false and gets the font from the helper.
+@param none
 @return none
 @throws none
 */
     public Game()
     {
-        entities = new ArrayList<>();
-        entities.add(new EntityTetromino());
-
+        new PieceManager(); // We can just call it, because once it's called we access it statically via getInstance()
         this.isGameOver = false;
         this.font = Helper.getFont();
     }
 /**
 @drawFrame
-This method Is able to resize the screen, and is responsible for updating the entities by delta, adjusting fullscreen, the score displayed, and controls when the game is over. 
+This method Is able to resize the screen, and is responsible for updating the entities by delta, adjusting fullscreen, the score displayed, and controls when the game is over.
 @param delta
-@return isGameOver true/false. 
+@return isGameOver true/false.
 @throws none
 */
     @Override
@@ -58,10 +56,7 @@ This method Is able to resize the screen, and is responsible for updating the en
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, 0);
 
         // TODO: Insert working logic here
-        for (EntityBase e : entities)
-        {
-            e.update(delta);
-        }
+        PieceManager.getInstance().update(delta);
 
         if (Keyboard.isKeyDown(Keyboard.KEY_F2))
         {
@@ -89,19 +84,18 @@ This method Is able to resize the screen, and is responsible for updating the en
         }
 
         // TODO: Put working draw code here:
-        for (EntityBase e : entities)
-        {
-            e.draw();
-        }
+        PieceManager.getInstance().draw();
+
+
         TextureImpl.bindNone();
         font.drawString(0, 0, "" + this.score);
         return !isGameOver;
     }
 /**
 @nextScene
-This method controls the pause menu, allowing for access to the main menu, resuming the game, or heading directly to the options menu. 
-@param none 
-@return menu 
+This method controls the pause menu, allowing for access to the main menu, resuming the game, or heading directly to the options menu.
+@param none
+@return menu
 @throws none
 */
     @Override
@@ -123,8 +117,8 @@ This method controls the pause menu, allowing for access to the main menu, resum
     }
 /**
 @reloadFont
-This method is used for reloading the game’s font.  
-@param none 
+This method is used for reloading the game’s font.
+@param none
 @return none
 @throws none
 */
