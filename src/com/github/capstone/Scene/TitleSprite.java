@@ -24,7 +24,7 @@ This constructor method takes a texture string and uses the helper to load that 
     }
 /**
 @draw
-This method is used for drawing the title sprite, setting the color, and size/shape. 
+This method is used for drawing the title sprite, setting the color, and SIZE/shape.
 @param none
 @return none
 @throws none

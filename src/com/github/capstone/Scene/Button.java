@@ -134,7 +134,7 @@ This method is used for updating the button’s position.
     }
 /**
 @draw
-This method is used for drawing the button, setting the color, and size/shape. 
+This method is used for drawing the button, setting the color, and SIZE/shape.
 @param none
 @return none
 @throws none

@@ -14,7 +14,7 @@ public abstract class EntityBase
     public abstract void update(float delta);
 	/**
 		@draw
-		This method is used for drawing the entity the class is used for, setting the color, and size/shape of the entity. 
+		This method is used for drawing the entity the class is used for, setting the color, and SIZE/shape of the entity.
 		@param none
 		@return none
 		@throws none

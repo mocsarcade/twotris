@@ -144,7 +144,7 @@ This method draws all buttons in keyset.
     }
 /**
 @adjustButtons
-This method adjusts the size of the buttons within the keySet. 
+This method adjusts the SIZE of the buttons within the keySet.
 @param none
 @return none
 @throws none

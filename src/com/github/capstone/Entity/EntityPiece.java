@@ -44,7 +44,7 @@ public class EntityPiece
     }
 	/**
 		@draw
-		This method is used for drawing the piece, setting the color, and size/shape. 
+		This method is used for drawing the piece, setting the color, and SIZE/shape.
 		@param none
 		@return none
 		@throws none

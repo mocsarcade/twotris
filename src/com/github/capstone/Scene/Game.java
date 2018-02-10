@@ -1,7 +1,5 @@
 package com.github.capstone.Scene;
 
-import com.github.capstone.Entity.EntityBase;
-import com.github.capstone.Entity.EntityTetromino;
 import com.github.capstone.Manager.PieceManager;
 import com.github.capstone.Twotris;
 import com.github.capstone.Util.Helper;
@@ -11,35 +9,33 @@ import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.opengl.TextureImpl;
 
-import java.awt.Font;
-import java.awt.Toolkit;
-import java.util.ArrayList;
+import java.awt.*;
 
 public class Game extends Scene
 {
     private boolean isGameOver;
     private int score;
     private TrueTypeFont font;
-/**
-@Game
-This constructor method initializes the piece manager. Also, sets ‘gameover’ to false and gets the font from the helper.
-@param none
-@return none
-@throws none
-*/
+
+    /**
+     * @param none
+     * @return none
+     * @throws none
+     * @Game This constructor method initializes the piece manager. Also, sets ‘gameover’ to false and gets the font from the helper.
+     */
     public Game()
     {
         new PieceManager(); // We can just call it, because once it's called we access it statically via getInstance()
         this.isGameOver = false;
         this.font = Helper.getFont();
     }
-/**
-@drawFrame
-This method Is able to resize the screen, and is responsible for updating the entities by delta, adjusting fullscreen, the score displayed, and controls when the game is over.
-@param delta
-@return isGameOver true/false.
-@throws none
-*/
+
+    /**
+     * @param delta
+     * @return isGameOver true/false.
+     * @throws none
+     * @drawFrame This method Is able to resize the screen, and is responsible for updating the entities by delta, adjusting fullscreen, the score displayed, and controls when the game is over.
+     */
     @Override
     public boolean drawFrame(float delta)
     {
@@ -57,6 +53,10 @@ This method Is able to resize the screen, and is responsible for updating the en
 
         // TODO: Insert working logic here
         PieceManager.getInstance().update(delta);
+        if (!isGameOver && (PieceManager.getInstance().isPieceColliding() || !PieceManager.getInstance().isPieceStillFalling()))
+        {
+            PieceManager.getInstance().generateNewTetronimo();
+        }
 
         if (Keyboard.isKeyDown(Keyboard.KEY_F2))
         {
@@ -91,13 +91,13 @@ This method Is able to resize the screen, and is responsible for updating the en
         font.drawString(0, 0, "" + this.score);
         return !isGameOver;
     }
-/**
-@nextScene
-This method controls the pause menu, allowing for access to the main menu, resuming the game, or heading directly to the options menu.
-@param none
-@return menu
-@throws none
-*/
+
+    /**
+     * @param none
+     * @return menu
+     * @throws none
+     * @nextScene This method controls the pause menu, allowing for access to the main menu, resuming the game, or heading directly to the options menu.
+     */
     @Override
     public Scene nextScene()
     {
@@ -115,13 +115,13 @@ This method controls the pause menu, allowing for access to the main menu, resum
         menu.adjustButtons();
         return menu;
     }
-/**
-@reloadFont
-This method is used for reloading the game’s font.
-@param none
-@return none
-@throws none
-*/
+
+    /**
+     * @param none
+     * @return none
+     * @throws none
+     * @reloadFont This method is used for reloading the game’s font.
+     */
     @Override
     public void reloadFont()
     {
