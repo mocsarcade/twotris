@@ -9,12 +9,12 @@ import java.util.Random;
 
 public class EntityTetromino extends EntityBase
 {
+    public static final int SIZE = 32;
+    public int speed;
     private Type type;
     private State state;
     private EntityPiece[][] pieceMatrix;
     private Rectangle hitBox;
-    public static final int SIZE = 32;
-    public int speed;
     private int rotation;
     private Color color;
     private long lastKeypress;
@@ -119,7 +119,7 @@ public class EntityTetromino extends EntityBase
                 }
             }
 
-            if(this.getHitBox().getY() + this.getHitBox().getHeight() >= Display.getHeight())
+            if (this.getHitBox().getY() + this.getHitBox().getHeight() >= Display.getHeight())
             {
                 this.getHitBox().setY(Display.getHeight() - this.getHitBox().getHeight());
 

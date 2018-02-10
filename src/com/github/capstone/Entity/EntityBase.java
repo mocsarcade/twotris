@@ -4,28 +4,27 @@ import org.lwjgl.util.Rectangle;
 
 public abstract class EntityBase
 {
-	/**
-		@update
-		This method is updating the entity the class is used for. 
-		@param floating point number delta
-		@return none
-		@throws none
-	*/
+    /**
+     * @param floating point number delta
+     * @return none
+     * @throws none
+     * @update This method is updating the entity the class is used for.
+     */
     public abstract void update(float delta);
-	/**
-		@draw
-		This method is used for drawing the entity the class is used for, setting the color, and SIZE/shape of the entity.
-		@param none
-		@return none
-		@throws none
-	*/
+
+    /**
+     * @param none
+     * @return none
+     * @throws none
+     * @draw This method is used for drawing the entity the class is used for, setting the color, and SIZE/shape of the entity.
+     */
     public abstract void draw();
-	/**
-		@getHitBox
-		This method is used for getting the hitbox the entity  possesses. 
-		@param none
-		@return none in abstract
-		@throws none
-	*/
+
+    /**
+     * @param none
+     * @return none in abstract
+     * @throws none
+     * @getHitBox This method is used for getting the hitbox the entity  possesses.
+     */
     public abstract Rectangle getHitBox();
 }

@@ -1,14 +1,13 @@
 package com.github.capstone.Scene;
 
 import com.github.capstone.Twotris;
-import com.github.capstone.Util.Helper;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 
-import java.awt.Toolkit;
+import java.awt.*;
 import java.util.LinkedHashMap;
 
 public class Menu extends Scene
@@ -17,13 +16,12 @@ public class Menu extends Scene
     private Scene nextScene;
     private TitleSprite titleSprite;
 
-/**
-@Menu
-This constructor method adds button to a linkedhashmap and creates a titlesprite. 
-@param title The String include for the title.  
-@return none
-@throws none
-*/
+    /**
+     * @param title The String include for the title.
+     * @return none
+     * @throws none
+     * @Menu This constructor method adds button to a linkedhashmap and creates a titlesprite.
+     */
     public Menu(String title)
     {
         buttons = new LinkedHashMap<>();
@@ -36,25 +34,25 @@ This constructor method adds button to a linkedhashmap and creates a titlesprite
         {
         }
     }
-/**
-@addButton
-This method receives a button and a scene, putting the button into the scene. 
-@param button A button given to the method
-@param Scene the scene the button is to be placed inside of. 
-@return none
-@throws none
-*/
+
+    /**
+     * @param button A button given to the method
+     * @param Scene  the scene the button is to be placed inside of.
+     * @return none
+     * @throws none
+     * @addButton This method receives a button and a scene, putting the button into the scene.
+     */
     public void addButton(Button button, Scene scene)
     {
         buttons.put(button, scene);
     }
-/**
-@drawFrame
-This method Is able to resize the screen, and is responsible for updating the entities by delta, adjusting fullscreen, the score displayed, and controls when the game is over. 
-@param delta
-@return isButtonDown true/false. 
-@throws none
-*/
+
+    /**
+     * @param delta
+     * @return isButtonDown true/false.
+     * @throws none
+     * @drawFrame This method Is able to resize the screen, and is responsible for updating the entities by delta, adjusting fullscreen, the score displayed, and controls when the game is over.
+     */
     public boolean drawFrame(float delta)
     {
         GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
@@ -112,14 +110,14 @@ This method Is able to resize the screen, and is responsible for updating the en
 
         return true;
     }
-/**
-@updateButtons
-This method receives a button and a scene, putting the button into the scene. 
-@param button A button given to the method
-@param Scene the scene the button is to be placed inside of. 
-@return none
-@throws none
-*/
+
+    /**
+     * @param button A button given to the method
+     * @param Scene  the scene the button is to be placed inside of.
+     * @return none
+     * @throws none
+     * @updateButtons This method receives a button and a scene, putting the button into the scene.
+     */
     public void updateButtons()
     {
         for (Button b : buttons.keySet())
@@ -128,13 +126,13 @@ This method receives a button and a scene, putting the button into the scene.
         }
         adjustButtons();
     }
-/**
-@drawButtons
-This method draws all buttons in keyset. 
-@param none
-@return none
-@throws none
-*/
+
+    /**
+     * @param none
+     * @return none
+     * @throws none
+     * @drawButtons This method draws all buttons in keyset.
+     */
     public void drawButtons()
     {
         for (Button b : buttons.keySet())
@@ -142,13 +140,13 @@ This method draws all buttons in keyset.
             b.draw();
         }
     }
-/**
-@adjustButtons
-This method adjusts the SIZE of the buttons within the keySet.
-@param none
-@return none
-@throws none
-*/
+
+    /**
+     * @param none
+     * @return none
+     * @throws none
+     * @adjustButtons This method adjusts the SIZE of the buttons within the keySet.
+     */
     public void adjustButtons()
     {
         int lastY = titleSprite.getHitBox().getY() + titleSprite.getHitBox().getHeight() + 32;
@@ -159,24 +157,24 @@ This method adjusts the SIZE of the buttons within the keySet.
             lastY += b.getHitBox().getHeight() + 16;
         }
     }
-/**
-@nextScene
-This method controls the pause menu, allowing for access to the main menu, resuming the game, or heading directly to the options menu. 
-@param none 
-@return menu 
-@throws none
-*/
+
+    /**
+     * @param none
+     * @return menu
+     * @throws none
+     * @nextScene This method controls the pause menu, allowing for access to the main menu, resuming the game, or heading directly to the options menu.
+     */
     public Scene nextScene()
     {
         return nextScene;
     }
-/**
-@reloadFont
-This method is used for reloading the fonts of all the button in keySet.  
-@param none 
-@return none
-@throws none
-*/
+
+    /**
+     * @param none
+     * @return none
+     * @throws none
+     * @reloadFont This method is used for reloading the fonts of all the button in keySet.
+     */
     @Override
     public void reloadFont()
     {

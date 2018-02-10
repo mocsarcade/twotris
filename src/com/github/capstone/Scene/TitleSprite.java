@@ -10,25 +10,25 @@ public class TitleSprite
 {
     private Texture sprite;
     private Rectangle hitBox;
-/**
-@TitleSprite
-This constructor method takes a texture string and uses the helper to load that texture into the sprite, and also creates a hitbox for the sprite. 
-@param texture A string (the title of the textile file)
-@return none
-@throws none
-*/
+
+    /**
+     * @param texture A string (the title of the textile file)
+     * @return none
+     * @throws none
+     * @TitleSprite This constructor method takes a texture string and uses the helper to load that texture into the sprite, and also creates a hitbox for the sprite.
+     */
     public TitleSprite(String texture)
     {
         this.sprite = Helper.loadTexture(texture);
         this.hitBox = new Rectangle(0, 0, sprite.getImageWidth(), sprite.getImageHeight());
     }
-/**
-@draw
-This method is used for drawing the title sprite, setting the color, and SIZE/shape.
-@param none
-@return none
-@throws none
-*/
+
+    /**
+     * @param none
+     * @return none
+     * @throws none
+     * @draw This method is used for drawing the title sprite, setting the color, and SIZE/shape.
+     */
     public void draw()
     {
         this.hitBox.setX((Display.getWidth() / 2) - (this.hitBox.getWidth() / 2));
@@ -63,13 +63,13 @@ This method is used for drawing the title sprite, setting the color, and SIZE/sh
 
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, 0);
     }
-/**
-@getHitBox
-This method is used for getting the hitbox the title sprite possesses. 
-@param none
-@return hitbox the hitbox belonging to the titlesprite. 
-@throws none
-*/
+
+    /**
+     * @param none
+     * @return hitbox the hitbox belonging to the titlesprite.
+     * @throws none
+     * @getHitBox This method is used for getting the hitbox the title sprite possesses.
+     */
     public Rectangle getHitBox()
     {
         return this.hitBox;

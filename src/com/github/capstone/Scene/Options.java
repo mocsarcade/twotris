@@ -1,13 +1,12 @@
 package com.github.capstone.Scene;
 
 import com.github.capstone.Twotris;
-import com.github.capstone.Util.Helper;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 
-import java.awt.Toolkit;
+import java.awt.*;
 import java.util.LinkedHashMap;
 
 public class Options extends Scene
@@ -16,13 +15,12 @@ public class Options extends Scene
     private LinkedHashMap<Button, String> buttons;
     private Scene next;
 
-/**
-@Options
-This constructor method adds button to a linkedhashmap, added the buttons to the options menu, adds a back button, adjusts the buttons, and then creates the next as the last scene. 
-@param lastscene The scene supplied.  
-@return none
-@throws none
-*/
+    /**
+     * @param lastscene The scene supplied.
+     * @return none
+     * @throws none
+     * @Options This constructor method adds button to a linkedhashmap, added the buttons to the options menu, adds a back button, adjusts the buttons, and then creates the next as the last scene.
+     */
     Options(Scene lastScene)
     {
         buttons = new LinkedHashMap<>();
@@ -31,24 +29,24 @@ This constructor method adds button to a linkedhashmap, added the buttons to the
         this.adjustButtons();
         this.next = lastScene;
     }
-		/**
-@addButton
-This method receives buttons and puts them into the options menu.  
-@param option The String given. 
-@return none
-@throws none
-*/
+
+    /**
+     * @param option The String given.
+     * @return none
+     * @throws none
+     * @addButton This method receives buttons and puts them into the options menu.
+     */
     public void addButton(String option)
     {
         this.buttons.put(new Button(256, 64, option), option);
     }
-/**
-@drawFrame
-This method Is able to resize the screen, and is responsible for updating the entities by delta, adjusting fullscreen, the score displayed, and controls when the game is over. 
-@param delta
-@return isGameOver true/false. 
-@throws none
-*/
+
+    /**
+     * @param delta
+     * @return isGameOver true/false.
+     * @throws none
+     * @drawFrame This method Is able to resize the screen, and is responsible for updating the entities by delta, adjusting fullscreen, the score displayed, and controls when the game is over.
+     */
     public boolean drawFrame(float delta)
     {
         GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
@@ -110,13 +108,13 @@ This method Is able to resize the screen, and is responsible for updating the en
 
         return true;
     }
-/**
-@updateButtons
-This method updates the back button, and the other buttons in the keyset, then adjusts them. 
-@param none
-@return none
-@throws none
-*/
+
+    /**
+     * @param none
+     * @return none
+     * @throws none
+     * @updateButtons This method updates the back button, and the other buttons in the keyset, then adjusts them.
+     */
     public void updateButtons()
     {
         back.update();
@@ -126,13 +124,13 @@ This method updates the back button, and the other buttons in the keyset, then a
         }
         adjustButtons();
     }
-/**
-@drawButtons
-This method draws the back button, then all buttons in keyset. 
-@param none
-@return none
-@throws none
-*/
+
+    /**
+     * @param none
+     * @return none
+     * @throws none
+     * @drawButtons This method draws the back button, then all buttons in keyset.
+     */
     public void drawButtons()
     {
         back.draw();
@@ -142,13 +140,13 @@ This method draws the back button, then all buttons in keyset.
             b.draw();
         }
     }
-/**
-@adjustButtons
-This method adjusts the SIZE of the buttons within the keySet.
-@param none
-@return none
-@throws none
-*/
+
+    /**
+     * @param none
+     * @return none
+     * @throws none
+     * @adjustButtons This method adjusts the SIZE of the buttons within the keySet.
+     */
     public void adjustButtons()
     {
         int lastY = 32;
@@ -166,24 +164,24 @@ This method adjusts the SIZE of the buttons within the keySet.
         }
         back.getHitBox().setLocation(16, Display.getHeight() - back.getHitBox().getHeight() - 16);
     }
-/**
-@nextScene
-This method sets the next scene, setting the next selection.  
-@param none 
-@return next
-@throws none
-*/
+
+    /**
+     * @param none
+     * @return next
+     * @throws none
+     * @nextScene This method sets the next scene, setting the next selection.
+     */
     public Scene nextScene()
     {
         return next;
     }
-/**
-@reloadFont
-This method is used for reloading the buttons’ from the keySet fonts as well as the back button.  
-@param none 
-@return none
-@throws none
-*/
+
+    /**
+     * @param none
+     * @return none
+     * @throws none
+     * @reloadFont This method is used for reloading the buttons’ from the keySet fonts as well as the back button.
+     */
     @Override
     public void reloadFont()
     {

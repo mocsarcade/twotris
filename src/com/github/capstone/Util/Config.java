@@ -10,30 +10,24 @@ package com.github.capstone.Util;
 import com.github.capstone.Scene.Button;
 import com.github.capstone.Scene.Options;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.Properties;
 
 public class Config
 {
     public float volume;
-    private String volume_label = "Volume";
-
     public boolean colorblind;
-    private String colorblind_label = "Colors";
-
     public String font;
+    private String volume_label = "Volume";
+    private String colorblind_label = "Colors";
     private String font_label = "Font";
     private LoopArrayList<String> font_options;
-/**
-@Config
-This constructor method creates a font_options LoopArrayList, adds font options to the list, and then loads the configuration.  
-@return none
-@throws none
-*/
+
+    /**
+     * @return none
+     * @throws none
+     * @Config This constructor method creates a font_options LoopArrayList, adds font options to the list, and then loads the configuration.
+     */
 
     public Config()
     {
@@ -46,26 +40,26 @@ This constructor method creates a font_options LoopArrayList, adds font options 
 
         loadConfig();
     }
-/**
-@addButtonstoOptionsGUI
-This method adds buttons to the options interface, including volume control, color options, and the font option button.  
-@param options An Options entity
-@return none
-@throws none
-*/ 
+
+    /**
+     * @param options An Options entity
+     * @return none
+     * @throws none
+     * @addButtonstoOptionsGUI This method adds buttons to the options interface, including volume control, color options, and the font option button.
+     */
     public void addButtonsToOptionsGUI(Options options)
     {
         options.addButton(volume_label + ":" + (int) (volume * 100));
         options.addButton(colorblind_label + ":" + colorblind);
         options.addButton(font_label + ":" + font);
     }
-/**
-@loadConfig
-This method loads the configuration file from the text file, initializing the three buttons options, then closes the reader.  
-@param none
-@return none
-@throws none
-*/
+
+    /**
+     * @param none
+     * @return none
+     * @throws none
+     * @loadConfig This method loads the configuration file from the text file, initializing the three buttons options, then closes the reader.
+     */
     public void loadConfig()
     {
         try
@@ -97,13 +91,13 @@ This method loads the configuration file from the text file, initializing the th
             e.printStackTrace();
         }
     }
-/**
-@createConfig
-This method creates a new file, called twotris.settings and a props properties. The props gets set with volume, colors, and fonts. Then these three options are further refined , such as adjusting volume from 0.0-1.0 to 0-100. 
-@param none 
-@return none
-@throws IOException
-*/
+
+    /**
+     * @param none
+     * @return none
+     * @throws IOException
+     * @createConfig This method creates a new file, called twotris.settings and a props properties. The props gets set with volume, colors, and fonts. Then these three options are further refined , such as adjusting volume from 0.0-1.0 to 0-100.
+     */
     public void createConfig() throws IOException
     {
         File configFile = new File("twotris.settings");
@@ -122,13 +116,13 @@ This method creates a new file, called twotris.settings and a props properties. 
         props.store(writer, "Twotris Settings");
         writer.close();
     }
-/**
-@updateConfig
-This method updates the existing config files if the selections are changed. 
-@param none
-@return none
-@throws none
-*/
+
+    /**
+     * @param none
+     * @return none
+     * @throws none
+     * @updateConfig This method updates the existing config files if the selections are changed.
+     */
     public void updateConfig()
     {
         try
@@ -150,14 +144,14 @@ This method updates the existing config files if the selections are changed.
 
         }
     }
-/**
-@toggleOption
-This method gathers an option String, and a button and is responsible for adjusting the string visible in the actual button. 
-@param option A string equal to volume, colors, or font, which controls the corresponding option.  
-@param button The button attached to the option mentioned above.  
-@return none
-@throws none
-*/
+
+    /**
+     * @param option A string equal to volume, colors, or font, which controls the corresponding option.
+     * @param button The button attached to the option mentioned above.
+     * @return none
+     * @throws none
+     * @toggleOption This method gathers an option String, and a button and is responsible for adjusting the string visible in the actual button.
+     */
     public void toggleOption(String option, Button button)
     {
         if (option.equalsIgnoreCase("volume"))

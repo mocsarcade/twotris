@@ -13,15 +13,15 @@ public enum Pallete
     WHITE(255, 255, 255);
 
     public Color color;
-/**
-@Pallete
-This constructor method gathers the rgb values and creates a color for using within the program to match the color scheme. 
-@param r the value of red in the color selected. 
-@param g the value of green in the color selected. 
-@param b the value of blue in the color selected. 
-@return none
-@throws none
-*/
+
+    /**
+     * @param r the value of red in the color selected.
+     * @param g the value of green in the color selected.
+     * @param b the value of blue in the color selected.
+     * @return none
+     * @throws none
+     * @Pallete This constructor method gathers the rgb values and creates a color for using within the program to match the color scheme.
+     */
 
     Pallete(int r, int g, int b)
     {

@@ -3,7 +3,6 @@ package com.github.capstone.Scene;
 import com.github.capstone.Manager.AudioManager;
 import com.github.capstone.Util.Helper;
 import org.lwjgl.opengl.Display;
-import org.newdawn.slick.TrueTypeFont;
 
 public abstract class Scene
 {
@@ -13,34 +12,33 @@ public abstract class Scene
     public abstract boolean drawFrame(float delta);
 
     /**
-@nextScene
-The null indicates that Twotris should load the menu. 
-@param none 
-@return null
-@throws none
-*/
+     * @param none
+     * @return null
+     * @throws none
+     * @nextScene The null indicates that Twotris should load the menu.
+     */
     public Scene nextScene()
     {
         return null;
     }
-/**
-@exit 
-This exits the selection, setting doExit as true. 
-@param none 
-@return none
-@throws none
-*/
+
+    /**
+     * @param none
+     * @return none
+     * @throws none
+     * @exit This exits the selection, setting doExit as true.
+     */
     protected void exit()
     {
         doExit = true;
     }
-/**
-@go
-This returns false when the game should be exited.  
-@param none 
-@return none
-@throws none
-*/
+
+    /**
+     * @param none
+     * @return none
+     * @throws none
+     * @go This returns false when the game should be exited.
+     */
     public boolean go()
     {
         long lastloop = Helper.getTime();
@@ -67,12 +65,12 @@ This returns false when the game should be exited.
 
         return true;
     }
-/**
-@reloadFont
-This method is used for reloading the font, but is not implemented in the abstract. 
-@param none 
-@return none
-@throws none
-*/
+
+    /**
+     * @param none
+     * @return none
+     * @throws none
+     * @reloadFont This method is used for reloading the font, but is not implemented in the abstract.
+     */
     public abstract void reloadFont();
 }

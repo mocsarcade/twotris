@@ -11,52 +11,53 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
 /**
-This class creates a screenshot folder and allows for taking screenshots in game. 
-		*/
+ * This class creates a screenshot folder and allows for taking screenshots in game.
+ */
 public class ScreenshotManager
 {
     private File screenshotsFolder;
-/**
-			@ScreenshotManager
-This constructor method creates a new screenshots folder. 
-			@param none 
-			@return none
-			@throws none
-		*/
+
+    /**
+     * @param none
+     * @return none
+     * @throws none
+     * @ScreenshotManager This constructor method creates a new screenshots folder.
+     */
     public ScreenshotManager()
     {
         screenshotsFolder = new File(System.getProperty("user.dir") + File.separator + "screenshots");
     }
-/**
-			@getScreenshotsFolder
-This method returns the screenshot folder. 
-			@param none
-			@return screenshot folder in question. 
-			@throws none
-		*/
+
+    /**
+     * @param none
+     * @return screenshot folder in question.
+     * @throws none
+     * @getScreenshotsFolder This method returns the screenshot folder.
+     */
     public File getScreenshotsFolder()
     {
         return this.screenshotsFolder;
     }
-/**
-			@setScreenshotsFolder
-This method sets a folder as the screenshot folder for the game. 
-			@param newFolder a folder in the system
-			@return none 
-			@throws none
-		*/
+
+    /**
+     * @param newFolder a folder in the system
+     * @return none
+     * @throws none
+     * @setScreenshotsFolder This method sets a folder as the screenshot folder for the game.
+     */
     public void setScreenshotsFolder(File newFolder)
     {
         this.screenshotsFolder = newFolder;
     }
-/**
-			@takeScreenshot
-			This method takes a screen shot of the game, saving the image as a png with the date in the title. Source used: http://wiki.lwjgl.org/wiki/Taking_Screen_Shots.html
-			@param none
-			@return none
-			@throws IOException
-		*/
+
+    /**
+     * @param none
+     * @return none
+     * @throws IOException
+     * @takeScreenshot This method takes a screen shot of the game, saving the image as a png with the date in the title. Source used: http://wiki.lwjgl.org/wiki/Taking_Screen_Shots.html
+     */
     public void takeScreenshot()
     {
         GL11.glReadBuffer(GL11.GL_FRONT);

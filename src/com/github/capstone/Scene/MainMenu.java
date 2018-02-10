@@ -2,13 +2,12 @@ package com.github.capstone.Scene;
 
 public class MainMenu extends Menu
 {
-	/**
-@Menu
-This constructor method adds button to a linkedhashmap, and creates a titlesprite. 
-@param title The String include for the title.  
-@return none
-@throws none
-*/
+    /**
+     * @param title The String include for the title.
+     * @return none
+     * @throws none
+     * @Menu This constructor method adds button to a linkedhashmap, and creates a titlesprite.
+     */
 
     public MainMenu()
     {

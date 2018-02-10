@@ -10,11 +10,10 @@ import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
-import org.newdawn.slick.openal.Audio;
 import org.newdawn.slick.opengl.PNGDecoder;
 import org.newdawn.slick.util.ResourceLoader;
 
-import java.awt.Toolkit;
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -24,6 +23,27 @@ import java.nio.ByteBuffer;
 
 public class Twotris
 {
+    private static Twotris instance;
+    public Config config;
+    public ScreenshotManager screenshotManager;
+    private boolean fullscreen;
+    /**
+     * @param none
+     * @return none
+     * @throws none
+     * @Twotris This is a constructor method, creating a config, a screenshot manager, and not initially setting the game to fullscreen. Also initializes the sounds, the display and the game itself.
+     */
+    private Twotris()
+    {
+        instance = this;
+        this.config = new Config();
+        this.screenshotManager = new ScreenshotManager();
+        this.fullscreen = false;
+        initGL();
+        initSounds();
+        initGame();
+    }
+
     public static void main(String[] args)
     {
         // Copies the natives folder FROM the compiled jar if it doesn't exist
@@ -37,45 +57,23 @@ public class Twotris
         new Twotris();
     }
 
-    private static Twotris instance;
-    public Config config;
-    public ScreenshotManager screenshotManager;
-    private boolean fullscreen;
-/**
-@Twotris
-This is a constructor method, creating a config, a screenshot manager, and not initially setting the game to fullscreen. Also initializes the sounds, the display and the game itself. 
-@param none
-@return none
-@throws none
-*/
-    private Twotris()
-    {
-        instance = this;
-        this.config = new Config();
-        this.screenshotManager = new ScreenshotManager();
-        this.fullscreen = false;
-        initGL();
-        initSounds();
-        initGame();
-    }
-/**
-@getInstance
-This method returns an instance 
-@param none
-@return instance
-@throws none
-*/
+    /**
+     * @param none
+     * @return instance
+     * @throws none
+     * @getInstance This method returns an instance
+     */
     public static Twotris getInstance()
     {
         return instance;
     }
-/**
-@initSounds
-This method loads the sounds for menus.  
-@param none
-@return none
-@throws none
-*/
+
+    /**
+     * @param none
+     * @return none
+     * @throws none
+     * @initSounds This method loads the sounds for menus.
+     */
     private void initSounds()
     {
         System.out.println("Loading sounds..");
@@ -92,13 +90,12 @@ This method loads the sounds for menus.
         System.out.println("Sounds Loaded!");
     }
 
-/**
-@initGame
-This method creates the main menu, and proceeds to the next scene when prompted, destroying the old instance of the audio manager and display. 
-@param none
-@return none
-@throws none
-*/
+    /**
+     * @param none
+     * @return none
+     * @throws none
+     * @initGame This method creates the main menu, and proceeds to the next scene when prompted, destroying the old instance of the audio manager and display.
+     */
     private void initGame()
     {
         MainMenu mainMenu = new MainMenu();
@@ -117,13 +114,13 @@ This method creates the main menu, and proceeds to the next scene when prompted,
         AudioManager.getInstance().destroy();
         Display.destroy();
     }
-/**
-@initGL
-This method is used for displaying the game and centering the window. 
-@param none
-@return none
-@throws none
-*/
+
+    /**
+     * @param none
+     * @return none
+     * @throws none
+     * @initGL This method is used for displaying the game and centering the window.
+     */
     public void initGL()
     {
         setDisplayMode(800, 600, fullscreen);
@@ -157,15 +154,14 @@ This method is used for displaying the game and centering the window.
         GL11.glMatrixMode(GL11.GL_MODELVIEW);
     }
 
-  /**
-@setDisplayMode
-This method is used for displaying the game, and is sourced from: http://wiki.lwjgl.org/wiki/LWJGL_Basics_5_(Fullscreen).html
-@param width      The width of the display required
-@param height     The height of the display required
-@param fullscreen True if we want fullscreen mode
-@return none
-@throws none
-*/
+    /**
+     * @param width      The width of the display required
+     * @param height     The height of the display required
+     * @param fullscreen True if we want fullscreen mode
+     * @return none
+     * @throws none
+     * @setDisplayMode This method is used for displaying the game, and is sourced from: http://wiki.lwjgl.org/wiki/LWJGL_Basics_5_(Fullscreen).html
+     */
     public void setDisplayMode(int width, int height, boolean fullscreen)
     {
         if ((Display.getDisplayMode().getWidth() == width) && (Display.getDisplayMode().getHeight() == height) && (Display.isFullscreen() == fullscreen))
@@ -227,13 +223,12 @@ This method is used for displaying the game, and is sourced from: http://wiki.lw
         }
     }
 
-   /**
-@loadIcon
-This method is used for displaying the icon image. Sourced from: http://forum.lwjgl.org/index.php?topic=3422.0 
-@param url the URL of the file needed
-@return The ByteBuffer of the PNG located at the passed URL
-@throws IOException
-*/
+    /**
+     * @param url the URL of the file needed
+     * @return The ByteBuffer of the PNG located at the passed URL
+     * @throws IOException
+     * @loadIcon This method is used for displaying the icon image. Sourced from: http://forum.lwjgl.org/index.php?topic=3422.0
+     */
     private ByteBuffer loadIcon(URL url) throws IOException
     {
         System.out.println("Loaded icon " + url.getPath().replace("/C:/", "C:/"));
@@ -251,13 +246,13 @@ This method is used for displaying the icon image. Sourced from: http://forum.lw
             is.close();
         }
     }
-/**
-@initIcon
-This method is used for initializing the icon, setting the image found in loadIcon as the actual icon. 
-@param none
-@return none
-@throws none
-*/
+
+    /**
+     * @param none
+     * @return none
+     * @throws none
+     * @initIcon This method is used for initializing the icon, setting the image found in loadIcon as the actual icon.
+     */
     private void initIcon()
     {
         try
