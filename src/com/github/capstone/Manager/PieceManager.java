@@ -17,7 +17,6 @@ public class PieceManager
 
     public PieceManager()
     {
-        System.out.println("Generated PieceManager");
         this.piecelist = new ArrayList<>();
         generateNewTetronimo();
         instance = this;
@@ -102,7 +101,6 @@ public class PieceManager
 
     public void generateNewTetronimo()
     {
-        System.out.println("Adding new piece to piece list. Size is now " + this.piecelist.size());
         this.activePiece = new EntityTetromino();
         this.piecelist.add(activePiece);
     }
@@ -133,6 +131,10 @@ public class PieceManager
                                             // Guess so. Set this piece to idle so it stops.
                                             other.setState(EntityTetromino.State.IDLE);
                                             return true;
+                                        }
+                                        else
+                                        {
+                                            System.out.println(thisCol.getHitBox() + " vs " + otherCol.getHitBox());
                                         }
                                     }
                                 }
