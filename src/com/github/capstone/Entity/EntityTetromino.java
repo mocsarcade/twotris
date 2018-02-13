@@ -1,6 +1,6 @@
 package com.github.capstone.Entity;
 
-import com.github.capstone.Util.Pallete;
+import com.github.capstone.Util.Palette;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.util.Color;
 import org.lwjgl.util.Rectangle;
@@ -33,7 +33,7 @@ public class EntityTetromino extends EntityBase
         this.pieceMatrix = generateFromType();
         this.rotation = 0;
         this.lastKeypress = 0;
-        this.color = Pallete.values()[type.index].color;
+        this.color = Palette.values()[type.index].color;
     }
 
     /**

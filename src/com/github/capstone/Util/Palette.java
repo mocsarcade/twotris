@@ -2,7 +2,7 @@ package com.github.capstone.Util;
 
 import org.lwjgl.util.Color;
 
-public enum Pallete
+public enum Palette
 {
     AMAZONITE(0, 182, 163),
     ORANGE(255, 165, 0),
@@ -23,7 +23,7 @@ public enum Pallete
      * @Pallete This constructor method gathers the rgb values and creates a color for using within the program to match the color scheme.
      */
 
-    Pallete(int r, int g, int b)
+    Palette(int r, int g, int b)
     {
         this.color = new Color(r, g, b);
     }
