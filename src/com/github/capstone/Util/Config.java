@@ -37,6 +37,7 @@ public class Config
         font_options.add("PixelMecha");
         font_options.add("Heavy");
         font_options.add("T 'n J");
+        font_options.add("m5x7");
 
         loadConfig();
     }
