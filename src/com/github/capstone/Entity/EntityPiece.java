@@ -1,12 +1,16 @@
 package com.github.capstone.Entity;
 
+import com.github.capstone.Util.Helper;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Color;
 import org.lwjgl.util.Rectangle;
+import org.newdawn.slick.opengl.Texture;
 
 public class EntityPiece
 {
     private Rectangle hitbox;
+    private Texture sprite;
+    private float wr, hr;
 
     /**
      * @param x    X is the initial X location of the piece.
@@ -19,6 +23,9 @@ public class EntityPiece
     EntityPiece(int x, int y, int size)
     {
         this.hitbox = new Rectangle(x, y, size, size);
+        this.sprite = Helper.loadTexture("piece");
+        this.wr = 1.0F * sprite.getImageWidth() / sprite.getTextureWidth();
+        this.hr = 1.0F * sprite.getImageHeight() / sprite.getTextureHeight();
     }
 
     /**
@@ -51,20 +58,32 @@ public class EntityPiece
      */
     public void draw(Color color)
     {
+
+
         float x = (float) this.hitbox.getX();
         float y = (float) this.hitbox.getY();
         float w = (float) this.hitbox.getWidth();
         float h = (float) this.hitbox.getHeight();
 
+        GL11.glBindTexture(GL11.GL_TEXTURE_2D, sprite.getTextureID());
         GL11.glColor3f(color.getRed() / 255F, color.getGreen() / 255F, color.getBlue() / 255F);
+
         GL11.glBegin(GL11.GL_QUADS);
 
+        GL11.glTexCoord2f(0F, 0F);
         GL11.glVertex2f(x, y);
+
+        GL11.glTexCoord2f(wr, 0F);
         GL11.glVertex2f(x + w, y);
+
+        GL11.glTexCoord2f(wr, hr);
         GL11.glVertex2f(x + w, y + h);
+
+        GL11.glTexCoord2f(0F, hr);
         GL11.glVertex2f(x, y + h);
 
         GL11.glEnd();
+        GL11.glBindTexture(GL11.GL_TEXTURE_2D, 0);
     }
 
     /**
