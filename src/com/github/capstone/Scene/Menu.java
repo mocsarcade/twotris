@@ -1,5 +1,6 @@
 package com.github.capstone.Scene;
 
+import com.github.capstone.Manager.AudioManager;
 import com.github.capstone.Twotris;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
@@ -166,6 +167,7 @@ public class Menu extends Scene
      */
     public Scene nextScene()
     {
+        AudioManager.getInstance().play("resume");
         return nextScene;
     }
 

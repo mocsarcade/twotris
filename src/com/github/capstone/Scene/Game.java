@@ -1,5 +1,6 @@
 package com.github.capstone.Scene;
 
+import com.github.capstone.Manager.AudioManager;
 import com.github.capstone.Manager.PieceManager;
 import com.github.capstone.Twotris;
 import com.github.capstone.Util.Helper;
@@ -16,6 +17,7 @@ public class Game extends Scene
     private boolean isGameOver;
     private int score;
     private TrueTypeFont font;
+    private Menu pauseMenu;
 
     /**
      * @param none
@@ -31,6 +33,25 @@ public class Game extends Scene
     }
 
     /**
+     * @updatePauseMenu this method updates the pause menu to contain EITHER resume or play again depending on game status
+     */
+    private void updatePauseMenu()
+    {
+        pauseMenu = new Menu("gui/paused");
+        if (isGameOver)
+        {
+            pauseMenu.addButton(new Button(0, 0, "Play Again"), new Game());
+        }
+        else
+        {
+            pauseMenu.addButton(new Button(0, 0, "Resume"), this);
+            pauseMenu.addButton(new Button(0, 0, "Options"), new Options(this));
+        }
+        pauseMenu.addButton(new Button(0, 0, "Save & Quit"), new MainMenu());
+        pauseMenu.adjustButtons();
+    }
+
+    /**
      * @param delta
      * @return isGameOver true/false.
      * @throws none
@@ -39,6 +60,16 @@ public class Game extends Scene
     @Override
     public boolean drawFrame(float delta)
     {
+        // Instantiate the menu if it hasn't been yet
+        if (this.pauseMenu == null)
+        {
+            this.updatePauseMenu();
+        }
+        if (this.isGameOver)
+        {
+            updatePauseMenu();
+        }
+
         GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
         GL11.glClearColor(.09F, 0.09F, 0.09F, 0F);
         // Screen resize handler
@@ -80,6 +111,7 @@ public class Game extends Scene
         }
         if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE))
         {
+            AudioManager.getInstance().play("pause");
             return false;
         }
 
@@ -101,19 +133,7 @@ public class Game extends Scene
     @Override
     public Scene nextScene()
     {
-        Menu menu = new Menu("gui/paused");
-        if (isGameOver)
-        {
-            menu.addButton(new Button(0, 0, "Play Again"), new Game());
-        }
-        else
-        {
-            menu.addButton(new Button(0, 0, "Resume"), this);
-            menu.addButton(new Button(0, 0, "Options"), new Options(this));
-        }
-        menu.addButton(new Button(0, 0, "Save & Quit"), new MainMenu());
-        menu.adjustButtons();
-        return menu;
+        return this.pauseMenu;
     }
 
     /**
