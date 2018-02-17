@@ -136,7 +136,7 @@ public class Button
      * @param none
      * @return none
      * @throws none
-     * @draw This method is used for drawing the button, setting the color, and SIZE/shape.
+     * @draw This method is used for drawing the button, setting the color, and size/shape.
      */
     public void draw()
     {

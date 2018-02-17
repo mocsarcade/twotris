@@ -146,7 +146,7 @@ public class Menu extends Scene
      * @param none
      * @return none
      * @throws none
-     * @adjustButtons This method adjusts the SIZE of the buttons within the keySet.
+     * @adjustButtons This method adjusts the size of the buttons within the keySet.
      */
     public void adjustButtons()
     {

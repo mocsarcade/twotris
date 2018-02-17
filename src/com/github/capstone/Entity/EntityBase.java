@@ -16,7 +16,7 @@ public abstract class EntityBase
      * @param none
      * @return none
      * @throws none
-     * @draw This method is used for drawing the entity the class is used for, setting the color, and SIZE/shape of the entity.
+     * @draw This method is used for drawing the entity the class is used for, setting the color, and size/shape of the entity.
      */
     public abstract void draw();
 

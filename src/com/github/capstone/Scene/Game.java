@@ -28,7 +28,6 @@ public class Game extends Scene
      */
     public Game()
     {
-        this.isGameOver = false;
         this.font = Helper.getFont();
         this.grid = new Grid();
     }
@@ -114,6 +113,8 @@ public class Game extends Scene
 
         // TODO: Put working draw code here:
         grid.draw();
+
+        this.isGameOver = grid.isGameOver();
 
         TextureImpl.bindNone();
         font.drawString(0, 0, "" + this.score);
