@@ -13,14 +13,7 @@ public class Grid
         {
             for (int j = 0; j < pieceGrid[i].length; j++)
             {
-                if (pieceGrid[i][j])
-                {
-                    System.out.print(1);
-                }
-                else
-                {
-                    System.out.print(0);
-                }
+                System.out.print(pieceGrid[i][j] ? 1 : 0);
             }
             System.out.println();
         }
@@ -32,14 +25,7 @@ public class Grid
         {
             for (int j = 0; j < pieceGrid[i].length; j++)
             {
-                if (pieceGrid[i][j])
-                {
-                    System.out.print(1);
-                }
-                else
-                {
-                    System.out.print(0);
-                }
+                System.out.print(pieceGrid[i][j] ? 1 : 0);
             }
             System.out.println();
         }
@@ -79,7 +65,7 @@ public class Grid
             pieceGrid[row][col] = false;
         }
         // Shift the grid down:
-        for (int i = row - 1; i > 0; i--)
+        for (int i = row; i > 0; i--)
         {
             System.arraycopy(pieceGrid[i - 1], 0, pieceGrid[i], 0, pieceGrid[i].length);
         }
