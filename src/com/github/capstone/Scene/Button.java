@@ -64,6 +64,11 @@ public class Button
         this.font = Helper.getFont();
     }
 
+    public String getText()
+    {
+        return this.buttonText;
+    }
+
     /**
      * @param x    The location of the button in the x axis.
      * @param y    The location of the button in the y axis.

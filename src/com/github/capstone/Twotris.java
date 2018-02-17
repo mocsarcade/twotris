@@ -27,6 +27,7 @@ public class Twotris
     public Config config;
     public ScreenshotManager screenshotManager;
     private boolean fullscreen;
+
     /**
      * @param none
      * @return none
@@ -82,6 +83,10 @@ public class Twotris
             AudioManager.getInstance().loadSample("pause", "assets/sounds/menu/game_pause.wav".replace("/", File.separator));
             AudioManager.getInstance().loadSample("resume", "assets/sounds/menu/game_resume.wav".replace("/", File.separator));
             AudioManager.getInstance().loadSample("select", "assets/sounds/menu/menu_select.wav".replace("/", File.separator));
+            AudioManager.getInstance().loadSample("place", "assets/sounds/game/piece_collide.wav".replace("/", File.separator));
+            AudioManager.getInstance().loadSample("obliterate_1", "assets/sounds/game/obliterate_1.wav".replace("/", File.separator));
+            AudioManager.getInstance().loadSample("obliterate_2", "assets/sounds/game/obliterate_2.wav".replace("/", File.separator));
+            AudioManager.getInstance().loadSample("obliterate_3", "assets/sounds/game/obliterate_3.wav".replace("/", File.separator));
         }
         catch (IOException e)
         {

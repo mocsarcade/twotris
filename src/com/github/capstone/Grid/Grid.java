@@ -1,7 +1,8 @@
 package com.github.capstone.Grid;
 
 import com.github.capstone.Entity.EntityPiece;
-import com.github.capstone.Entity.EntityTetromino;
+import com.github.capstone.Entity.EntityTetronimo;
+import com.github.capstone.Manager.AudioManager;
 import com.github.capstone.Util.Helper;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
@@ -10,13 +11,14 @@ import org.lwjgl.util.Rectangle;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Random;
 
 public class Grid
 {
     private boolean[][] pieceGrid;
     private Rectangle hitbox;
-    private ArrayList<EntityTetromino> pieces;
-    private EntityTetromino activePiece;
+    private ArrayList<EntityTetronimo> pieces;
+    private EntityTetronimo activePiece;
     private int gridSize;
     private boolean isGameOver;
     private long lastKeypress;
@@ -29,12 +31,27 @@ public class Grid
         this.hitbox.setHeight(Display.getHeight());
         this.hitbox.setWidth((int) (this.hitbox.getHeight() / 2.4));
         this.hitbox.setX((Display.getWidth() / 2) - (this.hitbox.getWidth() / 2));
-        this.hitbox.setY(4);
+        this.hitbox.setY(0);
         this.gridSize = this.hitbox.getWidth() / 10;
         this.pieces = new ArrayList<>();
-        this.activePiece = new EntityTetromino(this.gridSize, this.hitbox.getX() + ((this.hitbox.getWidth() / 2) - (this.gridSize / 2)));
+        this.activePiece = new EntityTetronimo(this);
         this.pieces.add(this.activePiece);
         this.isGameOver = false;
+    }
+
+    public int getGridSize()
+    {
+        return this.gridSize;
+    }
+
+    public int getXForCol(int colNum)
+    {
+        return this.hitbox.getX() + (colNum * gridSize);
+    }
+
+    public int getYForRow(int rowNum)
+    {
+        return this.hitbox.getY() + (rowNum * gridSize);
     }
 
     public void update(float delta)
@@ -47,7 +64,7 @@ public class Grid
             this.hitbox.setX((Display.getWidth() / 2) - (this.hitbox.getWidth() / 2));
             this.hitbox.setY(4);
             this.gridSize = this.hitbox.getWidth() / 10;
-            for (EntityTetromino t : pieces)
+            for (EntityTetronimo t : pieces)
             {
                 t.updateSize(this.gridSize);
             }
@@ -60,16 +77,21 @@ public class Grid
                 this.activePiece.moveLeft();
                 lastKeypress = Helper.getTime();
             }
-            else
-            {
-                System.out.println("Not enough room!");
-            }
         }
         else if (Keyboard.isKeyDown(Keyboard.KEY_D) && Helper.getTime() - lastKeypress > 250)
         {
-            this.activePiece.moveRight();
+            if ((this.activePiece.getHitBox().getX() + this.activePiece.getHitBox().getWidth()) < this.hitbox.getX() + this.hitbox.getWidth())
+            {
+                this.activePiece.moveRight();
+                lastKeypress = Helper.getTime();
+            }
+        }
+        else if (Keyboard.isKeyDown(Keyboard.KEY_R) && Helper.getTime() - lastKeypress > 250)
+        {
+            this.activePiece.rotate();
             lastKeypress = Helper.getTime();
         }
+
         if (Keyboard.isKeyDown(Keyboard.KEY_SPACE))
         {
             this.activePiece.speed = 3;
@@ -78,23 +100,23 @@ public class Grid
         {
             this.activePiece.speed = 1;
         }
-        for (EntityTetromino t : pieces)
+        for (EntityTetronimo t : pieces)
         {
             t.update(delta);
         }
-        if (activePiece.getState() == EntityTetromino.State.IDLE)
+        if (activePiece.getState() == EntityTetronimo.State.IDLE)
         {
             // Step 1: Determine where the hitbox is in the grid
             EntityPiece[][] m = activePiece.getPieceMatrix();
-            for (int i = 0; i < m.length; i++)
+            for (EntityPiece[] pieceRow : m)
             {
-                for (int j = 0; j < m[i].length; j++)
+                for (EntityPiece piece : pieceRow)
                 {
-                    if (m[i][j] != null)
+                    if (piece != null)
                     {
-                        int row = ((m[i][j].getHitBox().getY() - this.hitbox.getY()) / gridSize);
-                        int col = (m[i][j].getHitBox().getX() - this.hitbox.getX()) / gridSize;
-                        m[i][j].getHitBox().setY((row * gridSize) + gridSize);
+                        int row = piece.getHitBox().getY() / gridSize;
+                        int col = (piece.getHitBox().getX() - this.hitbox.getX()) / gridSize;
+                        piece.getHitBox().setY((row * gridSize));
                         // Step 2: occupy the grid
                         this.pieceGrid[row][col] = true;
                     }
@@ -103,7 +125,7 @@ public class Grid
             // Step 3: regular update stuff:
             this.checkRows();
             // Step 4: Generate a new piece
-            this.activePiece = new EntityTetromino(this.gridSize, this.hitbox.getX() + ((this.hitbox.getWidth() / 2) - (this.gridSize / 2)));
+            this.activePiece = new EntityTetronimo(this);
             if (this.activePiece.getHitBox().getX() < 0)
             {
                 this.isGameOver = true;
@@ -114,18 +136,25 @@ public class Grid
         {
             // Step 1: Determine where the hitbox is in the grid
             EntityPiece[][] m = activePiece.getPieceMatrix();
-            for (int i = 0; i < m.length; i++)
+            for (EntityPiece[] pieceRow : m)
             {
-                for (int j = 0; j < m[i].length; j++)
+                for (EntityPiece pieceCol : pieceRow)
                 {
-                    if (m[i][j] != null)
+                    if (pieceCol != null)
                     {
                         // Step 2: Check to see if the NEXT slot it can fall in is occupied
-                        int rowCheck = ((m[i][j].getHitBox().getY() - this.hitbox.getY()) / gridSize) + 1;
-                        int colCheck = (m[i][j].getHitBox().getX() - this.hitbox.getX()) / gridSize;
-                        if (rowCheck < this.pieceGrid.length && this.pieceGrid[rowCheck][colCheck])
+                        int rowCheck = ((pieceCol.getHitBox().getY()) / gridSize) + 1;
+                        int colCheck = (pieceCol.getHitBox().getX() - this.hitbox.getX()) / gridSize;
+                        try
                         {
-                            this.activePiece.setState(EntityTetromino.State.IDLE);
+                            if (rowCheck < this.pieceGrid.length && this.pieceGrid[rowCheck][colCheck])
+                            {
+                                this.activePiece.setState(EntityTetronimo.State.IDLE);
+                                AudioManager.getInstance().play("place");
+                            }
+                        }
+                        catch (ArrayIndexOutOfBoundsException ignored)
+                        {
                         }
                     }
                 }
@@ -135,22 +164,32 @@ public class Grid
 
     public void draw()
     {
-        float x = (float) this.hitbox.getX();
-        float y = (float) this.hitbox.getY();
-        float w = (float) this.hitbox.getWidth();
-        float h = (float) this.hitbox.getHeight();
+        GL11.glColor3f(1F, 1F, 1F);
 
-
-        GL11.glColor3f(.5F, .5F, .5F);
-
-        GL11.glBegin(GL11.GL_QUADS);
-        GL11.glVertex2f(x, y);
-        GL11.glVertex2f(x + w, y);
-        GL11.glVertex2f(x + w, y + h);
-        GL11.glVertex2f(x, y + h);
+        GL11.glBegin(GL11.GL_LINES);
+        // Outline:
+        GL11.glVertex2f(this.hitbox.getX(), this.hitbox.getY());
+        GL11.glVertex2f(this.hitbox.getX() + this.hitbox.getWidth(), this.hitbox.getY());
+        GL11.glVertex2f(this.hitbox.getX() + this.hitbox.getWidth(), this.hitbox.getY());
+        GL11.glVertex2f(this.hitbox.getX() + this.hitbox.getWidth(), this.hitbox.getY() + this.hitbox.getHeight());
+        GL11.glVertex2f(this.hitbox.getX() + this.hitbox.getWidth(), this.hitbox.getY() + this.hitbox.getHeight());
+        GL11.glVertex2f(this.hitbox.getX(), this.hitbox.getY() + this.hitbox.getHeight());
+        GL11.glVertex2f(this.hitbox.getX(), this.hitbox.getY() + this.hitbox.getHeight());
+        GL11.glVertex2f(this.hitbox.getX(), this.hitbox.getY());
+        // Gridlines:
+        for (int rows = 1; rows < 25; rows++)
+        {
+            GL11.glVertex2f(this.hitbox.getX(), rows * gridSize);
+            GL11.glVertex2f(this.hitbox.getX() + this.hitbox.getWidth(), rows * gridSize);
+        }
+        for (int cols = 1; cols < 11; cols++)
+        {
+            GL11.glVertex2f(this.hitbox.getX() + (cols * gridSize), this.hitbox.getY());
+            GL11.glVertex2f(this.hitbox.getX() + (cols * gridSize), this.hitbox.getY() + this.hitbox.getHeight());
+        }
         GL11.glEnd();
 
-        for (EntityTetromino t : pieces)
+        for (EntityTetronimo t : pieces)
         {
             t.draw();
         }
@@ -161,8 +200,10 @@ public class Grid
         return this.isGameOver;
     }
 
-    public void obliterate(int row)
+    private void obliterate(int row)
     {
+        Random rand = new Random();
+        AudioManager.getInstance().play("obliterate_" + (rand.nextInt(3) + 1));
         for (int col = 0; col < pieceGrid[row].length; col++)
         {
             pieceGrid[row][col] = false;
@@ -173,14 +214,53 @@ public class Grid
             System.arraycopy(pieceGrid[i - 1], 0, pieceGrid[i], 0, pieceGrid[i].length);
         }
         Arrays.fill(pieceGrid[0], false);
+
+        // Graphically shift the pieces:
+        int yCap = this.getYForRow(row);
+        System.out.println("yCap=" + yCap);
+        for (EntityTetronimo t : pieces)
+        {
+            EntityPiece[][] m = t.getPieceMatrix();
+            for (int i = 0; i < m.length; i++)
+            {
+                for (int j = 0; j < m[i].length; j++)
+                {
+                    if (m[i][j] != null)
+                    {
+                        // REMOVE the piece if it's the row being obliterated
+                        if (m[i][j].getHitBox().getY() == yCap)
+                        {
+                            System.out.println("Nulling item at " + m[i][j].getHitBox().getY());
+                            m[i][j] = null;
+                        }
+                        // SHIFT the piece if it's above the row being obliterated
+                        else if (m[i][j].getHitBox().getY() < yCap)
+                        {
+                            System.out.println("Dropping item down at " + m[i][j].getHitBox().getY());
+                            m[i][j].getHitBox().translate(0, gridSize);
+                        }
+                    }
+                }
+            }
+        }
     }
 
-    public boolean[][] getPieceGrid()
+    @Override
+    public String toString()
     {
-        return pieceGrid;
+        StringBuilder ret = new StringBuilder();
+        for (int i = 0; i < this.pieceGrid.length; i++)
+        {
+            for (int j = 0; j < this.pieceGrid[i].length; j++)
+            {
+                ret.append(this.pieceGrid[i][j] ? 1 : 0);
+            }
+            ret.append("\n");
+        }
+        return ret.toString();
     }
 
-    public void checkRows()
+    private void checkRows()
     {
         for (int i = 0; i < pieceGrid.length; i++)
         {
@@ -191,7 +271,7 @@ public class Grid
         }
     }
 
-    public boolean isRowFull(int row)
+    private boolean isRowFull(int row)
     {
         for (int col = 0; col < pieceGrid[row].length; col++)
         {
@@ -201,5 +281,25 @@ public class Grid
             }
         }
         return true;
+    }
+
+    public int getY()
+    {
+        return this.hitbox.getY();
+    }
+
+    public int getX()
+    {
+        return this.hitbox.getX();
+    }
+
+    public int getHeight()
+    {
+        return this.hitbox.getHeight();
+    }
+
+    public int getWidth()
+    {
+        return this.hitbox.getWidth();
     }
 }

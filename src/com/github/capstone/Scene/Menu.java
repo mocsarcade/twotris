@@ -167,7 +167,13 @@ public class Menu extends Scene
      */
     public Scene nextScene()
     {
-        AudioManager.getInstance().play("resume");
+        for (Button b : buttons.keySet())
+        {
+            if (b.getText().toLowerCase().contains("resume"))
+            {
+                AudioManager.getInstance().play("resume");
+            }
+        }
         return nextScene;
     }
 

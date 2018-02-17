@@ -1,5 +1,7 @@
 package com.github.capstone.Entity;
 
+import com.github.capstone.Grid.Grid;
+import com.github.capstone.Manager.AudioManager;
 import com.github.capstone.Util.Palette;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.util.Color;
@@ -7,7 +9,7 @@ import org.lwjgl.util.Rectangle;
 
 import java.util.Random;
 
-public class EntityTetromino extends EntityBase
+public class EntityTetronimo extends EntityBase
 {
     private int size;
     public int speed;
@@ -17,7 +19,7 @@ public class EntityTetromino extends EntityBase
     private Rectangle hitBox;
     private int rotation;
     private Color color;
-    private int center;
+    private Grid grid;
 
     /**
      * @param none
@@ -25,10 +27,10 @@ public class EntityTetromino extends EntityBase
      * @throws none
      * @EntityTetromino This constructor method is used for setting the type, state, size, speed and color of the piece being made. It also initializes the rotation and keypress to zero.
      */
-    public EntityTetromino(int size, int center)
+    public EntityTetronimo(Grid grid)
     {
-        this.size = size;
-        this.center = center;
+        this.grid = grid;
+        this.size = grid.getGridSize();
         this.type = randomType();
         this.state = State.FALLING;
         this.speed = 1;
@@ -94,49 +96,49 @@ public class EntityTetromino extends EntityBase
         switch (this.type)
         {
             case L:
-                this.hitBox = new Rectangle(Display.getHeight() / 2, 0, 2 * size, 3 * size);
+                this.hitBox = new Rectangle(this.grid.getXForCol(4), 0, 2 * size, 3 * size);
                 return new EntityPiece[][]{
-                        {new EntityPiece(this.center, 0, size), null},
-                        {new EntityPiece(this.center, size, size), null},
-                        {new EntityPiece(this.center, 2 * size, size), new EntityPiece(this.center + size, 2 * size, size)}
+                        {new EntityPiece(this.grid.getXForCol(4), 0, size), null},
+                        {new EntityPiece(this.grid.getXForCol(4), size, size), null},
+                        {new EntityPiece(this.grid.getXForCol(4), 2 * size, size), new EntityPiece(this.grid.getXForCol(4) + size, 2 * size, size)}
                 };
             case S:
-                this.hitBox = new Rectangle(Display.getHeight() / 2, 0, 2 * size, 3 * size);
+                this.hitBox = new Rectangle(this.grid.getXForCol(4), 0, 2 * size, 3 * size);
                 return new EntityPiece[][]{
-                        {new EntityPiece(this.center, 0, size), null, null},
-                        {new EntityPiece(this.center, size, size), new EntityPiece(this.center + size, size, size), null},
-                        {null, new EntityPiece(this.center + size, 2 * size, size), null}
+                        {new EntityPiece(this.grid.getXForCol(4), 0, size), null, null},
+                        {new EntityPiece(this.grid.getXForCol(4), size, size), new EntityPiece(this.grid.getXForCol(4) + size, size, size), null},
+                        {null, new EntityPiece(this.grid.getXForCol(4) + size, 2 * size, size), null}
                 };
             case J:
-                this.hitBox = new Rectangle(Display.getHeight() / 2, 0, 2 * size, 3 * size);
+                this.hitBox = new Rectangle(this.grid.getXForCol(4), 0, 2 * size, 3 * size);
                 return new EntityPiece[][]{
-                        {null, new EntityPiece(this.center + size, 0, size)},
-                        {null, new EntityPiece(this.center + size, size, size)},
-                        {new EntityPiece(this.center, 2 * size, size), new EntityPiece(this.center + size, 2 * size, size)}
+                        {null, new EntityPiece(this.grid.getXForCol(4) + size, 0, size)},
+                        {null, new EntityPiece(this.grid.getXForCol(4) + size, size, size)},
+                        {new EntityPiece(this.grid.getXForCol(4), 2 * size, size), new EntityPiece(this.grid.getXForCol(4) + size, 2 * size, size)}
                 };
             case T:
-                this.hitBox = new Rectangle(Display.getHeight() / 2, 0, 3 * size, 2 * size);
+                this.hitBox = new Rectangle(this.grid.getXForCol(4), 0, 3 * size, 2 * size);
                 return new EntityPiece[][]{
-                        {new EntityPiece(this.center, 0, size), new EntityPiece(this.center + size, 0, size), new EntityPiece(this.center + (2 * size), 0, size)},
-                        {null, new EntityPiece(this.center + size, size, size), null}
+                        {new EntityPiece(this.grid.getXForCol(4), 0, size), new EntityPiece(this.grid.getXForCol(4) + size, 0, size), new EntityPiece(this.grid.getXForCol(4) + (2 * size), 0, size)},
+                        {null, new EntityPiece(this.grid.getXForCol(4) + size, size, size), null}
                 };
             case O:
-                this.hitBox = new Rectangle(Display.getHeight() / 2, 0, 2 * size, 2 * size);
+                this.hitBox = new Rectangle(this.grid.getXForCol(4), 0, 2 * size, 2 * size);
                 return new EntityPiece[][]{
-                        {new EntityPiece(this.center, 0, size), new EntityPiece(this.center + size, 0, size)},
-                        {new EntityPiece(this.center, size, size), new EntityPiece(this.center + size, size, size)}
+                        {new EntityPiece(this.grid.getXForCol(4), 0, size), new EntityPiece(this.grid.getXForCol(4) + size, 0, size)},
+                        {new EntityPiece(this.grid.getXForCol(4), size, size), new EntityPiece(this.grid.getXForCol(4) + size, size, size)}
                 };
             case I:
-                this.hitBox = new Rectangle(Display.getHeight() / 2, 0, 4 * size, size);
+                this.hitBox = new Rectangle(this.grid.getXForCol(4), 0, 4 * size, size);
                 return new EntityPiece[][]{
-                        {new EntityPiece(this.center, 0, size), new EntityPiece(this.center + size, 0, size), new EntityPiece(this.center + (2 * size), 0, size), new EntityPiece(this.center + (3 * size), 0, size)}
+                        {new EntityPiece(this.grid.getXForCol(4), 0, size), new EntityPiece(this.grid.getXForCol(4) + size, 0, size), new EntityPiece(this.grid.getXForCol(4) + (2 * size), 0, size), new EntityPiece(this.grid.getXForCol(4) + (3 * size), 0, size)}
                 };
             case Z:
-                this.hitBox = new Rectangle(Display.getHeight() / 2, 0, 2 * size, 3 * size);
+                this.hitBox = new Rectangle(this.grid.getXForCol(4), 0, 2 * size, 3 * size);
                 return new EntityPiece[][]{
-                        {null, new EntityPiece(this.center + size, 0, size)},
-                        {new EntityPiece(this.center, size, size), new EntityPiece(this.center + size, size, size)},
-                        {new EntityPiece(this.center, 2 * size, size), null}
+                        {null, new EntityPiece(this.grid.getXForCol(4) + size, 0, size)},
+                        {new EntityPiece(this.grid.getXForCol(4), size, size), new EntityPiece(this.grid.getXForCol(4) + size, size, size)},
+                        {new EntityPiece(this.grid.getXForCol(4), 2 * size, size), null}
                 };
         }
         return new EntityPiece[][]{};
@@ -165,9 +167,9 @@ public class EntityTetromino extends EntityBase
                 }
             }
 
-            if (this.getHitBox().getY() + this.getHitBox().getHeight() >= Display.getHeight())
+            if (this.getHitBox().getY() + this.getHitBox().getHeight() >= grid.getHeight())
             {
-                this.getHitBox().setY(Display.getHeight() - this.getHitBox().getHeight());
+                this.getHitBox().setY(grid.getHeight() - this.getHitBox().getHeight());
 
                 // Correct individual pieces too..
                 int offset = 0;
@@ -177,9 +179,9 @@ public class EntityTetromino extends EntityBase
                     {
                         if (row != null)
                         {
-                            if (row.getHitBox().getY() + row.getHitBox().getHeight() > Display.getHeight())
+                            if (row.getHitBox().getY() + row.getHitBox().getHeight() > grid.getHeight())
                             {
-                                offset = Math.abs((row.getHitBox().getY() + row.getHitBox().getHeight()) - Display.getHeight());
+                                offset = Math.abs((row.getHitBox().getY() + row.getHitBox().getHeight()) - grid.getHeight());
                                 break;
                             }
                         }
@@ -197,6 +199,7 @@ public class EntityTetromino extends EntityBase
                     }
                 }
 
+                AudioManager.getInstance().play("place");
                 this.state = State.IDLE;
             }
             this.getHitBox().translate(0, this.speed);
