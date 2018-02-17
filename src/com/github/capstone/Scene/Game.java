@@ -1,7 +1,7 @@
 package com.github.capstone.Scene;
 
+import com.github.capstone.Grid.Grid;
 import com.github.capstone.Manager.AudioManager;
-import com.github.capstone.Manager.PieceManager;
 import com.github.capstone.Twotris;
 import com.github.capstone.Util.Helper;
 import org.lwjgl.input.Keyboard;
@@ -18,6 +18,7 @@ public class Game extends Scene
     private int score;
     private TrueTypeFont font;
     private Menu pauseMenu;
+    private Grid grid;
 
     /**
      * @param none
@@ -27,9 +28,9 @@ public class Game extends Scene
      */
     public Game()
     {
-        new PieceManager(); // We can just call it, because once it's called we access it statically via getInstance()
         this.isGameOver = false;
         this.font = Helper.getFont();
+        this.grid = new Grid();
     }
 
     /**
@@ -83,11 +84,7 @@ public class Game extends Scene
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, 0);
 
         // TODO: Insert working logic here
-        PieceManager.getInstance().update(delta);
-        if (!isGameOver && (PieceManager.getInstance().isPieceColliding() || !PieceManager.getInstance().isPieceStillFalling()))
-        {
-            PieceManager.getInstance().generateNewTetronimo();
-        }
+        grid.update(delta);
 
         if (Keyboard.isKeyDown(Keyboard.KEY_F2))
         {
@@ -116,8 +113,7 @@ public class Game extends Scene
         }
 
         // TODO: Put working draw code here:
-        PieceManager.getInstance().draw();
-
+        grid.draw();
 
         TextureImpl.bindNone();
         font.drawString(0, 0, "" + this.score);
