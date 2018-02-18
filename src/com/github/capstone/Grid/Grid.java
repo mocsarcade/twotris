@@ -28,7 +28,12 @@ public class Grid
         // The grid should be 24 rows tall, 10 wide
         pieceGrid = new boolean[24][10];
         this.hitbox = new Rectangle();
-        this.hitbox.setHeight(Display.getHeight());
+        int h = Display.getHeight();
+        while (h % 24 != 0)
+        {
+            h--;
+        }
+        this.hitbox.setHeight(h);
         this.hitbox.setWidth((int) (this.hitbox.getHeight() / 2.4));
         this.hitbox.setX((Display.getWidth() / 2) - (this.hitbox.getWidth() / 2));
         this.hitbox.setY(0);
@@ -59,15 +64,20 @@ public class Grid
         if (Display.wasResized())
         {
             // Do recalculation algorithm
-            this.hitbox.setHeight(Display.getHeight());
+            int h = Display.getHeight();
+            while (h % 24 != 0)
+            {
+                h--;
+            }
+            this.hitbox.setHeight(h);
             this.hitbox.setWidth((int) (this.hitbox.getHeight() / 2.4));
             this.hitbox.setX((Display.getWidth() / 2) - (this.hitbox.getWidth() / 2));
-            this.hitbox.setY(4);
+            this.hitbox.setY(0);
             this.gridSize = this.hitbox.getWidth() / 10;
-            for (EntityTetronimo t : pieces)
-            {
-                t.updateSize(this.gridSize);
-            }
+            // Remove and re-add the piece with newly calculated locations
+            pieces.remove(this.activePiece);
+            this.activePiece = new EntityTetronimo(this);
+            pieces.add(this.activePiece);
         }
 
         if (Keyboard.isKeyDown(Keyboard.KEY_A) && Helper.getTime() - lastKeypress > 250)
@@ -217,7 +227,6 @@ public class Grid
 
         // Graphically shift the pieces:
         int yCap = this.getYForRow(row);
-        System.out.println("yCap=" + yCap);
         for (EntityTetronimo t : pieces)
         {
             EntityPiece[][] m = t.getPieceMatrix();
@@ -230,13 +239,11 @@ public class Grid
                         // REMOVE the piece if it's the row being obliterated
                         if (m[i][j].getHitBox().getY() == yCap)
                         {
-                            System.out.println("Nulling item at " + m[i][j].getHitBox().getY());
                             m[i][j] = null;
                         }
                         // SHIFT the piece if it's above the row being obliterated
                         else if (m[i][j].getHitBox().getY() < yCap)
                         {
-                            System.out.println("Dropping item down at " + m[i][j].getHitBox().getY());
                             m[i][j].getHitBox().translate(0, gridSize);
                         }
                     }
