@@ -3,6 +3,7 @@ package com.github.capstone.Grid;
 import com.github.capstone.Entity.EntityPiece;
 import com.github.capstone.Entity.EntityTetronimo;
 import com.github.capstone.Manager.AudioManager;
+import com.github.capstone.Twotris;
 import com.github.capstone.Util.Helper;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
@@ -174,31 +175,33 @@ public class Grid
 
     public void draw()
     {
-        GL11.glColor3f(1F, 1F, 1F);
-
-        GL11.glBegin(GL11.GL_LINES);
-        // Outline:
-        GL11.glVertex2f(this.hitbox.getX(), this.hitbox.getY());
-        GL11.glVertex2f(this.hitbox.getX() + this.hitbox.getWidth(), this.hitbox.getY());
-        GL11.glVertex2f(this.hitbox.getX() + this.hitbox.getWidth(), this.hitbox.getY());
-        GL11.glVertex2f(this.hitbox.getX() + this.hitbox.getWidth(), this.hitbox.getY() + this.hitbox.getHeight());
-        GL11.glVertex2f(this.hitbox.getX() + this.hitbox.getWidth(), this.hitbox.getY() + this.hitbox.getHeight());
-        GL11.glVertex2f(this.hitbox.getX(), this.hitbox.getY() + this.hitbox.getHeight());
-        GL11.glVertex2f(this.hitbox.getX(), this.hitbox.getY() + this.hitbox.getHeight());
-        GL11.glVertex2f(this.hitbox.getX(), this.hitbox.getY());
-        // Gridlines:
-        for (int rows = 1; rows < 25; rows++)
+        if (Twotris.getInstance().config.grid)
         {
-            GL11.glVertex2f(this.hitbox.getX(), rows * gridSize);
-            GL11.glVertex2f(this.hitbox.getX() + this.hitbox.getWidth(), rows * gridSize);
-        }
-        for (int cols = 1; cols < 11; cols++)
-        {
-            GL11.glVertex2f(this.hitbox.getX() + (cols * gridSize), this.hitbox.getY());
-            GL11.glVertex2f(this.hitbox.getX() + (cols * gridSize), this.hitbox.getY() + this.hitbox.getHeight());
-        }
-        GL11.glEnd();
+            GL11.glColor3f(1F, 1F, 1F);
 
+            GL11.glBegin(GL11.GL_LINES);
+            // Outline:
+            GL11.glVertex2f(this.hitbox.getX(), this.hitbox.getY());
+            GL11.glVertex2f(this.hitbox.getX() + this.hitbox.getWidth(), this.hitbox.getY());
+            GL11.glVertex2f(this.hitbox.getX() + this.hitbox.getWidth(), this.hitbox.getY());
+            GL11.glVertex2f(this.hitbox.getX() + this.hitbox.getWidth(), this.hitbox.getY() + this.hitbox.getHeight());
+            GL11.glVertex2f(this.hitbox.getX() + this.hitbox.getWidth(), this.hitbox.getY() + this.hitbox.getHeight());
+            GL11.glVertex2f(this.hitbox.getX(), this.hitbox.getY() + this.hitbox.getHeight());
+            GL11.glVertex2f(this.hitbox.getX(), this.hitbox.getY() + this.hitbox.getHeight());
+            GL11.glVertex2f(this.hitbox.getX(), this.hitbox.getY());
+            // Gridlines:
+            for (int rows = 1; rows < 25; rows++)
+            {
+                GL11.glVertex2f(this.hitbox.getX(), rows * gridSize);
+                GL11.glVertex2f(this.hitbox.getX() + this.hitbox.getWidth(), rows * gridSize);
+            }
+            for (int cols = 1; cols < 11; cols++)
+            {
+                GL11.glVertex2f(this.hitbox.getX() + (cols * gridSize), this.hitbox.getY());
+                GL11.glVertex2f(this.hitbox.getX() + (cols * gridSize), this.hitbox.getY() + this.hitbox.getHeight());
+            }
+            GL11.glEnd();
+        }
         for (EntityTetronimo t : pieces)
         {
             t.draw();

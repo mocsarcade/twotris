@@ -18,10 +18,15 @@ public class Config
     public float volume;
     public boolean colorblind;
     public String font;
+    private LoopArrayList<String> font_options;
+    public boolean fullscreen;
+    public boolean grid;
+
     private String volume_label = "Volume";
     private String colorblind_label = "Colors";
     private String font_label = "Font";
-    private LoopArrayList<String> font_options;
+    private String fullscreen_label = "Fullscreen";
+    private String grid_label = "Show Grid";
 
     /**
      * @return none
@@ -53,6 +58,8 @@ public class Config
         options.addButton(volume_label + ":" + (int) (volume * 100));
         options.addButton(colorblind_label + ":" + colorblind);
         options.addButton(font_label + ":" + font);
+        options.addButton(fullscreen_label + ":" + fullscreen);
+        options.addButton(grid_label + ":" + grid);
     }
 
     /**
@@ -73,6 +80,8 @@ public class Config
             this.volume = Integer.parseInt(props.getProperty(volume_label, "50")) / 100F; // divide by one hundred because users understand 0 -> 100 better than 0.0 -> 1.0
             this.colorblind = Boolean.parseBoolean(props.getProperty(colorblind_label, "false"));
             this.font = props.getProperty(font_label, "Chickenpox");
+            this.fullscreen = Boolean.parseBoolean(props.getProperty(fullscreen_label, "false"));
+            this.grid = Boolean.parseBoolean(props.getProperty("show_grid", "false"));
 
             reader.close();
         }
@@ -108,10 +117,14 @@ public class Config
         props.setProperty(volume_label, "50");
         props.setProperty(colorblind_label, "false");
         props.setProperty(font_label, "Chickenpox");
+        props.setProperty(fullscreen_label, "false");
+        props.setProperty("show_grid", "false");
 
         this.volume = Integer.parseInt(props.getProperty(volume_label, "50")) / 100F; // divide by one hundred because users understand 0 -> 100 better than 0.0 -> 1.0
         this.colorblind = Boolean.parseBoolean(props.getProperty(colorblind_label, "false"));
         this.font = props.getProperty(font_label, "Chickenpox");
+        this.fullscreen = Boolean.parseBoolean(props.getProperty(fullscreen_label, "false"));
+        this.grid = Boolean.parseBoolean(props.getProperty("show_grid", "false"));
 
         FileWriter writer = new FileWriter(configFile);
         props.store(writer, "Twotris Settings");
@@ -136,6 +149,8 @@ public class Config
             props.setProperty(volume_label, "" + (int) (volume * 100));
             props.setProperty(colorblind_label, "" + colorblind);
             props.setProperty(font_label, font);
+            props.setProperty(fullscreen_label, "" + fullscreen);
+            props.setProperty("show_grid", "" + grid);
 
             props.store(new FileWriter(configFile), "Twotris Settings");
             loadConfig();
@@ -173,6 +188,18 @@ public class Config
             button.setButtonText(font_label + ":" + this.font);
             Helper.fontName = this.font.toLowerCase();
             button.setFont(Helper.getFont());
+            this.updateConfig();
+        }
+        else if (option.equalsIgnoreCase("fullscreen"))
+        {
+            this.fullscreen = !this.fullscreen;
+            button.setButtonText(fullscreen_label + ":" + this.fullscreen);
+            this.updateConfig();
+        }
+        else if (option.equalsIgnoreCase("show grid"))
+        {
+            this.grid = !this.grid;
+            button.setButtonText(grid_label + ":" + grid);
             this.updateConfig();
         }
     }

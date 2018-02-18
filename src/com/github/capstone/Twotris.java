@@ -39,7 +39,7 @@ public class Twotris
         instance = this;
         this.config = new Config();
         this.screenshotManager = new ScreenshotManager();
-        this.fullscreen = false;
+        this.fullscreen = config.fullscreen;
         initGL();
         initSounds();
         initGame();
@@ -129,8 +129,7 @@ public class Twotris
     public void initGL()
     {
         setDisplayMode(800, 600, fullscreen);
-        // TODO: Official name goes here:
-        Display.setTitle("Senior Capstone");
+        Display.setTitle("Twotris");
         // Centers the window
         Display.setLocation((Toolkit.getDefaultToolkit().getScreenSize().width / 2) - (800 / 2),
                 (Toolkit.getDefaultToolkit().getScreenSize().height / 2) - (600 / 2));

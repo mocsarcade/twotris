@@ -1,5 +1,7 @@
 #Twotris Settings
-#Thu Feb 15 09:51:01 EST 2018
-Volume=40
-Colors=true
-Font=m5x7
+#Sat Feb 17 18:37:30 CST 2018
+Fullscreen=false
+Volume=50
+show_grid=true
+Colors=false
+Font=Chickenpox
