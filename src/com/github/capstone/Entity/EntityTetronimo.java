@@ -39,6 +39,21 @@ public class EntityTetronimo extends EntityBase
         this.color = Palette.values()[type.index].color;
     }
 
+    public void translate(int x, int y)
+    {
+        this.hitBox.translate(x, y);
+        for (EntityPiece[] r : pieceMatrix)
+        {
+            for (EntityPiece c : r)
+            {
+                if (c != null)
+                {
+                    c.getHitBox().translate(x, y);
+                }
+            }
+        }
+    }
+
     public void moveLeft()
     {
         this.hitBox.translate(-size, 0);

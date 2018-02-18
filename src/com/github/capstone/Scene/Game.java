@@ -69,6 +69,10 @@ public class Game extends Scene
         {
             updatePauseMenu();
         }
+        if (Display.wasResized())
+        {
+            this.grid = new Grid();
+        }
 
         GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
         GL11.glClearColor(.09F, 0.09F, 0.09F, 0F);

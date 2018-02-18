@@ -62,25 +62,6 @@ public class Grid
 
     public void update(float delta)
     {
-        if (Display.wasResized())
-        {
-            // Do recalculation algorithm
-            int h = Display.getHeight();
-            while (h % 24 != 0)
-            {
-                h--;
-            }
-            this.hitbox.setHeight(h);
-            this.hitbox.setWidth((int) (this.hitbox.getHeight() / 2.4));
-            this.hitbox.setX((Display.getWidth() / 2) - (this.hitbox.getWidth() / 2));
-            this.hitbox.setY(0);
-            this.gridSize = this.hitbox.getWidth() / 10;
-            // Remove and re-add the piece with newly calculated locations
-            pieces.remove(this.activePiece);
-            this.activePiece = new EntityTetronimo(this);
-            pieces.add(this.activePiece);
-        }
-
         if (Keyboard.isKeyDown(Keyboard.KEY_A) && Helper.getTime() - lastKeypress > 250)
         {
             if ((this.activePiece.getHitBox().getX()) > this.hitbox.getX())

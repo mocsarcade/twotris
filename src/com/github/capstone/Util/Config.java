@@ -81,7 +81,7 @@ public class Config
             this.colorblind = Boolean.parseBoolean(props.getProperty(colorblind_label, "false"));
             this.font = props.getProperty(font_label, "Chickenpox");
             this.fullscreen = Boolean.parseBoolean(props.getProperty(fullscreen_label, "false"));
-            this.grid = Boolean.parseBoolean(props.getProperty("show_grid", "false"));
+            this.grid = Boolean.parseBoolean(props.getProperty("Show_Grid", "false"));
 
             reader.close();
         }
@@ -118,13 +118,13 @@ public class Config
         props.setProperty(colorblind_label, "false");
         props.setProperty(font_label, "Chickenpox");
         props.setProperty(fullscreen_label, "false");
-        props.setProperty("show_grid", "false");
+        props.setProperty("Show_Grid", "false");
 
         this.volume = Integer.parseInt(props.getProperty(volume_label, "50")) / 100F; // divide by one hundred because users understand 0 -> 100 better than 0.0 -> 1.0
         this.colorblind = Boolean.parseBoolean(props.getProperty(colorblind_label, "false"));
         this.font = props.getProperty(font_label, "Chickenpox");
         this.fullscreen = Boolean.parseBoolean(props.getProperty(fullscreen_label, "false"));
-        this.grid = Boolean.parseBoolean(props.getProperty("show_grid", "false"));
+        this.grid = Boolean.parseBoolean(props.getProperty("Show_Grid", "false"));
 
         FileWriter writer = new FileWriter(configFile);
         props.store(writer, "Twotris Settings");
@@ -150,7 +150,7 @@ public class Config
             props.setProperty(colorblind_label, "" + colorblind);
             props.setProperty(font_label, font);
             props.setProperty(fullscreen_label, "" + fullscreen);
-            props.setProperty("show_grid", "" + grid);
+            props.setProperty("Show_Grid", "" + grid);
 
             props.store(new FileWriter(configFile), "Twotris Settings");
             loadConfig();
