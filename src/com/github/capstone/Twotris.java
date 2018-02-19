@@ -27,6 +27,8 @@ public class Twotris
     public Config config;
     public ScreenshotManager screenshotManager;
     private boolean fullscreen;
+    private int startWidth;
+    private int startHeight;
 
     /**
      * @param none
@@ -40,6 +42,8 @@ public class Twotris
         this.config = new Config();
         this.screenshotManager = new ScreenshotManager();
         this.fullscreen = config.fullscreen;
+        startWidth = this.fullscreen ? Toolkit.getDefaultToolkit().getScreenSize().width : 800;
+        startHeight = this.fullscreen ? Toolkit.getDefaultToolkit().getScreenSize().height : 600;
         initGL();
         initSounds();
         initGame();
@@ -126,13 +130,13 @@ public class Twotris
      * @throws none
      * @initGL This method is used for displaying the game and centering the window.
      */
-    public void initGL()
+    private void initGL()
     {
-        setDisplayMode(800, 600, fullscreen);
+        setDisplayMode(this.startWidth, this.startHeight, this.fullscreen);
         Display.setTitle("Twotris");
         // Centers the window
-        Display.setLocation((Toolkit.getDefaultToolkit().getScreenSize().width / 2) - (800 / 2),
-                (Toolkit.getDefaultToolkit().getScreenSize().height / 2) - (600 / 2));
+        Display.setLocation((Toolkit.getDefaultToolkit().getScreenSize().width / 2) - (startWidth / 2),
+                (Toolkit.getDefaultToolkit().getScreenSize().height / 2) - (startHeight / 2));
 
         initIcon();
 
@@ -151,10 +155,10 @@ public class Twotris
         GL11.glClearColor(0F, 0F, 0F, 0.0f);
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-        GL11.glViewport(0, 0, 800, 600);
+        GL11.glViewport(0, 0, this.startWidth, this.startHeight);
         GL11.glMatrixMode(GL11.GL_PROJECTION);
         GL11.glLoadIdentity();
-        GL11.glOrtho(0, 800, 600, 0, 1, -1);
+        GL11.glOrtho(0, this.startWidth, this.startHeight, 0, 1, -1);
         GL11.glMatrixMode(GL11.GL_MODELVIEW);
     }
 
@@ -169,8 +173,9 @@ public class Twotris
     public void setDisplayMode(int width, int height, boolean fullscreen)
     {
         if ((Display.getDisplayMode().getWidth() == width) && (Display.getDisplayMode().getHeight() == height) && (Display.isFullscreen() == fullscreen))
+        {
             return;
-
+        }
         try
         {
             org.lwjgl.opengl.DisplayMode targetDisplayMode = null;
