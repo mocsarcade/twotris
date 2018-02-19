@@ -190,20 +190,21 @@ public class Grid
 
     public void draw()
     {
+        GL11.glColor3f(1F, 1F, 1F);
+
+        GL11.glBegin(GL11.GL_LINES);
+        // Outline:
+        GL11.glVertex2f(this.hitbox.getX(), this.hitbox.getY());
+        GL11.glVertex2f(this.hitbox.getX() + this.hitbox.getWidth(), this.hitbox.getY());
+        GL11.glVertex2f(this.hitbox.getX() + this.hitbox.getWidth(), this.hitbox.getY());
+        GL11.glVertex2f(this.hitbox.getX() + this.hitbox.getWidth(), this.hitbox.getY() + this.hitbox.getHeight());
+        GL11.glVertex2f(this.hitbox.getX() + this.hitbox.getWidth(), this.hitbox.getY() + this.hitbox.getHeight());
+        GL11.glVertex2f(this.hitbox.getX(), this.hitbox.getY() + this.hitbox.getHeight());
+        GL11.glVertex2f(this.hitbox.getX(), this.hitbox.getY() + this.hitbox.getHeight());
+        GL11.glVertex2f(this.hitbox.getX(), this.hitbox.getY());
+
         if (Twotris.getInstance().config.grid)
         {
-            GL11.glColor3f(1F, 1F, 1F);
-
-            GL11.glBegin(GL11.GL_LINES);
-            // Outline:
-            GL11.glVertex2f(this.hitbox.getX(), this.hitbox.getY());
-            GL11.glVertex2f(this.hitbox.getX() + this.hitbox.getWidth(), this.hitbox.getY());
-            GL11.glVertex2f(this.hitbox.getX() + this.hitbox.getWidth(), this.hitbox.getY());
-            GL11.glVertex2f(this.hitbox.getX() + this.hitbox.getWidth(), this.hitbox.getY() + this.hitbox.getHeight());
-            GL11.glVertex2f(this.hitbox.getX() + this.hitbox.getWidth(), this.hitbox.getY() + this.hitbox.getHeight());
-            GL11.glVertex2f(this.hitbox.getX(), this.hitbox.getY() + this.hitbox.getHeight());
-            GL11.glVertex2f(this.hitbox.getX(), this.hitbox.getY() + this.hitbox.getHeight());
-            GL11.glVertex2f(this.hitbox.getX(), this.hitbox.getY());
             // Gridlines:
             for (int rows = 1; rows < 25; rows++)
             {
@@ -215,8 +216,9 @@ public class Grid
                 GL11.glVertex2f(this.hitbox.getX() + (cols * gridSize), this.hitbox.getY());
                 GL11.glVertex2f(this.hitbox.getX() + (cols * gridSize), this.hitbox.getY() + this.hitbox.getHeight());
             }
-            GL11.glEnd();
         }
+        GL11.glEnd();
+
         for (EntityTetronimo t : pieces)
         {
             t.draw();
