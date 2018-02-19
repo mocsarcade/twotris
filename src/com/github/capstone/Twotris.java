@@ -42,8 +42,8 @@ public class Twotris
         this.config = new Config();
         this.screenshotManager = new ScreenshotManager();
         this.fullscreen = config.fullscreen;
-        startWidth = this.fullscreen ? Toolkit.getDefaultToolkit().getScreenSize().width : 800;
-        startHeight = this.fullscreen ? Toolkit.getDefaultToolkit().getScreenSize().height : 600;
+        this.startWidth = this.fullscreen ? Toolkit.getDefaultToolkit().getScreenSize().width : 800;
+        this.startHeight = this.fullscreen ? Toolkit.getDefaultToolkit().getScreenSize().height : 600;
         initGL();
         initSounds();
         initGame();
