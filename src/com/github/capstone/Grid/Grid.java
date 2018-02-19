@@ -80,8 +80,34 @@ public class Grid
         }
         else if (Keyboard.isKeyDown(Keyboard.KEY_R) && Helper.getTime() - lastKeypress > 250)
         {
-            this.activePiece.rotate();
-            lastKeypress = Helper.getTime();
+            // Create a rotated clone rectangle, and see where we end up
+            boolean canRotate = true;
+            Rectangle rotatedClone = new Rectangle(this.activePiece.getHitBox().getX(), this.activePiece.getHitBox().getY(), this.activePiece.getHitBox().getHeight(), this.activePiece.getHitBox().getWidth());
+            int rowsTall = rotatedClone.getHeight() / this.gridSize;
+            int colsWide = rotatedClone.getWidth() / this.gridSize;
+            int startRow = this.activePiece.getHitBox().getY() / gridSize;
+            int startCol = (this.activePiece.getHitBox().getX() - this.hitbox.getX()) / gridSize;
+
+            for (int i = 0; i < rowsTall; i++)
+            {
+                for (int j = 0; j < colsWide; j++)
+                {
+                    if (pieceGrid[startRow + i][startCol + j])
+                    {
+                        canRotate = false;
+                        break;
+                    }
+                }
+            }
+            if (canRotate)
+            {
+                this.activePiece.rotate();
+                lastKeypress = Helper.getTime();
+            }
+            else
+            {
+                // TODO: Play a sound here or something
+            }
         }
 
         if (Keyboard.isKeyDown(Keyboard.KEY_SPACE))
