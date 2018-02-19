@@ -37,17 +37,18 @@ public class Game extends Scene
      */
     private void updatePauseMenu()
     {
-        pauseMenu = new Menu("gui/paused");
+        pauseMenu = this.isGameOver ? new Menu("gui/game_over") : new Menu("gui/paused");
         if (isGameOver)
         {
             pauseMenu.addButton(new Button(0, 0, "Play Again"), new Game());
+            pauseMenu.addButton(new Button(0, 0, "Main Menu"), new MainMenu());
         }
         else
         {
             pauseMenu.addButton(new Button(0, 0, "Resume"), this);
             pauseMenu.addButton(new Button(0, 0, "Options"), new Options(this));
+            pauseMenu.addButton(new Button(0, 0, "Save & Quit"), new MainMenu());
         }
-        pauseMenu.addButton(new Button(0, 0, "Save & Quit"), new MainMenu());
         pauseMenu.adjustButtons();
     }
 
@@ -119,6 +120,10 @@ public class Game extends Scene
         grid.draw();
 
         this.isGameOver = grid.isGameOver();
+        if (this.isGameOver)
+        {
+            updatePauseMenu();
+        }
 
         TextureImpl.bindNone();
         font.drawString(0, 0, "" + this.score);

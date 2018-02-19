@@ -117,12 +117,20 @@ public class Grid
             // Step 3: regular update stuff:
             this.checkRows();
             // Step 4: Generate a new piece
-            this.activePiece = new EntityTetronimo(this);
-            if (this.activePiece.getHitBox().getX() < 0)
+            for (int col = 0; col < pieceGrid[0].length; col++)
             {
-                this.isGameOver = true;
+                // Game over if any of the top row is full
+                if (pieceGrid[0][col])
+                {
+                    this.isGameOver = true;
+                    break;
+                }
             }
-            this.pieces.add(this.activePiece);
+            if (!this.isGameOver)
+            {
+                this.activePiece = new EntityTetronimo(this);
+                this.pieces.add(this.activePiece);
+            }
         }
         else
         {
