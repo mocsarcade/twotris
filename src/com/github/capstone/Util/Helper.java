@@ -15,7 +15,7 @@ import java.util.Random;
 
 public class Helper
 {
-    public static String fontName = Twotris.getInstance().config.font;
+    public static String fontName = Twotris.getInstance().config.font.toLowerCase();
 
     /**
      * @param none
@@ -87,11 +87,19 @@ public class Helper
     {
         try
         {
-            File fontFile = new File("natives/fontname.ttf".replace("/", File.separator).replace("fontname", fontName)).getAbsoluteFile();
+            File fontFile = new File("natives/fonts/fontname.ttf".replace("/", File.separator).replace("fontname", fontName)).getAbsoluteFile();
             if (!fontFile.exists())
             {
                 System.out.println("Font did not exist; copying...");
-                FileUtils.copyStream(ResourceLoader.getResourceAsStream("assets/" + fontName + ".ttf"), new File("natives/fontname.ttf".replace("/", File.separator).replace("fontname", fontName)));
+                File extractedFontFolder = new File("natives/fonts".replace("/", File.separator));
+                if (!extractedFontFolder.exists())
+                {
+                    if (!extractedFontFolder.mkdir())
+                    {
+                        throw new RuntimeException();
+                    }
+                }
+                FileUtils.copyStream(ResourceLoader.getResourceAsStream("assets/fonts/fontname.ttf".replace("/", File.separator).replace("fontname", fontName)), new File("natives/fonts/fontname.ttf".replace("/", File.separator).replace("fontname", fontName)));
             }
 
             Font awtFont = Font.createFont(Font.TRUETYPE_FONT, fontFile).deriveFont(32F);
@@ -99,6 +107,7 @@ public class Helper
         }
         catch (IOException | FontFormatException e)
         {
+            e.printStackTrace();
             return new TrueTypeFont(new Font("Arial", Font.PLAIN, 32), false);
         }
     }
