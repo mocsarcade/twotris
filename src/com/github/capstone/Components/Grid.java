@@ -346,28 +346,32 @@ public class Grid
      */
     private boolean canMove(String direction)
     {
+
         // Create a rectangle clone and move it according to the movement we're wanting
-        Rectangle movedClone = new Rectangle(this.activePiece.getHitBox().getX(), this.activePiece.getHitBox().getY(), this.activePiece.getHitBox().getWidth(), this.activePiece.getHitBox().getHeight());
-        movedClone.translate(direction.equalsIgnoreCase("left") ? -this.gridSize : this.gridSize, 0);
-
-        int rowsTall = movedClone.getHeight() / this.gridSize;
-        int colsWide = movedClone.getWidth() / this.gridSize;
-        int startRow = movedClone.getY() / gridSize;
-        int startCol = (movedClone.getX() - this.hitbox.getX()) / gridSize;
-
-        for (int i = 0; i < rowsTall; i++)
+        for (TetronimoPiece[] row : this.activePiece.getPieceMatrix())
         {
-            for (int j = 0; j < colsWide; j++)
+            for (TetronimoPiece col : row)
             {
-                if (startCol + j >= pieceGrid[0].length)
+                if (col == null)
+                {
+                    continue;
+                }
+                
+                Rectangle movedClone = new Rectangle(col.getHitBox().getX(), col.getHitBox().getY(), col.getHitBox().getWidth(), col.getHitBox().getHeight());
+                movedClone.translate(direction.equalsIgnoreCase("left") ? -this.gridSize : this.gridSize, 0);
+
+                int movedRow = movedClone.getY() / gridSize;
+                int movedCol = (movedClone.getX() - this.hitbox.getX()) / gridSize;
+
+                if (movedCol >= pieceGrid[0].length)
                 {
                     return false;
                 }
-                if (startCol + j < 0)
+                if (movedCol < 0)
                 {
                     return false;
                 }
-                if (pieceGrid[startRow + i][startCol + j])
+                if (pieceGrid[movedRow][movedCol])
                 {
                     return false;
                 }
