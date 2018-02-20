@@ -1,6 +1,5 @@
 package com.github.capstone;
 
-import com.github.capstone.Components.ColorPalette;
 import com.github.capstone.Manager.AudioManager;
 import com.github.capstone.Manager.ScreenshotManager;
 import com.github.capstone.Scene.MainMenu;

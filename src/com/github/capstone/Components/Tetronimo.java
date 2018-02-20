@@ -10,8 +10,8 @@ import java.util.Random;
 
 public class Tetronimo
 {
-    private int size;
     public int speed;
+    private int size;
     private Type type;
     private State state;
     private TetronimoPiece[][] pieceMatrix;
@@ -26,7 +26,7 @@ public class Tetronimo
      * @throws none
      * @EntityTetromino This constructor method is used for setting the type, state, size, speed and color of the piece being made. It also initializes the rotation and keypress to zero.
      */
-    public Tetronimo(Grid grid)
+    Tetronimo(Grid grid)
     {
         this.grid = grid;
         this.size = grid.getGridSize();

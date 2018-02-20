@@ -6,8 +6,8 @@ import java.util.HashMap;
 
 public class ColorPalette
 {
-    public HashMap<String, Color[]> colors;
     private static ColorPalette instance;
+    public HashMap<String, Color[]> colors;
 
     public ColorPalette()
     {

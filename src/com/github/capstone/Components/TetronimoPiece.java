@@ -58,8 +58,6 @@ public class TetronimoPiece
      */
     public void draw(Color color)
     {
-
-
         float x = (float) this.hitbox.getX();
         float y = (float) this.hitbox.getY();
         float w = (float) this.hitbox.getWidth();

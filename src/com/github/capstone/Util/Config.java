@@ -19,11 +19,10 @@ public class Config
     public float volume;
     public String colorscheme;
     public String font;
-    private LoopArrayList<String> font_options;
-    private LoopArrayList<String> color_options;
     public boolean fullscreen;
     public boolean grid;
-
+    private LoopArrayList<String> font_options;
+    private LoopArrayList<String> color_options;
     private String volume_label = "Volume";
     private String colorscheme_label = "Colors";
     private String font_label = "Font";
