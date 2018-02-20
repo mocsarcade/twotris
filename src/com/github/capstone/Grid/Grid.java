@@ -64,18 +64,26 @@ public class Grid
     {
         if (Keyboard.isKeyDown(Keyboard.KEY_A) && Helper.getTime() - lastKeypress > 250)
         {
-            if ((this.activePiece.getHitBox().getX()) > this.hitbox.getX())
+            if (canMove("left"))
             {
                 this.activePiece.moveLeft();
                 lastKeypress = Helper.getTime();
             }
+            else
+            {
+                // TODO: play sound here
+            }
         }
         else if (Keyboard.isKeyDown(Keyboard.KEY_D) && Helper.getTime() - lastKeypress > 250)
         {
-            if ((this.activePiece.getHitBox().getX() + this.activePiece.getHitBox().getWidth()) < this.hitbox.getX() + this.hitbox.getWidth())
+            if (canMove("right"))
             {
                 this.activePiece.moveRight();
                 lastKeypress = Helper.getTime();
+            }
+            else
+            {
+                // TODO: play sound here
             }
         }
         else if (Keyboard.isKeyDown(Keyboard.KEY_R) && Helper.getTime() - lastKeypress > 250)
@@ -334,4 +342,38 @@ public class Grid
     {
         return this.hitbox.getWidth();
     }
+
+    public boolean canMove(String direction)
+    {
+        // Create a rectangle clone and move it according to the movement we're wanting
+        Rectangle movedClone = new Rectangle(this.activePiece.getHitBox().getX(), this.activePiece.getHitBox().getY(), this.activePiece.getHitBox().getWidth(), this.activePiece.getHitBox().getHeight());
+        movedClone.translate(direction.equalsIgnoreCase("left") ? -this.gridSize : this.gridSize, 0);
+
+        int rowsTall = movedClone.getHeight() / this.gridSize;
+        int colsWide = movedClone.getWidth() / this.gridSize;
+        int startRow = movedClone.getY() / gridSize;
+        int startCol = (movedClone.getX() - this.hitbox.getX()) / gridSize;
+
+        for (int i = 0; i < rowsTall; i++)
+        {
+            for (int j = 0; j < colsWide; j++)
+            {
+                if (startCol + j >= pieceGrid[0].length)
+                {
+                    return false;
+                }
+                if (startCol + j < 0)
+                {
+                    return false;
+                }
+                if (pieceGrid[startRow + i][startCol + j])
+                {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
 }
