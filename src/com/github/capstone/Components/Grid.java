@@ -356,7 +356,7 @@ public class Grid
                 {
                     continue;
                 }
-                
+
                 Rectangle movedClone = new Rectangle(col.getHitBox().getX(), col.getHitBox().getY(), col.getHitBox().getWidth(), col.getHitBox().getHeight());
                 movedClone.translate(direction.equalsIgnoreCase("left") ? -this.gridSize : this.gridSize, 0);
 
