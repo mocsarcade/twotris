@@ -51,6 +51,7 @@ public class Config
         ColorPalette.getInstance().addColorPallete("Default", "fa0012", "00b6a3", "ffa500", "ec0868", "05e662", "c200fb", "ffffff");
         ColorPalette.getInstance().addColorPallete("Darker", "fa1200", "0562e6", "ff00a5", "00a3b6", "c2fb00", "ffffff", "ec6808");
         ColorPalette.getInstance().addColorPallete("CANDYBATS", "ffe0e0", "dadaff", "d2fdf8", "aae2fb", "ebc2f9", "ffd1ec", "b486a2");
+        ColorPalette.getInstance().addColorPallete("CANDYBATS2", "d2fdf8", "aae2fb", "ebc2f9", "ffd1ec", "b486a2", "C585DB", "D675B1");
         color_options = new LoopArrayList<>();
         for (String option : ColorPalette.getInstance().colors.keySet())
         {
