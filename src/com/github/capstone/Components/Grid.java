@@ -205,14 +205,14 @@ public class Grid
 
         GL11.glBegin(GL11.GL_LINES);
         // Outline:
-        GL11.glVertex2f(this.hitbox.getX(), this.hitbox.getY());
-        GL11.glVertex2f(this.hitbox.getX() + this.hitbox.getWidth(), this.hitbox.getY());
-        GL11.glVertex2f(this.hitbox.getX() + this.hitbox.getWidth(), this.hitbox.getY());
-        GL11.glVertex2f(this.hitbox.getX() + this.hitbox.getWidth(), this.hitbox.getY() + this.hitbox.getHeight());
-        GL11.glVertex2f(this.hitbox.getX() + this.hitbox.getWidth(), this.hitbox.getY() + this.hitbox.getHeight());
-        GL11.glVertex2f(this.hitbox.getX(), this.hitbox.getY() + this.hitbox.getHeight());
-        GL11.glVertex2f(this.hitbox.getX(), this.hitbox.getY() + this.hitbox.getHeight());
-        GL11.glVertex2f(this.hitbox.getX(), this.hitbox.getY());
+        GL11.glVertex2f(this.hitbox.getX() - 1, this.hitbox.getY());
+        GL11.glVertex2f(this.hitbox.getX() + this.hitbox.getWidth() + 1, this.hitbox.getY());
+        GL11.glVertex2f(this.hitbox.getX() + this.hitbox.getWidth() + 1, this.hitbox.getY());
+        GL11.glVertex2f(this.hitbox.getX() + this.hitbox.getWidth() + 1, this.hitbox.getY() + this.hitbox.getHeight());
+        GL11.glVertex2f(this.hitbox.getX() + this.hitbox.getWidth() + 1, this.hitbox.getY() + this.hitbox.getHeight());
+        GL11.glVertex2f(this.hitbox.getX() - 1, this.hitbox.getY() + this.hitbox.getHeight());
+        GL11.glVertex2f(this.hitbox.getX() - 1, this.hitbox.getY() + this.hitbox.getHeight());
+        GL11.glVertex2f(this.hitbox.getX() - 1, this.hitbox.getY());
 
         if (Twotris.getInstance().config.grid)
         {
