@@ -1,7 +1,5 @@
-package com.github.capstone.Grid;
+package com.github.capstone.Components;
 
-import com.github.capstone.Entity.EntityPiece;
-import com.github.capstone.Entity.EntityTetronimo;
 import com.github.capstone.Manager.AudioManager;
 import com.github.capstone.Twotris;
 import com.github.capstone.Util.Helper;
@@ -18,8 +16,8 @@ public class Grid
 {
     private boolean[][] pieceGrid;
     private Rectangle hitbox;
-    private ArrayList<EntityTetronimo> pieces;
-    private EntityTetronimo activePiece;
+    private ArrayList<Tetronimo> pieces;
+    private Tetronimo activePiece;
     private int gridSize;
     private boolean isGameOver;
     private long lastKeypress;
@@ -40,7 +38,7 @@ public class Grid
         this.hitbox.setY(0);
         this.gridSize = this.hitbox.getWidth() / 10;
         this.pieces = new ArrayList<>();
-        this.activePiece = new EntityTetronimo(this);
+        this.activePiece = new Tetronimo(this);
         this.pieces.add(this.activePiece);
         this.isGameOver = false;
     }
@@ -131,17 +129,17 @@ public class Grid
         {
             this.activePiece.speed = 1;
         }
-        for (EntityTetronimo t : pieces)
+        for (Tetronimo t : pieces)
         {
             t.update(delta);
         }
-        if (activePiece.getState() == EntityTetronimo.State.IDLE)
+        if (activePiece.getState() == Tetronimo.State.IDLE)
         {
             // Step 1: Determine where the hitbox is in the grid
-            EntityPiece[][] m = activePiece.getPieceMatrix();
-            for (EntityPiece[] pieceRow : m)
+            TetronimoPiece[][] m = activePiece.getPieceMatrix();
+            for (TetronimoPiece[] pieceRow : m)
             {
-                for (EntityPiece piece : pieceRow)
+                for (TetronimoPiece piece : pieceRow)
                 {
                     if (piece != null)
                     {
@@ -167,17 +165,17 @@ public class Grid
             }
             if (!this.isGameOver)
             {
-                this.activePiece = new EntityTetronimo(this);
+                this.activePiece = new Tetronimo(this);
                 this.pieces.add(this.activePiece);
             }
         }
         else
         {
             // Step 1: Determine where the hitbox is in the grid
-            EntityPiece[][] m = activePiece.getPieceMatrix();
-            for (EntityPiece[] pieceRow : m)
+            TetronimoPiece[][] m = activePiece.getPieceMatrix();
+            for (TetronimoPiece[] pieceRow : m)
             {
-                for (EntityPiece pieceCol : pieceRow)
+                for (TetronimoPiece pieceCol : pieceRow)
                 {
                     if (pieceCol != null)
                     {
@@ -188,7 +186,7 @@ public class Grid
                         {
                             if (rowCheck < this.pieceGrid.length && this.pieceGrid[rowCheck][colCheck])
                             {
-                                this.activePiece.setState(EntityTetronimo.State.IDLE);
+                                this.activePiece.setState(Tetronimo.State.IDLE);
                                 AudioManager.getInstance().play("place");
                             }
                         }
@@ -232,7 +230,7 @@ public class Grid
         }
         GL11.glEnd();
 
-        for (EntityTetronimo t : pieces)
+        for (Tetronimo t : pieces)
         {
             t.draw();
         }
@@ -260,9 +258,9 @@ public class Grid
 
         // Graphically shift the pieces:
         int yCap = this.getYForRow(row);
-        for (EntityTetronimo t : pieces)
+        for (Tetronimo t : pieces)
         {
-            EntityPiece[][] m = t.getPieceMatrix();
+            TetronimoPiece[][] m = t.getPieceMatrix();
             for (int i = 0; i < m.length; i++)
             {
                 for (int j = 0; j < m[i].length; j++)

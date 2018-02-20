@@ -1,4 +1,4 @@
-package com.github.capstone.Entity;
+package com.github.capstone.Components;
 
 import com.github.capstone.Util.Helper;
 import org.lwjgl.opengl.GL11;
@@ -6,7 +6,7 @@ import org.lwjgl.util.Color;
 import org.lwjgl.util.Rectangle;
 import org.newdawn.slick.opengl.Texture;
 
-public class EntityPiece
+public class TetronimoPiece
 {
     private Rectangle hitbox;
     private Texture sprite;
@@ -20,7 +20,7 @@ public class EntityPiece
      * @throws none
      * @EntityPiece This constructor method is used constructing the piece’s hitbox.
      */
-    EntityPiece(int x, int y, int size)
+    TetronimoPiece(int x, int y, int size)
     {
         this.hitbox = new Rectangle(x, y, size, size);
         this.sprite = Helper.loadTexture("piece");

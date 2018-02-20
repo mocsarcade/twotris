@@ -7,6 +7,7 @@ package com.github.capstone.Util;
  * That being said: this file was written on my own, but how I learned it previous was via Google.
  */
 
+import com.github.capstone.Components.ColorPalette;
 import com.github.capstone.Scene.Button;
 import com.github.capstone.Scene.Options;
 
@@ -16,14 +17,15 @@ import java.util.Properties;
 public class Config
 {
     public float volume;
-    public boolean colorblind;
+    public String colorscheme;
     public String font;
     private LoopArrayList<String> font_options;
+    private LoopArrayList<String> color_options;
     public boolean fullscreen;
     public boolean grid;
 
     private String volume_label = "Volume";
-    private String colorblind_label = "Colors";
+    private String colorscheme_label = "Colors";
     private String font_label = "Font";
     private String fullscreen_label = "Fullscreen";
     private String grid_label = "Show Grid";
@@ -44,6 +46,18 @@ public class Config
         font_options.add("T 'n J");
         font_options.add("m5x7");
 
+
+        // TODO: add more color options!
+        new ColorPalette();
+        ColorPalette.getInstance().addColorPallete("Default", "fa0012", "00b6a3", "ffa500", "ec0868", "05e662", "c200fb", "ffffff");
+        ColorPalette.getInstance().addColorPallete("Darker", "fa1200", "0562e6", "ff00a5", "00a3b6", "c2fb00", "ffffff", "ec6808");
+
+        color_options = new LoopArrayList<>();
+        for (String option : ColorPalette.getInstance().colors.keySet())
+        {
+            color_options.add(option);
+        }
+
         loadConfig();
     }
 
@@ -56,7 +70,7 @@ public class Config
     public void addButtonsToOptionsGUI(Options options)
     {
         options.addButton(volume_label + ":" + (int) (volume * 100));
-        options.addButton(colorblind_label + ":" + colorblind);
+        options.addButton(colorscheme_label + ":" + colorscheme);
         options.addButton(font_label + ":" + font);
         options.addButton(fullscreen_label + ":" + fullscreen);
         options.addButton(grid_label + ":" + grid);
@@ -78,7 +92,7 @@ public class Config
             props.load(reader);
 
             this.volume = Integer.parseInt(props.getProperty(volume_label, "50")) / 100F; // divide by one hundred because users understand 0 -> 100 better than 0.0 -> 1.0
-            this.colorblind = Boolean.parseBoolean(props.getProperty(colorblind_label, "false"));
+            this.colorscheme = props.getProperty("Colors", "Default");
             this.font = props.getProperty(font_label, "Chickenpox");
             this.fullscreen = Boolean.parseBoolean(props.getProperty(fullscreen_label, "false"));
             this.grid = Boolean.parseBoolean(props.getProperty("Show_Grid", "false"));
@@ -115,13 +129,13 @@ public class Config
         Properties props = new Properties();
 
         props.setProperty(volume_label, "50");
-        props.setProperty(colorblind_label, "false");
+        props.setProperty("Colors", "Default");
         props.setProperty(font_label, "Chickenpox");
         props.setProperty(fullscreen_label, "false");
         props.setProperty("Show_Grid", "false");
 
         this.volume = Integer.parseInt(props.getProperty(volume_label, "50")) / 100F; // divide by one hundred because users understand 0 -> 100 better than 0.0 -> 1.0
-        this.colorblind = Boolean.parseBoolean(props.getProperty(colorblind_label, "false"));
+        this.colorscheme = props.getProperty("Colors", "Default");
         this.font = props.getProperty(font_label, "Chickenpox");
         this.fullscreen = Boolean.parseBoolean(props.getProperty(fullscreen_label, "false"));
         this.grid = Boolean.parseBoolean(props.getProperty("Show_Grid", "false"));
@@ -147,7 +161,7 @@ public class Config
             props.load(reader);
 
             props.setProperty(volume_label, "" + (int) (volume * 100));
-            props.setProperty(colorblind_label, "" + colorblind);
+            props.setProperty("Colors", colorscheme);
             props.setProperty(font_label, font);
             props.setProperty(fullscreen_label, "" + fullscreen);
             props.setProperty("Show_Grid", "" + grid);
@@ -178,8 +192,8 @@ public class Config
         }
         else if (option.equalsIgnoreCase("colors"))
         {
-            this.colorblind = !this.colorblind;
-            button.setButtonText(colorblind_label + ":" + this.colorblind);
+            this.colorscheme = color_options.getNextOption(this.colorscheme);
+            button.setButtonText(colorscheme_label + ":" + this.colorscheme);
             this.updateConfig();
         }
         else if (option.equalsIgnoreCase("font"))

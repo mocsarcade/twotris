@@ -1,6 +1,6 @@
 package com.github.capstone.Scene;
 
-import com.github.capstone.Grid.Grid;
+import com.github.capstone.Components.Grid;
 import com.github.capstone.Manager.AudioManager;
 import com.github.capstone.Twotris;
 import com.github.capstone.Util.Helper;
