@@ -92,6 +92,11 @@ public class Grid
             {
                 for (int j = 0; j < colsWide; j++)
                 {
+                    if (startCol + j >= pieceGrid[0].length)
+                    {
+                        canRotate = false;
+                        break;
+                    }
                     if (pieceGrid[startRow + i][startCol + j])
                     {
                         canRotate = false;

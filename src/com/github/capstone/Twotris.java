@@ -293,7 +293,7 @@ public class Twotris
         {
             // We do nothing as there's nothing else we can do.
         }
-        
+
         Font f = Helper.getAWTFont();
         JFrame mainWindow = new JFrame("LWJGL Error");
         mainWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
