@@ -71,6 +71,17 @@ public class Menu extends Scene
         updateButtons();
         drawButtons();
 
+        if (Display.wasResized())
+        {
+            for (Button b : buttons.keySet())
+            {
+                if (buttons.get(b) instanceof Game)
+                {
+                    buttons.put(b, new Game());
+                }
+            }
+        }
+
         if (Keyboard.isKeyDown(Keyboard.KEY_F2))
         {
             Twotris.getInstance().screenshotManager.takeScreenshot();
