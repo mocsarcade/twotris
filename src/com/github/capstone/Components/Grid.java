@@ -24,7 +24,7 @@ public class Grid
 
     public Grid()
     {
-        // The grid should be 24 rows tall, 10 wide
+        // The grid should be 24 rows tall, 10 wide:
         pieceGrid = new boolean[24][10];
         this.hitbox = new Rectangle();
         int h = Display.getHeight();
@@ -43,16 +43,27 @@ public class Grid
         this.isGameOver = false;
     }
 
+    /**
+     * @return The current grid size
+     */
     public int getGridSize()
     {
         return this.gridSize;
     }
 
+    /**
+     * @param colNum the column which should be converted to the cartesian coordinate
+     * @return an X value adapted from the row number given, based on grid size
+     */
     public int getXForCol(int colNum)
     {
         return this.hitbox.getX() + (colNum * gridSize);
     }
 
+    /**
+     * @param rowNum the row which should be converted to the cartesian coordinate
+     * @return a Y value adapted from the row number given, based on grid size
+     */
     public int getYForRow(int rowNum)
     {
         return this.hitbox.getY() + (rowNum * gridSize);
@@ -236,11 +247,18 @@ public class Grid
         }
     }
 
+    /**
+     * @return true if the game has ended
+     */
     public boolean isGameOver()
     {
         return this.isGameOver;
     }
 
+    /**
+     * @param row the row to obliterate
+     * @obliterate removes <code>row</code> both graphically, and in the back-end <code>pieceMatrix</code>
+     */
     private void obliterate(int row)
     {
         Random rand = new Random();
@@ -283,21 +301,10 @@ public class Grid
         }
     }
 
-    @Override
-    public String toString()
-    {
-        StringBuilder ret = new StringBuilder();
-        for (int i = 0; i < this.pieceGrid.length; i++)
-        {
-            for (int j = 0; j < this.pieceGrid[i].length; j++)
-            {
-                ret.append(this.pieceGrid[i][j] ? 1 : 0);
-            }
-            ret.append("\n");
-        }
-        return ret.toString();
-    }
 
+    /**
+     * @checkRows checks every row to in the grid to see if it is full, and obliterates it if so
+     */
     private void checkRows()
     {
         for (int i = 0; i < pieceGrid.length; i++)
@@ -309,6 +316,10 @@ public class Grid
         }
     }
 
+    /**
+     * @param row the row to check for completeness
+     * @return true if the row in the pieceGrid is all true
+     */
     private boolean isRowFull(int row)
     {
         for (int col = 0; col < pieceGrid[row].length; col++)
@@ -321,27 +332,19 @@ public class Grid
         return true;
     }
 
-    public int getY()
-    {
-        return this.hitbox.getY();
-    }
-
-    public int getX()
-    {
-        return this.hitbox.getX();
-    }
-
+    /**
+     * @return the Grid's current height
+     */
     public int getHeight()
     {
         return this.hitbox.getHeight();
     }
 
-    public int getWidth()
-    {
-        return this.hitbox.getWidth();
-    }
-
-    public boolean canMove(String direction)
+    /**
+     * @param direction the direction to check
+     * @return true if the current active piece can move <code>direction</code>
+     */
+    private boolean canMove(String direction)
     {
         // Create a rectangle clone and move it according to the movement we're wanting
         Rectangle movedClone = new Rectangle(this.activePiece.getHitBox().getX(), this.activePiece.getHitBox().getY(), this.activePiece.getHitBox().getWidth(), this.activePiece.getHitBox().getHeight());

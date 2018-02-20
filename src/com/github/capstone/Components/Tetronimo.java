@@ -38,21 +38,9 @@ public class Tetronimo
         this.color = ColorPalette.getInstance().getColor(Twotris.getInstance().config.colorscheme, this.type.ordinal());
     }
 
-    public void translate(int x, int y)
-    {
-        this.hitBox.translate(x, y);
-        for (TetronimoPiece[] r : pieceMatrix)
-        {
-            for (TetronimoPiece c : r)
-            {
-                if (c != null)
-                {
-                    c.getHitBox().translate(x, y);
-                }
-            }
-        }
-    }
-
+    /**
+     * @moveLeft move the piece (and sub-pieces) left by <code>size</code> amount
+     */
     public void moveLeft()
     {
         this.hitBox.translate(-size, 0);
@@ -68,6 +56,9 @@ public class Tetronimo
         }
     }
 
+    /**
+     * @moveRight move the piece (and sub-pieces) right by <code>size</code> amount
+     */
     public void moveRight()
     {
         this.hitBox.translate(size, 0);
@@ -149,7 +140,6 @@ public class Tetronimo
      * @throws none
      * @update This method is used for updating the piece’s position and rotation, using the state, x/y, height, and hitbox. This method also allows for the player to speed up the fall, and correct each individual piece accordingly.
      */
-
     public void update(float delta)
     {
         if (this.state == State.FALLING)
