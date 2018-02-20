@@ -6,6 +6,7 @@ import com.github.capstone.Scene.MainMenu;
 import com.github.capstone.Scene.Scene;
 import com.github.capstone.Util.Config;
 import com.github.capstone.Util.FileUtils;
+import com.github.capstone.Util.Helper;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
@@ -13,6 +14,7 @@ import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.opengl.PNGDecoder;
 import org.newdawn.slick.util.ResourceLoader;
 
+import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
@@ -44,9 +46,11 @@ public class Twotris
         this.fullscreen = config.fullscreen;
         this.startWidth = this.fullscreen ? Toolkit.getDefaultToolkit().getScreenSize().width : 800;
         this.startHeight = this.fullscreen ? Toolkit.getDefaultToolkit().getScreenSize().height : 600;
-        initGL();
-        initSounds();
-        initGame();
+        if (initGL())
+        {
+            initSounds();
+            initGame();
+        }
     }
 
     public static void main(String[] args)
@@ -126,11 +130,11 @@ public class Twotris
 
     /**
      * @param none
-     * @return none
+     * @return true if LWJGL succeeded, false otherwise.
      * @throws none
      * @initGL This method is used for displaying the game and centering the window.
      */
-    private void initGL()
+    private boolean initGL()
     {
         setDisplayMode(this.startWidth, this.startHeight, this.fullscreen);
         Display.setTitle("Twotris");
@@ -146,9 +150,9 @@ public class Twotris
         }
         catch (LWJGLException e)
         {
-            System.out.println("Caught an LWJGL exception when creating the display. Quitting..");
-            System.out.println(e.getMessage());
-            System.exit(0);
+            Display.destroy();
+            errMain(e.getMessage());
+            return false;
         }
 
         GL11.glEnable(GL11.GL_TEXTURE_2D);
@@ -160,6 +164,7 @@ public class Twotris
         GL11.glLoadIdentity();
         GL11.glOrtho(0, this.startWidth, this.startHeight, 0, 1, -1);
         GL11.glMatrixMode(GL11.GL_MODELVIEW);
+        return true;
     }
 
     /**
@@ -276,5 +281,49 @@ public class Twotris
             System.out.println("Icon file not found; using default.");
             Display.setIcon(new ByteBuffer[]{});
         }
+    }
+
+    private void errMain(String crash)
+    {
+        try
+        {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        }
+        catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e)
+        {
+            // We do nothing as there's nothing else we can do.
+        }
+        
+        Font f = Helper.getAWTFont();
+        JFrame mainWindow = new JFrame("LWJGL Error");
+        mainWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+        mainWindow.setPreferredSize(new Dimension(384, 192));
+        mainWindow.setResizable(false);
+
+        JPanel p = new JPanel();
+        p.setBounds(0, 0, 384, 192);
+
+        JTextArea errorMsg = new JTextArea();
+        errorMsg.setFont(f);
+        errorMsg.setEditable(false);
+        errorMsg.setText("Your graphics aren't supported!\nThis was the report:\n" + crash);
+        errorMsg.setBounds(0, 0, 384, 168);
+        p.add(errorMsg);
+        p.revalidate();
+        p.repaint();
+
+        JButton confirmation = new JButton("Exit");
+        confirmation.setFont(f.deriveFont(16F));
+        confirmation.setBounds(142, 168, 100, 24);
+        confirmation.addActionListener(e -> System.exit(0));
+        p.add(confirmation);
+        p.revalidate();
+        p.repaint();
+
+        mainWindow.add(p);
+        mainWindow.pack();
+        mainWindow.setVisible(true);
+        mainWindow.setLocationRelativeTo(null);
     }
 }

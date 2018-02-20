@@ -111,4 +111,38 @@ public class Helper
             return new TrueTypeFont(new Font("Arial", Font.PLAIN, 32), false);
         }
     }
+
+    /**
+     * @param none
+     * @return TrueTypeFont
+     * @throws none
+     * @getFont This method returns a TrueTypeFont  specified elsewhere, if unable to do so, the method uses Arial.
+     */
+    public static Font getAWTFont()
+    {
+        try
+        {
+            File fontFile = new File("natives/fonts/fontname.ttf".replace("/", File.separator).replace("fontname", fontName)).getAbsoluteFile();
+            if (!fontFile.exists())
+            {
+                System.out.println("Font did not exist; copying...");
+                File extractedFontFolder = new File("natives/fonts".replace("/", File.separator));
+                if (!extractedFontFolder.exists())
+                {
+                    if (!extractedFontFolder.mkdir())
+                    {
+                        throw new RuntimeException();
+                    }
+                }
+                FileUtils.copyStream(ResourceLoader.getResourceAsStream("assets/fonts/fontname.ttf".replace("/", File.separator).replace("fontname", fontName)), new File("natives/fonts/fontname.ttf".replace("/", File.separator).replace("fontname", fontName)));
+            }
+
+            return Font.createFont(Font.TRUETYPE_FONT, fontFile).deriveFont(24F);
+        }
+        catch (IOException | FontFormatException e)
+        {
+            e.printStackTrace();
+            return Font.getFont("Arial");
+        }
+    }
 }
