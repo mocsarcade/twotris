@@ -2,7 +2,9 @@ package com.github.capstone.Components;
 
 import com.github.capstone.Manager.AudioManager;
 import com.github.capstone.Twotris;
+import com.github.capstone.Util.Controllers;
 import com.github.capstone.Util.Helper;
+import net.java.games.input.Event;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
@@ -20,7 +22,7 @@ public class Grid
     private Tetronimo activePiece;
     private int gridSize;
     private boolean isGameOver;
-    private long lastKeypress;
+    private long lastMovement;
 
     public Grid()
     {
@@ -71,80 +73,169 @@ public class Grid
 
     public void update(float delta)
     {
-        if (Keyboard.isKeyDown(Keyboard.KEY_A) && Helper.getTime() - lastKeypress > 250)
+        if (Controllers.getInstance().controller_a > -1) // TODO: check for controller_b too
         {
-            if (canMove("left"))
+            Event event = Controllers.getInstance().pollPlayerOne();
+            if (event != null)
             {
-                this.activePiece.moveLeft();
-                lastKeypress = Helper.getTime();
-            }
-            else
-            {
-                // TODO: play sound here
-            }
-        }
-        else if (Keyboard.isKeyDown(Keyboard.KEY_D) && Helper.getTime() - lastKeypress > 250)
-        {
-            if (canMove("right"))
-            {
-                this.activePiece.moveRight();
-                lastKeypress = Helper.getTime();
-            }
-            else
-            {
-                // TODO: play sound here
-            }
-        }
-        else if (Keyboard.isKeyDown(Keyboard.KEY_R) && Helper.getTime() - lastKeypress > 250)
-        {
-            // Create a rotated clone rectangle, and see where we end up
-            boolean canRotate = true;
-            Rectangle rotatedClone = new Rectangle(this.activePiece.getHitBox().getX(), this.activePiece.getHitBox().getY(), this.activePiece.getHitBox().getHeight(), this.activePiece.getHitBox().getWidth());
-            int rowsTall = rotatedClone.getHeight() / this.gridSize;
-            int colsWide = rotatedClone.getWidth() / this.gridSize;
-            int startRow = this.activePiece.getHitBox().getY() / gridSize;
-            int startCol = (this.activePiece.getHitBox().getX() - this.hitbox.getX()) / gridSize;
-
-            for (int i = 0; i < rowsTall; i++)
-            {
-                for (int j = 0; j < colsWide; j++)
+                // Shoulder triggers:
+                if (event.getComponent().getName().toLowerCase().contains("z axis"))
                 {
-                    if (startCol + j >= pieceGrid[0].length)
+                    if (event.getValue() < -0.7 && Helper.getTime() - lastMovement > 250)
                     {
-                        canRotate = false;
-                        break;
+                        if (canMove("right"))
+                        {
+                            this.activePiece.moveRight();
+                            lastMovement = Helper.getTime();
+                        }
+                        else
+                        {
+                            // TODO: play sound here
+                        }
                     }
-                    if (pieceGrid[startRow + i][startCol + j])
+                    else if (event.getValue() > 0.7 && Helper.getTime() - lastMovement > 250)
                     {
-                        canRotate = false;
-                        break;
+                        if (canMove("left"))
+                        {
+                            this.activePiece.moveLeft();
+                            lastMovement = Helper.getTime();
+                        }
+                        else
+                        {
+                            // TODO: play sound here
+                        }
                     }
                 }
+                // D-pad:
+                if (event.getComponent().getName().toLowerCase().contains("hat switch"))
+                {
+                    // accelerate if D-pad is down
+                    if (event.getValue() == 0.75F)
+                    {
+                        this.activePiece.speed = 3;
+                    }
+                    else
+                    {
+                        this.activePiece.speed = 1;
+                    }
+
+                    if (event.getValue() == 1.0F && Helper.getTime() - lastMovement > 250)
+                    {
+                        // left
+                        if (canMove("left"))
+                        {
+                            this.activePiece.moveLeft();
+                            lastMovement = Helper.getTime();
+                        }
+                        else
+                        {
+                            // TODO: play sound here
+                        }
+                    }
+                    else if (event.getValue() == 0.5F && Helper.getTime() - lastMovement > 250)
+                    {
+                        // right
+                        if (canMove("right"))
+                        {
+                            this.activePiece.moveRight();
+                            lastMovement = Helper.getTime();
+                        }
+                        else
+                        {
+                            // TODO: play sound here
+                        }
+                    }
+                }
+                // Misc buttons (for rotation):
+                if (event.getComponent().getName().toLowerCase().contains("button"))
+                {
+                    int buttonNo = Integer.parseInt(event.getComponent().getName().toLowerCase().replace("button ", ""));
+                    // If button is ABXY or main button set:
+                    if (buttonNo < 4)
+                    {
+                        if (event.getValue() == 1.0F)
+                        {
+                            this.activePiece.speed = 3;
+                        }
+                        else
+                        {
+                            this.activePiece.speed = 1;
+                        }
+                    }
+                    else if (event.getValue() == 1.0F && Helper.getTime() - lastMovement > 250)
+                    {
+                        if (canRotate())
+                        {
+                            this.activePiece.rotate();
+                            lastMovement = Helper.getTime();
+                        }
+                        else
+                        {
+                            // TODO: Play a sound here or something
+                        }
+                    }
+
+                }
             }
-            if (canRotate)
+        }
+        // Only listen to keyboard commands if keyboard isn't active
+        else
+        {
+            if (Keyboard.isKeyDown(Keyboard.KEY_A) && Helper.getTime() - lastMovement > 250)
             {
-                this.activePiece.rotate();
-                lastKeypress = Helper.getTime();
+                if (canMove("left"))
+                {
+                    this.activePiece.moveLeft();
+                    lastMovement = Helper.getTime();
+                }
+                else
+                {
+                    // TODO: play sound here
+                }
+            }
+            else if (Keyboard.isKeyDown(Keyboard.KEY_D) && Helper.getTime() - lastMovement > 250)
+            {
+                if (canMove("right"))
+                {
+                    this.activePiece.moveRight();
+                    lastMovement = Helper.getTime();
+                }
+                else
+                {
+                    // TODO: play sound here
+                }
+            }
+            else if (Keyboard.isKeyDown(Keyboard.KEY_R) && Helper.getTime() - lastMovement > 250)
+            {
+                // Create a rotated clone rectangle, and see where we end up
+                if (canRotate())
+                {
+                    this.activePiece.rotate();
+                    lastMovement = Helper.getTime();
+                }
+                else
+                {
+                    // TODO: Play a sound here or something
+                }
+            }
+            if (Keyboard.isKeyDown(Keyboard.KEY_SPACE))
+            {
+                this.activePiece.speed = 3;
             }
             else
             {
-                // TODO: Play a sound here or something
+                this.activePiece.speed = 1;
             }
         }
 
-        if (Keyboard.isKeyDown(Keyboard.KEY_SPACE))
-        {
-            this.activePiece.speed = 3;
-        }
-        else
-        {
-            this.activePiece.speed = 1;
-        }
-        for (Tetronimo t : pieces)
+        for (
+                Tetronimo t : pieces)
+
         {
             t.update(delta);
         }
         if (activePiece.getState() == Tetronimo.State.IDLE)
+
         {
             // Step 1: Determine where the hitbox is in the grid
             TetronimoPiece[][] m = activePiece.getPieceMatrix();
@@ -181,6 +272,7 @@ public class Grid
             }
         }
         else
+
         {
             // Step 1: Determine where the hitbox is in the grid
             TetronimoPiece[][] m = activePiece.getPieceMatrix();
@@ -208,6 +300,7 @@ public class Grid
                 }
             }
         }
+
     }
 
     public void draw()
@@ -338,6 +431,31 @@ public class Grid
     public int getHeight()
     {
         return this.hitbox.getHeight();
+    }
+
+    private boolean canRotate()
+    {
+        Rectangle rotatedClone = new Rectangle(this.activePiece.getHitBox().getX(), this.activePiece.getHitBox().getY(), this.activePiece.getHitBox().getHeight(), this.activePiece.getHitBox().getWidth());
+        int rowsTall = rotatedClone.getHeight() / this.gridSize;
+        int colsWide = rotatedClone.getWidth() / this.gridSize;
+        int startRow = this.activePiece.getHitBox().getY() / gridSize;
+        int startCol = (this.activePiece.getHitBox().getX() - this.hitbox.getX()) / gridSize;
+
+        for (int i = 0; i < rowsTall; i++)
+        {
+            for (int j = 0; j < colsWide; j++)
+            {
+                if (startCol + j >= pieceGrid[0].length)
+                {
+                    return false;
+                }
+                if (pieceGrid[startRow + i][startCol + j])
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     /**
