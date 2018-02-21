@@ -2,8 +2,8 @@
     <property name="src" location="src/"/>
     <property name="assets" location="assets/"/>
     <property name="build" location="build/"/>
-    <property name="lwjgl" location="../lib/lwjgl-2.9.3"/>
-    <property name="slick" location="../lib/slick-util"/>
+    <property name="lwjgl" location="./libs"/>
+    <property name="slick" location="./libs"/>
 
     <path id="project.class.path">
         <pathelement path="{$classpath}"/>
