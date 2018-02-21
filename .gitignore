@@ -2,5 +2,5 @@ build/
 out/
 .idea/
 screenshots/
-./twotris.settings
+twotris.settings
 natives/fonts/
