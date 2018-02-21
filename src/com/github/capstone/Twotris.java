@@ -5,7 +5,6 @@ import com.github.capstone.Manager.ScreenshotManager;
 import com.github.capstone.Scene.MainMenu;
 import com.github.capstone.Scene.Scene;
 import com.github.capstone.Util.Config;
-import com.github.capstone.Util.Controllers;
 import com.github.capstone.Util.FileUtils;
 import com.github.capstone.Util.Helper;
 import org.lwjgl.LWJGLException;
@@ -15,15 +14,8 @@ import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.opengl.PNGDecoder;
 import org.newdawn.slick.util.ResourceLoader;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Toolkit;
+import javax.swing.*;
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -56,7 +48,6 @@ public class Twotris
         this.startHeight = this.fullscreen ? Toolkit.getDefaultToolkit().getScreenSize().height : 600;
         if (initGL())
         {
-            Controllers.init();
             initSounds();
             initGame();
         }
@@ -72,7 +63,6 @@ public class Twotris
 
         // Sets the LWJGL Libraries path to the natives folder
         System.setProperty("org.lwjgl.librarypath", new File("natives").getAbsolutePath());
-
         new Twotris();
     }
 
@@ -246,7 +236,6 @@ public class Twotris
             System.err.println("Unable to setup mode " + width + "x" + height + " fullscreen=" + fullscreen + e);
         }
     }
-
 
     /**
      * @param url the URL of the file needed
