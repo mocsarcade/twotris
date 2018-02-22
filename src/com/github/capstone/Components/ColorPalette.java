@@ -20,7 +20,7 @@ public class ColorPalette
         return instance;
     }
 
-    public void addColorPallete(String name, String... colors_in)
+    public void addColorPalette(String name, String... colors_in)
     {
         assert colors_in.length == 7;
 

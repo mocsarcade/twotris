@@ -48,12 +48,12 @@ public class Config
 
         // TODO: add more color options!
         new ColorPalette();
-        ColorPalette.getInstance().addColorPallete("Default", "fa0012", "00b6a3", "ffa500", "ec0868", "05e662", "c200fb", "ffffff");
-        ColorPalette.getInstance().addColorPallete("Darker", "fa1200", "0562e6", "ff00a5", "00a3b6", "c2fb00", "ffffff", "ec6808");
-        ColorPalette.getInstance().addColorPallete("CANDYBATS", "d2fdf8", "aae2fb", "ebc2f9", "ffd1ec", "b486a2", "C585DB", "D675B1");
-        ColorPalette.getInstance().addColorPallete("Storm", "416168", "99c6c6", "41546d", "b9bbb6", "d2d7dd", "bfcfd9", "7c7a7d");
-        ColorPalette.getInstance().addColorPallete("Google", "3cba54", "f4c20d", "db3236", "4885ed", "7d7d7d", "a0a0a0", "f0f0f0");
-        ColorPalette.getInstance().addColorPallete("Rustic", "7c0707", "5B3502", "1f5170", "dbb774", "b34a00", "E5DFE6", "696969");
+        ColorPalette.getInstance().addColorPalette("Default", "fa0012", "00b6a3", "ffa500", "ec0868", "05e662", "c200fb", "ffffff");
+        ColorPalette.getInstance().addColorPalette("Darker", "fa1200", "0562e6", "ff00a5", "00a3b6", "c2fb00", "ffffff", "ec6808");
+        ColorPalette.getInstance().addColorPalette("CANDYBATS", "d2fdf8", "aae2fb", "ebc2f9", "ffd1ec", "b486a2", "C585DB", "D675B1");
+        ColorPalette.getInstance().addColorPalette("Storm", "416168", "99c6c6", "41546d", "b9bbb6", "d2d7dd", "bfcfd9", "7c7a7d");
+        ColorPalette.getInstance().addColorPalette("Google", "3cba54", "f4c20d", "db3236", "4885ed", "7d7d7d", "a0a0a0", "f0f0f0");
+        ColorPalette.getInstance().addColorPalette("Rustic", "7c0707", "5B3502", "1f5170", "dbb774", "b34a00", "E5DFE6", "696969");
         color_options = new LoopArrayList<>();
         for (String option : ColorPalette.getInstance().colors.keySet())
         {
