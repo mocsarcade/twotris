@@ -1,4 +1,4 @@
-package com.github.capstone.Scene;
+package com.github.capstone.Scene.Components;
 
 import com.github.capstone.Manager.AudioManager;
 import com.github.capstone.Util.Helper;
@@ -17,12 +17,12 @@ import org.newdawn.slick.opengl.TextureImpl;
 
 public class Button
 {
-    private String buttonText;
+    String buttonText;
     private Rectangle box;
     private Color color;
     private Color textColor;
     private TrueTypeFont font;
-    private boolean hovering;
+    boolean hovering;
     private Texture sprite;
     private float wr, hr;
 

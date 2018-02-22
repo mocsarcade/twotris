@@ -2,6 +2,10 @@ package com.github.capstone.Scene;
 
 import com.github.capstone.Components.Grid;
 import com.github.capstone.Manager.AudioManager;
+import com.github.capstone.Scene.Components.Button;
+import com.github.capstone.Scene.Menus.MainMenu;
+import com.github.capstone.Scene.Menus.Menu;
+import com.github.capstone.Scene.Menus.Options;
 import com.github.capstone.Twotris;
 import com.github.capstone.Util.Helper;
 import org.lwjgl.input.Keyboard;
@@ -17,7 +21,7 @@ public class Game extends Scene
     private boolean isGameOver;
     private int score;
     private TrueTypeFont font;
-    private Menu pauseMenu;
+    private com.github.capstone.Scene.Menus.Menu pauseMenu;
     private Grid grid;
 
     /**
@@ -37,16 +41,16 @@ public class Game extends Scene
      */
     private void updatePauseMenu()
     {
-        pauseMenu = this.isGameOver ? new Menu("gui/game_over") : new Menu("gui/paused");
+        pauseMenu = this.isGameOver ? new com.github.capstone.Scene.Menus.Menu("gui/game_over") : new Menu("gui/paused");
         if (isGameOver)
         {
-            pauseMenu.addButton(new Button(0, 0, "Play Again"), new Game());
-            pauseMenu.addButton(new Button(0, 0, "Main Menu"), new MainMenu());
+            pauseMenu.addButton(new com.github.capstone.Scene.Components.Button(0, 0, "Play Again"), new Game());
+            pauseMenu.addButton(new com.github.capstone.Scene.Components.Button(0, 0, "Main Menu"), new MainMenu());
         }
         else
         {
-            pauseMenu.addButton(new Button(0, 0, "Resume"), this);
-            pauseMenu.addButton(new Button(0, 0, "Options"), new Options(this));
+            pauseMenu.addButton(new com.github.capstone.Scene.Components.Button(0, 0, "Resume"), this);
+            pauseMenu.addButton(new com.github.capstone.Scene.Components.Button(0, 0, "Options"), new Options(this));
             pauseMenu.addButton(new Button(0, 0, "Save & Quit"), new MainMenu());
         }
         pauseMenu.adjustButtons();
@@ -110,7 +114,7 @@ public class Game extends Scene
             GL11.glLoadIdentity();
             GL11.glOrtho(0, Display.getWidth(), Display.getHeight(), 0, 1, -1);
         }
-        if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE))
+        if (Keyboard.isKeyDown(Twotris.getInstance().keybinds.menuBack))
         {
             AudioManager.getInstance().play("pause");
             return false;

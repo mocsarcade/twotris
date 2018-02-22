@@ -8,8 +8,8 @@ package com.github.capstone.Util;
  */
 
 import com.github.capstone.Components.ColorPalette;
-import com.github.capstone.Scene.Button;
-import com.github.capstone.Scene.Options;
+import com.github.capstone.Scene.Components.Button;
+import com.github.capstone.Scene.Menus.Options;
 
 import java.io.*;
 import java.util.Properties;

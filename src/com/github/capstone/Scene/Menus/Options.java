@@ -1,8 +1,8 @@
-package com.github.capstone.Scene;
+package com.github.capstone.Scene.Menus;
 
-import com.github.capstone.Manager.AudioManager;
+import com.github.capstone.Scene.Components.Button;
+import com.github.capstone.Scene.Scene;
 import com.github.capstone.Twotris;
-import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
@@ -11,46 +11,44 @@ import org.lwjgl.opengl.GL11;
 import java.awt.*;
 import java.util.LinkedHashMap;
 
-public class Menu extends Scene
+public class Options extends Scene
 {
-    private LinkedHashMap<Button, Scene> buttons;
-    private Scene nextScene;
-    private TitleSprite titleSprite;
+    private Button back;
+    private Button keybinds;
+    private LinkedHashMap<Button, String> buttons;
+    private Scene last;
+    private Scene next;
 
     /**
-     * @param title The String include for the title.
+     * @param lastscene The scene supplied.
      * @return none
      * @throws none
-     * @Menu This constructor method adds button to a linkedhashmap and creates a titlesprite.
+     * @Options This constructor method adds button to a linkedhashmap, added the buttons to the options menu, adds a back button, adjusts the buttons, and then creates the next as the last scene.
      */
-    public Menu(String title)
+    public Options(Scene lastScene)
     {
         buttons = new LinkedHashMap<>();
-        titleSprite = new TitleSprite(title);
-        try
-        {
-            Mouse.setNativeCursor(null);
-        }
-        catch (LWJGLException ignored)
-        {
-        }
+        Twotris.getInstance().config.addButtonsToOptionsGUI(this);
+        keybinds = new Button(256, 64, "Keybinds");
+        back = new Button(256, 64, "Back");
+        this.adjustButtons();
+        this.last = lastScene;
     }
 
     /**
-     * @param button A button given to the method
-     * @param Scene  the scene the button is to be placed inside of.
+     * @param option The String given.
      * @return none
      * @throws none
-     * @addButton This method receives a button and a scene, putting the button into the scene.
+     * @addButton This method receives buttons and puts them into the options menu.
      */
-    public void addButton(Button button, Scene scene)
+    public void addButton(String option)
     {
-        buttons.put(button, scene);
+        this.buttons.put(new Button(256, 64, option), option);
     }
 
     /**
      * @param delta
-     * @return isButtonDown true/false.
+     * @return isGameOver true/false.
      * @throws none
      * @drawFrame This method Is able to resize the screen, and is responsible for updating the entities by delta, adjusting fullscreen, the score displayed, and controls when the game is over.
      */
@@ -67,20 +65,8 @@ public class Menu extends Scene
             GL11.glOrtho(0, Display.getWidth(), Display.getHeight(), 0, 1, -1);
         }
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, 0);
-        titleSprite.draw();
         updateButtons();
         drawButtons();
-
-        if (Display.wasResized())
-        {
-            for (Button b : buttons.keySet())
-            {
-                if (buttons.get(b) instanceof Game)
-                {
-                    buttons.put(b, new Game());
-                }
-            }
-        }
 
         if (Keyboard.isKeyDown(Keyboard.KEY_F2))
         {
@@ -106,16 +92,27 @@ public class Menu extends Scene
 
         if (Mouse.isButtonDown(0))
         {
-            for (Button b : buttons.keySet())
+            if (back.isClicked())
             {
-                if (b.isClicked())
+                this.reloadFont();
+                last.reloadFont();
+                this.next = this.last;
+                return false;
+            }
+            else if (keybinds.isClicked())
+            {
+                this.next = new OptionsKeybinds(this);
+                return false;
+            }
+            else
+            {
+                for (Button b : buttons.keySet())
                 {
-                    nextScene = buttons.get(b);
-                    if (nextScene == null)
+                    if (b.isClicked())
                     {
-                        System.exit(0);
+                        String prop = buttons.get(b).substring(0, buttons.get(b).indexOf(":"));
+                        Twotris.getInstance().config.toggleOption(prop, b);
                     }
-                    return false;
                 }
             }
         }
@@ -124,14 +121,15 @@ public class Menu extends Scene
     }
 
     /**
-     * @param button A button given to the method
-     * @param Scene  the scene the button is to be placed inside of.
+     * @param none
      * @return none
      * @throws none
-     * @updateButtons This method receives a button and a scene, putting the button into the scene.
+     * @updateButtons This method updates the back button, and the other buttons in the keyset, then adjusts them.
      */
     public void updateButtons()
     {
+        back.update();
+        keybinds.update();
         for (Button b : buttons.keySet())
         {
             b.update();
@@ -143,10 +141,13 @@ public class Menu extends Scene
      * @param none
      * @return none
      * @throws none
-     * @drawButtons This method draws all buttons in keyset.
+     * @drawButtons This method draws the back button, then all buttons in keyset.
      */
     public void drawButtons()
     {
+        back.draw();
+        keybinds.draw();
+
         for (Button b : buttons.keySet())
         {
             b.draw();
@@ -157,42 +158,43 @@ public class Menu extends Scene
      * @param none
      * @return none
      * @throws none
-     * @adjustButtons This method adjusts the size of the buttons within the keySet.
+     * @adjustButtons This method adjusts the SIZE of the buttons within the keySet.
      */
     public void adjustButtons()
     {
-        int lastY = titleSprite.getHitBox().getY() + titleSprite.getHitBox().getHeight() + 32;
+        int lastY = 32;
+        boolean isLeft = true;
         for (Button b : buttons.keySet())
         {
-            int x = (Display.getWidth() / 2) - (b.getHitBox().getWidth() / 2);
+            int offset = isLeft ? Display.getWidth() / 4 : 3 * (Display.getWidth() / 4);
+            int x = offset - (b.getHitBox().getWidth() / 2);
             b.getHitBox().setLocation(x, lastY);
-            lastY += b.getHitBox().getHeight() + 16;
+            isLeft = !isLeft;
+            if (isLeft)
+            {
+                lastY += b.getHitBox().getHeight() + 16;
+            }
         }
+        back.getHitBox().setLocation(16, Display.getHeight() - back.getHitBox().getHeight() - 16);
+        keybinds.getHitBox().setLocation(Display.getWidth() - keybinds.getHitBox().getWidth() - 16, Display.getHeight() - back.getHitBox().getHeight() - 16);
     }
 
     /**
      * @param none
-     * @return menu
+     * @return next
      * @throws none
-     * @nextScene This method controls the pause menu, allowing for access to the main menu, resuming the game, or heading directly to the options menu.
+     * @nextScene This method sets the next scene, setting the next selection.
      */
     public Scene nextScene()
     {
-        for (Button b : buttons.keySet())
-        {
-            if (b.getText().toLowerCase().contains("resume"))
-            {
-                AudioManager.getInstance().play("resume");
-            }
-        }
-        return nextScene;
+        return next;
     }
 
     /**
      * @param none
      * @return none
      * @throws none
-     * @reloadFont This method is used for reloading the fonts of all the button in keySet.
+     * @reloadFont This method is used for reloading the buttons’ from the keySet fonts as well as the back button.
      */
     @Override
     public void reloadFont()
@@ -201,5 +203,8 @@ public class Menu extends Scene
         {
             b.reloadFont();
         }
+        keybinds.reloadFont();
+        back.reloadFont();
     }
+
 }

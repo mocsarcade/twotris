@@ -2,11 +2,12 @@ package com.github.capstone;
 
 import com.github.capstone.Manager.AudioManager;
 import com.github.capstone.Manager.ScreenshotManager;
-import com.github.capstone.Scene.MainMenu;
+import com.github.capstone.Scene.Menus.MainMenu;
 import com.github.capstone.Scene.Scene;
 import com.github.capstone.Util.Config;
 import com.github.capstone.Util.FileUtils;
 import com.github.capstone.Util.Helper;
+import com.github.capstone.Util.Keybinds;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
@@ -27,6 +28,7 @@ public class Twotris
 {
     private static Twotris instance;
     public Config config;
+    public Keybinds keybinds;
     public ScreenshotManager screenshotManager;
     private boolean fullscreen;
     private int startWidth;
@@ -42,6 +44,7 @@ public class Twotris
     {
         instance = this;
         this.config = new Config();
+        this.keybinds= new Keybinds();
         this.screenshotManager = new ScreenshotManager();
         this.fullscreen = config.fullscreen;
         this.startWidth = this.fullscreen ? Toolkit.getDefaultToolkit().getScreenSize().width : 800;

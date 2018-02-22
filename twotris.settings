@@ -1,7 +1,7 @@
 #Twotris Settings
-#Tue Feb 20 14:50:03 EST 2018
+#Thu Feb 22 09:31:44 EST 2018
 Fullscreen=false
-Show_Grid=true
-Volume=70
-Colors=CANDYBATS2
+Show_Grid=false
+Volume=50
+Colors=Default
 Font=m5x7

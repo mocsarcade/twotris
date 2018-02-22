@@ -1,4 +1,7 @@
-package com.github.capstone.Scene;
+package com.github.capstone.Scene.Menus;
+
+import com.github.capstone.Scene.Components.Button;
+import com.github.capstone.Scene.Game;
 
 public class MainMenu extends Menu
 {

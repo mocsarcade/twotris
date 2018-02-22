@@ -3,6 +3,7 @@ package com.github.capstone.Components;
 import com.github.capstone.Manager.AudioManager;
 import com.github.capstone.Twotris;
 import com.github.capstone.Util.Helper;
+import com.github.capstone.Util.Keybinds;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
@@ -71,7 +72,8 @@ public class Grid
 
     public void update(float delta)
     {
-        if (Keyboard.isKeyDown(Keyboard.KEY_A) && Helper.getTime() - lastKeypress > 250)
+        Keybinds kb = Twotris.getInstance().keybinds;
+        if (Keyboard.isKeyDown(kb.moveLeft) && Helper.getTime() - lastKeypress > 250)
         {
             if (canMove("left"))
             {
@@ -83,7 +85,7 @@ public class Grid
                 // TODO: play sound here
             }
         }
-        else if (Keyboard.isKeyDown(Keyboard.KEY_D) && Helper.getTime() - lastKeypress > 250)
+        else if (Keyboard.isKeyDown(kb.moveRight) && Helper.getTime() - lastKeypress > 250)
         {
             if (canMove("right"))
             {
@@ -95,7 +97,7 @@ public class Grid
                 // TODO: play sound here
             }
         }
-        else if (Keyboard.isKeyDown(Keyboard.KEY_R) && Helper.getTime() - lastKeypress > 250)
+        else if (Keyboard.isKeyDown(kb.rotate) && Helper.getTime() - lastKeypress > 250)
         {
             // Create a rotated clone rectangle, and see where we end up
             boolean canRotate = true;
@@ -132,9 +134,17 @@ public class Grid
             }
         }
 
-        if (Keyboard.isKeyDown(Keyboard.KEY_SPACE))
+        if (Keyboard.isKeyDown(kb.accelerate))
         {
             this.activePiece.speed = 3;
+        }
+        else
+        {
+            this.activePiece.speed = 1;
+        }
+        if(Keyboard.isKeyDown(kb.place))
+        {
+            this.activePiece.speed = 8;
         }
         else
         {

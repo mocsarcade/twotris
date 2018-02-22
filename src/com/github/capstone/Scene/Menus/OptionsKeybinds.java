@@ -1,5 +1,8 @@
-package com.github.capstone.Scene;
+package com.github.capstone.Scene.Menus;
 
+import com.github.capstone.Scene.Components.Button;
+import com.github.capstone.Scene.Components.ButtonKeybind;
+import com.github.capstone.Scene.Scene;
 import com.github.capstone.Twotris;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
@@ -7,13 +10,13 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
-import java.util.LinkedHashMap;
+import java.util.ArrayList;
 
-public class Options extends Scene
+public class OptionsKeybinds extends Scene
 {
     private Button back;
-    private LinkedHashMap<Button, String> buttons;
     private Scene next;
+    private ArrayList<ButtonKeybind> buttons;
 
     /**
      * @param lastscene The scene supplied.
@@ -21,25 +24,20 @@ public class Options extends Scene
      * @throws none
      * @Options This constructor method adds button to a linkedhashmap, added the buttons to the options menu, adds a back button, adjusts the buttons, and then creates the next as the last scene.
      */
-    Options(Scene lastScene)
+    public OptionsKeybinds(Scene lastScene)
     {
-        buttons = new LinkedHashMap<>();
-        Twotris.getInstance().config.addButtonsToOptionsGUI(this);
+        this.buttons = new ArrayList<>();
+        this.buttons.add(new ButtonKeybind(0, 0, "Left", Twotris.getInstance().keybinds.moveLeft));
+        this.buttons.add(new ButtonKeybind(0, 0, "Right", Twotris.getInstance().keybinds.moveRight));
+        this.buttons.add(new ButtonKeybind(0, 0, "Rotate", Twotris.getInstance().keybinds.rotate));
+        this.buttons.add(new ButtonKeybind(0, 0, "Accel", Twotris.getInstance().keybinds.accelerate));
+        this.buttons.add(new ButtonKeybind(0, 0, "Place", Twotris.getInstance().keybinds.place));
+        this.buttons.add(new ButtonKeybind(0, 0, "Menu/Back", Twotris.getInstance().keybinds.menuBack));
         back = new Button(256, 64, "Back");
         this.adjustButtons();
         this.next = lastScene;
     }
 
-    /**
-     * @param option The String given.
-     * @return none
-     * @throws none
-     * @addButton This method receives buttons and puts them into the options menu.
-     */
-    public void addButton(String option)
-    {
-        this.buttons.put(new Button(256, 64, option), option);
-    }
 
     /**
      * @param delta
@@ -95,12 +93,11 @@ public class Options extends Scene
             }
             else
             {
-                for (Button b : buttons.keySet())
+                for (ButtonKeybind b : buttons)
                 {
                     if (b.isClicked())
                     {
-                        String prop = buttons.get(b).substring(0, buttons.get(b).indexOf(":"));
-                        Twotris.getInstance().config.toggleOption(prop, b);
+
                     }
                 }
             }
@@ -108,6 +105,7 @@ public class Options extends Scene
 
         return true;
     }
+
 
     /**
      * @param none
@@ -117,11 +115,11 @@ public class Options extends Scene
      */
     public void updateButtons()
     {
-        back.update();
-        for (Button b : buttons.keySet())
+        for (ButtonKeybind b : buttons)
         {
             b.update();
         }
+        back.update();
         adjustButtons();
     }
 
@@ -133,12 +131,11 @@ public class Options extends Scene
      */
     public void drawButtons()
     {
-        back.draw();
-
-        for (Button b : buttons.keySet())
+        for (ButtonKeybind b : buttons)
         {
             b.draw();
         }
+        back.draw();
     }
 
     /**
@@ -151,7 +148,7 @@ public class Options extends Scene
     {
         int lastY = 32;
         boolean isLeft = true;
-        for (Button b : buttons.keySet())
+        for (ButtonKeybind b : buttons)
         {
             int offset = isLeft ? Display.getWidth() / 4 : 3 * (Display.getWidth() / 4);
             int x = offset - (b.getHitBox().getWidth() / 2);
@@ -185,11 +182,8 @@ public class Options extends Scene
     @Override
     public void reloadFont()
     {
-        for (Button b : buttons.keySet())
-        {
-            b.reloadFont();
-        }
         back.reloadFont();
+        next.reloadFont();
     }
 
 }

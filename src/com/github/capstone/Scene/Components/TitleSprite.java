@@ -1,4 +1,4 @@
-package com.github.capstone.Scene;
+package com.github.capstone.Scene.Components;
 
 import com.github.capstone.Util.Helper;
 import org.lwjgl.opengl.Display;
