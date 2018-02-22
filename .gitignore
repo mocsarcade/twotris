@@ -2,6 +2,6 @@ build/
 out/
 .idea/
 screenshots/
-./twotris.settings
-./twotris.keybinds
+twotris.settings
+twotris.keybinds
 natives/fonts/
