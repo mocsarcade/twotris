@@ -15,18 +15,19 @@ import java.util.Random;
 
 public class Grid
 {
-    private boolean[][] pieceGrid;
+    private int[][] pieceGrid;
     private Rectangle hitbox;
     private ArrayList<Tetronimo> pieces;
     private Tetronimo activePiece;
     private int gridSize;
     private boolean isGameOver;
+    private int score;
     private long lastKeypress;
 
     public Grid()
     {
         // The grid should be 24 rows tall, 10 wide:
-        pieceGrid = new boolean[24][10];
+        pieceGrid = new int[24][10];
         this.hitbox = new Rectangle();
         int h = Display.getHeight();
         while (h % 24 != 0)
@@ -116,7 +117,7 @@ public class Grid
                         canRotate = false;
                         break;
                     }
-                    if (pieceGrid[startRow + i][startCol + j])
+                    if (pieceGrid[startRow + i][startCol + j] > 0)
                     {
                         canRotate = false;
                         break;
@@ -142,7 +143,7 @@ public class Grid
         {
             this.activePiece.speed = 1;
         }
-        if(Keyboard.isKeyDown(kb.place))
+        if (Keyboard.isKeyDown(kb.place))
         {
             this.activePiece.speed = 8;
         }
@@ -168,7 +169,7 @@ public class Grid
                         int col = (piece.getHitBox().getX() - this.hitbox.getX()) / gridSize;
                         piece.getHitBox().setY((row * gridSize));
                         // Step 2: occupy the grid
-                        this.pieceGrid[row][col] = true;
+                        this.pieceGrid[row][col] = activePiece.getType().scoreValue;
                     }
                 }
             }
@@ -178,7 +179,7 @@ public class Grid
             for (int col = 0; col < pieceGrid[0].length; col++)
             {
                 // Game over if any of the top row is full
-                if (pieceGrid[0][col])
+                if (pieceGrid[0][col] > 0)
                 {
                     this.isGameOver = true;
                     break;
@@ -205,7 +206,7 @@ public class Grid
                         int colCheck = (pieceCol.getHitBox().getX() - this.hitbox.getX()) / gridSize;
                         try
                         {
-                            if (rowCheck < this.pieceGrid.length && this.pieceGrid[rowCheck][colCheck])
+                            if (rowCheck < this.pieceGrid.length && this.pieceGrid[rowCheck][colCheck] > 0)
                             {
                                 this.activePiece.setState(Tetronimo.State.IDLE);
                                 AudioManager.getInstance().play("place");
@@ -267,22 +268,25 @@ public class Grid
 
     /**
      * @param row the row to obliterate
+     * @return the sum of the scores of each piece in the row destroyed
      * @obliterate removes <code>row</code> both graphically, and in the back-end <code>pieceMatrix</code>
      */
-    private void obliterate(int row)
+    private int obliterate(int row)
     {
         Random rand = new Random();
         AudioManager.getInstance().play("obliterate_" + (rand.nextInt(3) + 1));
+        int retSum = 0;
         for (int col = 0; col < pieceGrid[row].length; col++)
         {
-            pieceGrid[row][col] = false;
+            retSum += pieceGrid[row][col];
+            pieceGrid[row][col] = 0;
         }
         // Shift the grid down:
         for (int i = row; i > 0; i--)
         {
             System.arraycopy(pieceGrid[i - 1], 0, pieceGrid[i], 0, pieceGrid[i].length);
         }
-        Arrays.fill(pieceGrid[0], false);
+        Arrays.fill(pieceGrid[0], 0);
 
         // Graphically shift the pieces:
         int yCap = this.getYForRow(row);
@@ -309,21 +313,25 @@ public class Grid
                 }
             }
         }
+        return retSum;
     }
-
 
     /**
      * @checkRows checks every row to in the grid to see if it is full, and obliterates it if so
      */
     private void checkRows()
     {
+        int numRowsObliterated = 0;
+        int runningTally = 0;
         for (int i = 0; i < pieceGrid.length; i++)
         {
             if (isRowFull(i))
             {
-                obliterate(i);
+                numRowsObliterated++;
+                runningTally += obliterate(i);
             }
         }
+        this.score += numRowsObliterated * runningTally;
     }
 
     /**
@@ -334,7 +342,7 @@ public class Grid
     {
         for (int col = 0; col < pieceGrid[row].length; col++)
         {
-            if (!pieceGrid[row][col])
+            if (pieceGrid[row][col] == 0)
             {
                 return false;
             }
@@ -381,7 +389,7 @@ public class Grid
                 {
                     return false;
                 }
-                if (pieceGrid[movedRow][movedCol])
+                if (pieceGrid[movedRow][movedCol] > 0)
                 {
                     return false;
                 }
@@ -391,4 +399,8 @@ public class Grid
         return true;
     }
 
+    public int getScore()
+    {
+        return this.score;
+    }
 }

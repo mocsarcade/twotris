@@ -38,6 +38,11 @@ public class Tetronimo
         this.color = ColorPalette.getInstance().getColor(Twotris.getInstance().config.colorscheme, this.type.ordinal());
     }
 
+    public Type getType()
+    {
+        return this.type;
+    }
+
     /**
      * @moveLeft move the piece (and sub-pieces) left by <code>size</code> amount
      */
@@ -462,6 +467,19 @@ public class Tetronimo
      */
     public enum Type
     {
-        L, S, J, T, O, I, Z
+        L(3),
+        S(4),
+        J(3),
+        T(2),
+        O(1),
+        I(1),
+        Z(4);
+
+        int scoreValue;
+
+        Type(int scoreVal)
+        {
+            this.scoreValue = scoreVal;
+        }
     }
 }

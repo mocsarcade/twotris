@@ -2,22 +2,26 @@ package com.github.capstone.Scene.Menus;
 
 import com.github.capstone.Manager.AudioManager;
 import com.github.capstone.Scene.Components.Button;
+import com.github.capstone.Scene.Components.TitleSprite;
 import com.github.capstone.Scene.Game;
 import com.github.capstone.Scene.Scene;
-import com.github.capstone.Scene.Components.TitleSprite;
 import com.github.capstone.Twotris;
+import com.github.capstone.Util.Helper;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
+import org.newdawn.slick.TrueTypeFont;
 
 import java.awt.*;
 import java.util.LinkedHashMap;
+import java.util.Optional;
 
 public class Menu extends Scene
 {
     private LinkedHashMap<Button, Scene> buttons;
+    private LinkedHashMap<String, Integer[]> optTexts;
     private Scene nextScene;
     private TitleSprite titleSprite;
 
@@ -29,8 +33,9 @@ public class Menu extends Scene
      */
     public Menu(String title)
     {
-        buttons = new LinkedHashMap<>();
-        titleSprite = new TitleSprite(title);
+        this.buttons = new LinkedHashMap<>();
+        this.titleSprite = new TitleSprite(title);
+        this.optTexts = new LinkedHashMap<>();
         try
         {
             Mouse.setNativeCursor(null);
@@ -74,6 +79,11 @@ public class Menu extends Scene
         titleSprite.draw();
         updateButtons();
         drawButtons();
+
+        for (String s : optTexts.keySet())
+        {
+            Helper.getFont().drawString(optTexts.get(s)[0], optTexts.get(s)[1], s);
+        }
 
         if (Display.wasResized())
         {
@@ -205,5 +215,15 @@ public class Menu extends Scene
         {
             b.reloadFont();
         }
+    }
+
+    public void addSplashText(int x, int y, String toDraw)
+    {
+        optTexts.put(toDraw, new Integer[]{x, y});
+    }
+
+    public void addSplashText(int y, String toDraw)
+    {
+        addSplashText((Display.getWidth() / 2) - (Helper.getFont().getWidth(toDraw) / 2), y, toDraw);
     }
 }

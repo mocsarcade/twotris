@@ -19,7 +19,6 @@ import java.awt.*;
 public class Game extends Scene
 {
     private boolean isGameOver;
-    private int score;
     private TrueTypeFont font;
     private com.github.capstone.Scene.Menus.Menu pauseMenu;
     private Grid grid;
@@ -44,6 +43,7 @@ public class Game extends Scene
         pauseMenu = this.isGameOver ? new com.github.capstone.Scene.Menus.Menu("gui/game_over") : new Menu("gui/paused");
         if (isGameOver)
         {
+            pauseMenu.addSplashText(Display.getHeight() - 32, "Game Score: " + this.grid.getScore());
             pauseMenu.addButton(new com.github.capstone.Scene.Components.Button(0, 0, "Play Again"), new Game());
             pauseMenu.addButton(new com.github.capstone.Scene.Components.Button(0, 0, "Main Menu"), new MainMenu());
         }
@@ -130,7 +130,7 @@ public class Game extends Scene
         }
 
         TextureImpl.bindNone();
-        font.drawString(0, 0, "" + this.score);
+        font.drawString(0, 0, "" + grid.getScore());
         return !isGameOver;
     }
 
