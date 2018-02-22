@@ -1,8 +1,0 @@
-#Twotris Keybinds
-#Thu Feb 22 09:32:08 EST 2018
-menuBack=1
-place=15
-rotate=19
-accelerate=57
-moveRight=32
-moveLeft=30
