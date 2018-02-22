@@ -3,4 +3,5 @@ out/
 .idea/
 screenshots/
 ./twotris.settings
+./twotris.keybinds
 natives/fonts/
