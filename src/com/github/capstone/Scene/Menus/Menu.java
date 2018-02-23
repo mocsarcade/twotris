@@ -14,9 +14,8 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.TrueTypeFont;
 
-import java.awt.*;
+import java.awt.Toolkit;
 import java.util.LinkedHashMap;
-import java.util.Optional;
 
 public class Menu extends Scene
 {
@@ -24,6 +23,7 @@ public class Menu extends Scene
     private LinkedHashMap<String, Integer[]> optTexts;
     private Scene nextScene;
     private TitleSprite titleSprite;
+    private TrueTypeFont font;
 
     /**
      * @param title The String include for the title.
@@ -36,6 +36,7 @@ public class Menu extends Scene
         this.buttons = new LinkedHashMap<>();
         this.titleSprite = new TitleSprite(title);
         this.optTexts = new LinkedHashMap<>();
+        this.font = Helper.getFont();
         try
         {
             Mouse.setNativeCursor(null);
@@ -82,7 +83,7 @@ public class Menu extends Scene
 
         for (String s : optTexts.keySet())
         {
-            Helper.getFont().drawString(optTexts.get(s)[0], optTexts.get(s)[1], s);
+            this.font.drawString(optTexts.get(s)[0], optTexts.get(s)[1], s);
         }
 
         if (Display.wasResized())
@@ -215,6 +216,7 @@ public class Menu extends Scene
         {
             b.reloadFont();
         }
+        this.font = Helper.getFont();
     }
 
     public void addSplashText(int x, int y, String toDraw)
@@ -224,6 +226,6 @@ public class Menu extends Scene
 
     public void addSplashText(int y, String toDraw)
     {
-        addSplashText((Display.getWidth() / 2) - (Helper.getFont().getWidth(toDraw) / 2), y, toDraw);
+        addSplashText((Display.getWidth() / 2) - (this.font.getWidth(toDraw) / 2), y, toDraw);
     }
 }

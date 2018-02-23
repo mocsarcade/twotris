@@ -20,7 +20,7 @@ public class Game extends Scene
 {
     private boolean isGameOver;
     private TrueTypeFont font;
-    private com.github.capstone.Scene.Menus.Menu pauseMenu;
+    private Menu pauseMenu;
     private Grid grid;
 
     /**
