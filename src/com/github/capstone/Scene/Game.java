@@ -130,7 +130,7 @@ public class Game extends Scene
         }
 
         TextureImpl.bindNone();
-        font.drawString(0, 0, "" + grid.getScore());
+        font.drawString(0, 0, "Score: " + grid.getScore());
         return !isGameOver;
     }
 

@@ -2,18 +2,15 @@ package com.github.capstone.Components;
 
 import com.github.capstone.Manager.AudioManager;
 import com.github.capstone.Twotris;
-import org.lwjgl.opengl.Display;
 import org.lwjgl.util.Color;
 import org.lwjgl.util.Rectangle;
 
-import java.util.Random;
-
 public class Tetromino
 {
+    int size;
     public int speed;
-    private int size;
-    private Type type;
     private State state;
+    private Type type;
     private TetrominoPiece[][] pieceMatrix;
     private Rectangle hitBox;
     private int rotation;
@@ -26,11 +23,11 @@ public class Tetromino
      * @throws none
      * @EntityTetromino This constructor method is used for setting the type, state, size, speed and color of the piece being made. It also initializes the rotation and keypress to zero.
      */
-    Tetromino(Grid grid)
+    Tetromino(Grid grid, int type)
     {
         this.grid = grid;
         this.size = grid.getGridSize();
-        this.type = randomType();
+        this.type = Type.values()[type];
         this.state = State.FALLING;
         this.speed = 1;
         this.pieceMatrix = generateFromType();
@@ -156,7 +153,6 @@ public class Tetromino
                     if (row != null)
                     {
                         row.getHitBox().translate(0, this.speed);
-                        row.update(delta);
                     }
                 }
             }
@@ -198,13 +194,6 @@ public class Tetromino
             }
             this.getHitBox().translate(0, this.speed);
         }
-        else
-        {
-            if (Display.wasResized())
-            {
-
-            }
-        }
     }
 
     public TetrominoPiece[][] getPieceMatrix()
@@ -236,7 +225,7 @@ public class Tetromino
             {
                 if (row != null)
                 {
-                    row.draw(this.color);
+                    row.draw(this.color, 1F);
                 }
             }
         }
@@ -435,18 +424,11 @@ public class Tetromino
         return this.hitBox;
     }
 
-    /**
-     * @param none
-     * @return The type of piece found at the location in the array at the index generated.
-     * @throws none
-     * @randomType This method is used for selecting a type for the tetromino. Uses random numbers to select which tetromino piece is next to be selected.
-     */
-    private Type randomType()
+    public Color getColor()
     {
-        Random rand = new Random();
-        int rng = rand.nextInt(Type.values().length);
-        return Type.values()[rng];
+        return this.color;
     }
+
 
     /**
      * @param none

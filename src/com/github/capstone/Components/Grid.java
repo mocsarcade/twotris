@@ -18,15 +18,19 @@ public class Grid
     private int[][] pieceGrid;
     private Rectangle hitbox;
     private ArrayList<Tetromino> pieces;
+    private int currentType, nextType;
     private Tetromino activePiece;
+    private TetrominoGhost nextPiece;
     private int gridSize;
     private boolean isGameOver;
     private int score;
     private long lastKeypress;
+    private Random rand;
 
     public Grid()
     {
         // The grid should be 24 rows tall, 10 wide:
+        rand = new Random();
         pieceGrid = new int[24][10];
         this.hitbox = new Rectangle();
         int h = Display.getHeight();
@@ -40,7 +44,10 @@ public class Grid
         this.hitbox.setY(0);
         this.gridSize = this.hitbox.getWidth() / 10;
         this.pieces = new ArrayList<>();
-        this.activePiece = new Tetromino(this);
+        this.currentType = rand.nextInt(Tetromino.Type.values().length);
+        this.nextType = rand.nextInt(Tetromino.Type.values().length);
+        this.activePiece = new Tetromino(this, currentType);
+        this.nextPiece = new TetrominoGhost(this, nextType);
         this.pieces.add(this.activePiece);
         this.isGameOver = false;
     }
@@ -155,6 +162,7 @@ public class Grid
         {
             t.update(delta);
         }
+        this.nextPiece.update(delta);
         if (activePiece.getState() == Tetromino.State.IDLE)
         {
             // Step 1: Determine where the hitbox is in the grid
@@ -187,7 +195,10 @@ public class Grid
             }
             if (!this.isGameOver)
             {
-                this.activePiece = new Tetromino(this);
+                this.currentType = this.nextType;
+                this.nextType = this.rand.nextInt(Tetromino.Type.values().length);
+                this.activePiece = new Tetromino(this, this.currentType);
+                this.nextPiece = new TetrominoGhost(this, this.nextType);
                 this.pieces.add(this.activePiece);
             }
         }
@@ -238,6 +249,7 @@ public class Grid
 
         if (Twotris.getInstance().config.grid)
         {
+            GL11.glColor4f(1F, 1F, 1F, 0.25F);
             // Gridlines:
             for (int rows = 1; rows < 25; rows++)
             {
@@ -256,6 +268,7 @@ public class Grid
         {
             t.draw();
         }
+        this.nextPiece.draw();
     }
 
     /**
@@ -357,6 +370,15 @@ public class Grid
     {
         return this.hitbox.getHeight();
     }
+
+    /**
+     * @return the Grid's current width
+     */
+    public int getWidth()
+    {
+        return this.hitbox.getWidth();
+    }
+
 
     /**
      * @param direction the direction to check

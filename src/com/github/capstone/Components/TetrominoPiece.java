@@ -29,22 +29,12 @@ public class TetrominoPiece
     }
 
     /**
-     * @param delta
-     * @return none
-     * @throws none
-     * @update This method is used for updating the piece’s position and rotation.
-     */
-    public void update(float delta)
-    {
-    }
-
-    /**
      * @param none
      * @return none
      * @throws none
      * @draw This method is used for drawing the piece, setting the color, and size/shape.
      */
-    public void draw(Color color)
+    public void draw(Color color, float alpha)
     {
         float x = (float) this.hitbox.getX();
         float y = (float) this.hitbox.getY();
@@ -52,7 +42,7 @@ public class TetrominoPiece
         float h = (float) this.hitbox.getHeight();
 
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, sprite.getTextureID());
-        GL11.glColor3f(color.getRed() / 255F, color.getGreen() / 255F, color.getBlue() / 255F);
+        GL11.glColor4f(color.getRed() / 255F, color.getGreen() / 255F, color.getBlue() / 255F, alpha);
 
         GL11.glBegin(GL11.GL_QUADS);
 
