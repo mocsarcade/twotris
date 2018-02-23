@@ -8,7 +8,8 @@ import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
 
-import java.awt.*;
+import java.awt.Font;
+import java.awt.FontFormatException;
 import java.io.File;
 import java.io.IOException;
 import java.util.Random;
@@ -102,7 +103,29 @@ public class Helper
                 FileUtils.copyStream(ResourceLoader.getResourceAsStream("assets/fonts/fontname.ttf".replace("/", File.separator).replace("fontname", fontName)), new File("natives/fonts/fontname.ttf".replace("/", File.separator).replace("fontname", fontName)));
             }
 
-            Font awtFont = Font.createFont(Font.TRUETYPE_FONT, fontFile).deriveFont(32F);
+            float fontSize = 32F;
+
+            if (fontName.toLowerCase().contains("t 'n j"))
+            {
+                fontSize = 18F;
+            }
+            else if (fontName.toLowerCase().contains("blocks"))
+            {
+                fontSize = 28F;
+            }
+            else if (fontName.toLowerCase().contains("chickenpox"))
+            {
+                fontSize = 28F;
+            }
+            else if (fontName.toLowerCase().contains("heavy"))
+            {
+                fontSize = 20F;
+            }
+            else if (fontName.toLowerCase().contains("pixelmecha"))
+            {
+                fontSize = 28F;
+            }
+            Font awtFont = Font.createFont(Font.TRUETYPE_FONT, fontFile).deriveFont(fontSize);
             return new TrueTypeFont(awtFont, false);
         }
         catch (IOException | FontFormatException e)
@@ -114,9 +137,9 @@ public class Helper
 
     /**
      * @param none
-     * @return TrueTypeFont
+     * @return AWT Font
      * @throws none
-     * @getFont This method returns a TrueTypeFont  specified elsewhere, if unable to do so, the method uses Arial.
+     * @getFont This method returns an AWT Font specified elsewhere, if unable to do so, the method uses Arial.
      */
     public static Font getAWTFont()
     {

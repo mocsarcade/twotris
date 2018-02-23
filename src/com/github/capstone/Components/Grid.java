@@ -425,4 +425,9 @@ public class Grid
     {
         return this.score;
     }
+
+    public void reloadFont()
+    {
+        this.nextPiece.reloadFont();
+    }
 }

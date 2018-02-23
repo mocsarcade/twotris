@@ -7,10 +7,13 @@ import org.newdawn.slick.TrueTypeFont;
 public class TetrominoGhost extends Tetromino
 {
     private Grid grid;
+    private TrueTypeFont font;
+
 
     public TetrominoGhost(Grid grid, int type)
     {
         super(grid, type);
+        this.font = Helper.getFont();
         this.grid = grid;
         super.getHitBox().setLocation(Display.getWidth() - this.getHitBox().getWidth() - 16, 16);
         for (int i = 0; i < super.getPieceMatrix().length; i++)
@@ -45,8 +48,7 @@ public class TetrominoGhost extends Tetromino
     public void draw()
     {
         // Draw some text:
-        TrueTypeFont f = Helper.getFont();
-        f.drawString(this.getHitBox().getX() - f.getWidth("Next Piece:") - 8, 16, "Next Piece:");
+        font.drawString(this.getHitBox().getX() - font.getWidth("Next Piece:") - 8, 16, "Next Piece:");
 
         for (TetrominoPiece[] column : super.getPieceMatrix())
         {
@@ -60,4 +62,8 @@ public class TetrominoGhost extends Tetromino
         }
     }
 
+    public void reloadFont()
+    {
+        this.font = Helper.getFont();
+    }
 }

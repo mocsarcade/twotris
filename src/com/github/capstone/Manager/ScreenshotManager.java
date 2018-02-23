@@ -32,28 +32,6 @@ public class ScreenshotManager
 
     /**
      * @param none
-     * @return screenshot folder in question.
-     * @throws none
-     * @getScreenshotsFolder This method returns the screenshot folder.
-     */
-    public File getScreenshotsFolder()
-    {
-        return this.screenshotsFolder;
-    }
-
-    /**
-     * @param newFolder a folder in the system
-     * @return none
-     * @throws none
-     * @setScreenshotsFolder This method sets a folder as the screenshot folder for the game.
-     */
-    public void setScreenshotsFolder(File newFolder)
-    {
-        this.screenshotsFolder = newFolder;
-    }
-
-    /**
-     * @param none
      * @return none
      * @throws IOException
      * @takeScreenshot This method takes a screen shot of the game, saving the image as a png with the date in the title. Source used: http://wiki.lwjgl.org/wiki/Taking_Screen_Shots.html
@@ -72,12 +50,9 @@ public class ScreenshotManager
             this.screenshotsFolder.mkdir();
         }
 
-        String format = "png";
-        long timestamp = System.currentTimeMillis();
         SimpleDateFormat dateFormat = new SimpleDateFormat("MMM-dd-yyyy HH mm ss");
-        Date resultdate = new Date(timestamp);
-        File file = new File(this.screenshotsFolder.getAbsolutePath() + File.separator + dateFormat.format(resultdate) + "." + format);
-        System.out.println(file.getAbsolutePath());
+        Date resultdate = new Date(System.currentTimeMillis());
+        File file = new File(this.screenshotsFolder.getAbsolutePath() + File.separator + dateFormat.format(resultdate) + ".png");
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
         for (int x = 0; x < width; x++)
@@ -94,7 +69,8 @@ public class ScreenshotManager
 
         try
         {
-            ImageIO.write(image, format, file);
+            ImageIO.write(image, "png", file);
+            System.out.println(file.getAbsolutePath());
         }
         catch (IOException e)
         {

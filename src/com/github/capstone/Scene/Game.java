@@ -14,7 +14,7 @@ import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.opengl.TextureImpl;
 
-import java.awt.*;
+import java.awt.Toolkit;
 
 public class Game extends Scene
 {
@@ -156,5 +156,7 @@ public class Game extends Scene
     public void reloadFont()
     {
         this.font = Helper.getFont();
+        this.grid.reloadFont();
+        this.pauseMenu.reloadFont();
     }
 }
