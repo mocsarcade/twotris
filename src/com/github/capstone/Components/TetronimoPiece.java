@@ -29,18 +29,6 @@ public class TetronimoPiece
     }
 
     /**
-     * @param none
-     * @return “Piece”
-     * @throws none
-     * @toString This method is used for returning the presence of a piece during testing.
-     */
-    @Override
-    public String toString()
-    {
-        return "Piece";
-    }
-
-    /**
      * @param delta
      * @return none
      * @throws none
