@@ -6,7 +6,7 @@ import org.lwjgl.util.Color;
 import org.lwjgl.util.Rectangle;
 import org.newdawn.slick.opengl.Texture;
 
-public class TetronimoPiece
+public class TetrominoPiece
 {
     private Rectangle hitbox;
     private Texture sprite;
@@ -20,7 +20,7 @@ public class TetronimoPiece
      * @throws none
      * @EntityPiece This constructor method is used constructing the piece’s hitbox.
      */
-    TetronimoPiece(int x, int y, int size)
+    TetrominoPiece(int x, int y, int size)
     {
         this.hitbox = new Rectangle(x, y, size, size);
         this.sprite = Helper.loadTexture("piece");

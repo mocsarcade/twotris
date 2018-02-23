@@ -17,8 +17,8 @@ public class Grid
 {
     private int[][] pieceGrid;
     private Rectangle hitbox;
-    private ArrayList<Tetronimo> pieces;
-    private Tetronimo activePiece;
+    private ArrayList<Tetromino> pieces;
+    private Tetromino activePiece;
     private int gridSize;
     private boolean isGameOver;
     private int score;
@@ -40,7 +40,7 @@ public class Grid
         this.hitbox.setY(0);
         this.gridSize = this.hitbox.getWidth() / 10;
         this.pieces = new ArrayList<>();
-        this.activePiece = new Tetronimo(this);
+        this.activePiece = new Tetromino(this);
         this.pieces.add(this.activePiece);
         this.isGameOver = false;
     }
@@ -151,17 +151,17 @@ public class Grid
         {
             this.activePiece.speed = 1;
         }
-        for (Tetronimo t : pieces)
+        for (Tetromino t : pieces)
         {
             t.update(delta);
         }
-        if (activePiece.getState() == Tetronimo.State.IDLE)
+        if (activePiece.getState() == Tetromino.State.IDLE)
         {
             // Step 1: Determine where the hitbox is in the grid
-            TetronimoPiece[][] m = activePiece.getPieceMatrix();
-            for (TetronimoPiece[] pieceRow : m)
+            TetrominoPiece[][] m = activePiece.getPieceMatrix();
+            for (TetrominoPiece[] pieceRow : m)
             {
-                for (TetronimoPiece piece : pieceRow)
+                for (TetrominoPiece piece : pieceRow)
                 {
                     if (piece != null)
                     {
@@ -187,17 +187,17 @@ public class Grid
             }
             if (!this.isGameOver)
             {
-                this.activePiece = new Tetronimo(this);
+                this.activePiece = new Tetromino(this);
                 this.pieces.add(this.activePiece);
             }
         }
         else
         {
             // Step 1: Determine where the hitbox is in the grid
-            TetronimoPiece[][] m = activePiece.getPieceMatrix();
-            for (TetronimoPiece[] pieceRow : m)
+            TetrominoPiece[][] m = activePiece.getPieceMatrix();
+            for (TetrominoPiece[] pieceRow : m)
             {
-                for (TetronimoPiece pieceCol : pieceRow)
+                for (TetrominoPiece pieceCol : pieceRow)
                 {
                     if (pieceCol != null)
                     {
@@ -208,7 +208,7 @@ public class Grid
                         {
                             if (rowCheck < this.pieceGrid.length && this.pieceGrid[rowCheck][colCheck] > 0)
                             {
-                                this.activePiece.setState(Tetronimo.State.IDLE);
+                                this.activePiece.setState(Tetromino.State.IDLE);
                                 AudioManager.getInstance().play("place");
                             }
                         }
@@ -252,7 +252,7 @@ public class Grid
         }
         GL11.glEnd();
 
-        for (Tetronimo t : pieces)
+        for (Tetromino t : pieces)
         {
             t.draw();
         }
@@ -290,9 +290,9 @@ public class Grid
 
         // Graphically shift the pieces:
         int yCap = this.getYForRow(row);
-        for (Tetronimo t : pieces)
+        for (Tetromino t : pieces)
         {
-            TetronimoPiece[][] m = t.getPieceMatrix();
+            TetrominoPiece[][] m = t.getPieceMatrix();
             for (int i = 0; i < m.length; i++)
             {
                 for (int j = 0; j < m[i].length; j++)
@@ -366,9 +366,9 @@ public class Grid
     {
 
         // Create a rectangle clone and move it according to the movement we're wanting
-        for (TetronimoPiece[] row : this.activePiece.getPieceMatrix())
+        for (TetrominoPiece[] row : this.activePiece.getPieceMatrix())
         {
-            for (TetronimoPiece col : row)
+            for (TetrominoPiece col : row)
             {
                 if (col == null)
                 {
