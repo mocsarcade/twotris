@@ -114,7 +114,7 @@ public class Button
             // Sleep before processing the action
             try
             {
-                Thread.sleep(300);
+                Thread.sleep(150);
             }
             catch (InterruptedException ignored)
             {
