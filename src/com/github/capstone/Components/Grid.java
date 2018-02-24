@@ -249,7 +249,9 @@ public class Grid
 
         if (Twotris.getInstance().config.grid)
         {
+            GL11.glEnd();
             GL11.glColor4f(1F, 1F, 1F, 0.25F);
+            GL11.glBegin(GL11.GL_LINES);
             // Gridlines:
             for (int rows = 1; rows < 25; rows++)
             {
