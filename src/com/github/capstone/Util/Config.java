@@ -10,8 +10,16 @@ package com.github.capstone.Util;
 import com.github.capstone.Components.ColorPalette;
 import com.github.capstone.Scene.Components.Button;
 import com.github.capstone.Scene.Menus.Options;
+import com.github.capstone.Twotris;
+import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.GL11;
 
-import java.io.*;
+import java.awt.Toolkit;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Properties;
 
 public class Config
@@ -45,8 +53,6 @@ public class Config
         font_options.add("T 'n J");
         font_options.add("m5x7");
 
-
-        // TODO: add more color options!
         new ColorPalette();
         ColorPalette.getInstance().addColorPalette("Default", "fa0012", "00b6a3", "ffa500", "ec0868", "05e662", "c200fb", "ffffff");
         ColorPalette.getInstance().addColorPalette("Darker", "fa1200", "0562e6", "ff00a5", "00a3b6", "c2fb00", "ffffff", "ec6808");
@@ -212,6 +218,19 @@ public class Config
             this.fullscreen = !this.fullscreen;
             button.setButtonText(fullscreen_label + ":" + this.fullscreen);
             this.updateConfig();
+            if(this.fullscreen)
+            {
+                Twotris.getInstance().setDisplayMode(Toolkit.getDefaultToolkit().getScreenSize().width, Toolkit.getDefaultToolkit().getScreenSize().height, true);
+            }
+            else
+            {
+                Twotris.getInstance().setDisplayMode(800, 600, false);
+            }
+            Display.setResizable(true);
+            GL11.glViewport(0, 0, Display.getWidth(), Display.getHeight());
+            GL11.glMatrixMode(GL11.GL_PROJECTION);
+            GL11.glLoadIdentity();
+            GL11.glOrtho(0, Display.getWidth(), Display.getHeight(), 0, 1, -1);
         }
         else if (option.equalsIgnoreCase("show grid"))
         {
