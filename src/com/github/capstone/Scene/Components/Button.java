@@ -109,19 +109,18 @@ public class Button
     public boolean isClicked()
     {
         Rectangle mouse = new Rectangle(Mouse.getX(), Display.getHeight() - Mouse.getY(), 1, 1);
-        if (box.intersects(mouse) && Mouse.isButtonDown(0))
+        if (box.intersects(mouse))
         {
-            // Sleep before processing the action
-            try
+            while (Mouse.next())
             {
-                Thread.sleep(150);
+                if (Mouse.getEventButtonState() && box.intersects(mouse))
+                {
+                    AudioManager.getInstance().play("select");
+                    return true;
+                }
             }
-            catch (InterruptedException ignored)
-            {
-            }
-            AudioManager.getInstance().play("select");
-            return true;
         }
+
         return false;
     }
 
