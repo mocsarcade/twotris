@@ -137,6 +137,13 @@ public class Game extends Scene
 
         TextureImpl.bindNone();
         font.drawString(0, 0, "Score: " + grid.getScore());
+
+        if (!Display.isActive())
+        {
+            AudioManager.getInstance().play("pause");
+            return false;
+        }
+
         return !isGameOver;
     }
 
