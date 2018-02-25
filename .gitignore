@@ -5,3 +5,4 @@ screenshots/
 twotris.settings
 twotris.keybinds
 natives/fonts/
+*.settings
