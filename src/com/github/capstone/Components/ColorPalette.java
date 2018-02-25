@@ -3,16 +3,17 @@ package com.github.capstone.Components;
 import org.lwjgl.util.Color;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class ColorPalette
 {
     private static ColorPalette instance;
-    public HashMap<String, Color[]> colors;
+    public LinkedHashMap<String, Color[]> colors;
 
     public ColorPalette()
     {
         instance = this;
-        colors = new HashMap<>();
+        colors = new LinkedHashMap<>();
     }
 
     public static ColorPalette getInstance()
