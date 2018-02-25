@@ -43,12 +43,8 @@
 
     <target name="run" description="run the compiled code" depends="compile">
         <property name="native" location="natives"/>
-        <!-- <echo message="${native}" /> -->
-
         <java classname="com.github.capstone.Twotris" fork="true">
             <sysproperty key="java.library.path" value="${native}"/>
-            <!-- <sysproperty key="java.awt.headless" value="true" /> -->
-
             <classpath refid="project.class.path"/>
             <classpath>
                 <pathelement path="build/"/>
@@ -63,8 +59,5 @@
             <src path="${CHK_SOURCES}"/>
             <compilerarg value="-Xlint"/>
         </javac>
-
     </target>
-
-
 </project>
