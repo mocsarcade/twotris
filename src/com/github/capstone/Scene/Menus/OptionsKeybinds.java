@@ -91,16 +91,6 @@ public class OptionsKeybinds extends Scene
                 next.reloadFont();
                 return false;
             }
-            else
-            {
-                for (ButtonKeybind b : buttons)
-                {
-                    if (b.isClicked())
-                    {
-
-                    }
-                }
-            }
         }
 
         return true;
