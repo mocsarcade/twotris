@@ -31,6 +31,7 @@ public class Tetromino
         this.state = State.FALLING;
         this.speed = 1;
         this.pieceMatrix = generateFromType();
+        this.moveToTop();
         this.rotation = 0;
         this.color = ColorPalette.getInstance().getColor(Twotris.getInstance().config.colorscheme, this.type.ordinal());
     }
@@ -39,6 +40,25 @@ public class Tetromino
     {
         return this.type;
     }
+
+    /**
+     * @moveToTop a lazy method to start all pieces to be ABOVE the grid, instead of within it
+     */
+    private void moveToTop()
+    {
+        this.hitBox.translate(0, -(this.hitBox.getHeight()));
+        for (TetrominoPiece[] row : pieceMatrix)
+        {
+            for (TetrominoPiece col : row)
+            {
+                if (col != null)
+                {
+                    col.getHitBox().translate(0, -pieceMatrix.length * this.size);
+                }
+            }
+        }
+    }
+
 
     /**
      * @moveLeft move the piece (and sub-pieces) left by <code>size</code> amount

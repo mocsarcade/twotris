@@ -119,7 +119,7 @@ public class Grid
             {
                 for (int j = 0; j < colsWide; j++)
                 {
-                    if (startCol + j >= pieceGrid[0].length)
+                    if (startCol + j >= pieceGrid[0].length || startRow + i < 0)
                     {
                         canRotate = false;
                         break;
@@ -175,6 +175,10 @@ public class Grid
                     {
                         int row = piece.getHitBox().getY() / gridSize;
                         int col = (piece.getHitBox().getX() - this.hitbox.getX()) / gridSize;
+                        if (row < 0)
+                        {
+                            continue;
+                        }
                         piece.getHitBox().setY((row * gridSize));
                         // Step 2: occupy the grid
                         this.pieceGrid[row][col] = activePiece.getType().scoreValue;
@@ -409,7 +413,7 @@ public class Grid
                 {
                     return false;
                 }
-                if (movedCol < 0)
+                if (movedCol < 0 || movedRow < 0)
                 {
                     return false;
                 }
