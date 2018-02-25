@@ -118,6 +118,7 @@ public class Game extends Scene
             GL11.glMatrixMode(GL11.GL_PROJECTION);
             GL11.glLoadIdentity();
             GL11.glOrtho(0, Display.getWidth(), Display.getHeight(), 0, 1, -1);
+            this.grid = new Grid();
         }
         if (Keyboard.isKeyDown(Twotris.getInstance().keybinds.menuBack))
         {
