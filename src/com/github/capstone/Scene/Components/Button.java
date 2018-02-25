@@ -113,7 +113,7 @@ public class Button
         {
             while (Mouse.next())
             {
-                if (Mouse.getEventButtonState() && box.intersects(mouse))
+                if (Mouse.getEventButtonState())
                 {
                     AudioManager.getInstance().play("select");
                     return true;

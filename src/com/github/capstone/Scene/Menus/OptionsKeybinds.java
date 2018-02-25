@@ -5,11 +5,10 @@ import com.github.capstone.Scene.Components.ButtonKeybind;
 import com.github.capstone.Scene.Scene;
 import com.github.capstone.Twotris;
 import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 
-import java.awt.*;
+import java.awt.Toolkit;
 import java.util.ArrayList;
 
 public class OptionsKeybinds extends Scene
@@ -83,17 +82,7 @@ public class OptionsKeybinds extends Scene
             adjustButtons();
         }
 
-        if (Mouse.isButtonDown(0))
-        {
-            if (back.isClicked())
-            {
-                this.reloadFont();
-                next.reloadFont();
-                return false;
-            }
-        }
-
-        return true;
+        return !back.isClicked();
     }
 
 

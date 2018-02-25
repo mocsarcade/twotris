@@ -1,5 +1,6 @@
 package com.github.capstone.Scene.Components;
 
+import com.github.capstone.Manager.AudioManager;
 import com.github.capstone.Twotris;
 import com.github.capstone.Util.Keybinds;
 import org.lwjgl.input.Keyboard;
@@ -32,6 +33,7 @@ public class ButtonKeybind extends Button
         if (this.keyValue == -1)
         {
             Mouse.setGrabbed(true);
+
             while (Keyboard.next())
             {
                 if (Keyboard.next())
@@ -47,12 +49,6 @@ public class ButtonKeybind extends Button
             {
                 this.buttonText = title + ": " + intKeyToPrettyStr(this.keyValue);
                 updateKeybind(this.title, this.keyValue);
-            }
-        }
-        else
-        {
-            if (Mouse.isGrabbed())
-            {
                 Mouse.setGrabbed(false);
             }
         }
@@ -90,5 +86,22 @@ public class ButtonKeybind extends Button
                 break;
         }
         kb.updateConfig();
+    }
+
+    /**
+     * @param delta
+     * @return true/false depending on if the mouse has indeed encountered the button’s hitbox.
+     * @throws none
+     * @isClicked This method is used to detect whether the button has been clicked by testing whether the hitbox of the mouse has intercepted the hitbox of the button.
+     */
+    public boolean isClicked()
+    {
+        Rectangle mouse = new Rectangle(Mouse.getX(), Display.getHeight() - Mouse.getY(), 1, 1);
+        if (this.getHitBox().intersects(mouse) && Mouse.isButtonDown(0) && this.keyValue > -1)
+        {
+            AudioManager.getInstance().play("select");
+            return true;
+        }
+        return false;
     }
 }
