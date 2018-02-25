@@ -61,6 +61,7 @@ public class Config
         ColorPalette.getInstance().addColorPalette("Storm", "416168", "99c6c6", "41546d", "b9bbb6", "d2d7dd", "bfcfd9", "7c7a7d");
         ColorPalette.getInstance().addColorPalette("Google", "3cba54", "f4c20d", "db3236", "4885ed", "7d7d7d", "a0a0a0", "f0f0f0");
         ColorPalette.getInstance().addColorPalette("Rustic", "7c0707", "5B3502", "1f5170", "dbb774", "b34a00", "E5DFE6", "696969");
+        ColorPalette.getInstance().addColorPalette("Brite", "ef8700", "02e01f", "eeff07", "133cf2", "f207c7", "12cae2", "f70707");
         color_options = new LoopArrayList<>();
         for (String option : ColorPalette.getInstance().colors.keySet())
         {
@@ -218,7 +219,7 @@ public class Config
             this.fullscreen = !this.fullscreen;
             button.setButtonText(fullscreen_label + ":" + this.fullscreen);
             this.updateConfig();
-            if(this.fullscreen)
+            if (this.fullscreen)
             {
                 Twotris.getInstance().setDisplayMode(Toolkit.getDefaultToolkit().getScreenSize().width, Toolkit.getDefaultToolkit().getScreenSize().height, true);
             }
