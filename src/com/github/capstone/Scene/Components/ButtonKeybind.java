@@ -14,7 +14,7 @@ public class ButtonKeybind extends Button
 
     public ButtonKeybind(int x, int y, String title, int defaultVal)
     {
-        super(x, y, title + ":" + Keyboard.getKeyName(defaultVal).substring(0, 1) + Keyboard.getKeyName(defaultVal).substring(1).toLowerCase());
+        super(x, y, title + ": " + Keyboard.getKeyName(defaultVal).substring(0, 1) + Keyboard.getKeyName(defaultVal).substring(1).toLowerCase());
         this.title = title;
         this.keyValue = defaultVal;
     }
@@ -26,7 +26,7 @@ public class ButtonKeybind extends Button
         this.hovering = this.getHitBox().intersects(mouse);
         if (this.isClicked())
         {
-            this.buttonText = title + ":_";
+            this.buttonText = title + ": _";
             this.keyValue = -1;
         }
         if (this.keyValue == -1)
@@ -45,7 +45,7 @@ public class ButtonKeybind extends Button
             }
             if (this.keyValue > -1)
             {
-                this.buttonText = title + ":" + intKeyToPrettyStr(this.keyValue);
+                this.buttonText = title + ": " + intKeyToPrettyStr(this.keyValue);
                 updateKeybind(this.title, this.keyValue);
             }
         }
