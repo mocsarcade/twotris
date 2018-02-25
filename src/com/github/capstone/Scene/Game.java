@@ -9,6 +9,7 @@ import com.github.capstone.Scene.Menus.Options;
 import com.github.capstone.Twotris;
 import com.github.capstone.Util.Helper;
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.TrueTypeFont;
@@ -65,6 +66,10 @@ public class Game extends Scene
     @Override
     public boolean drawFrame(float delta)
     {
+        if (!Mouse.isGrabbed())
+        {
+            Mouse.setGrabbed(true);
+        }
         // Instantiate the menu if it hasn't been yet
         if (this.pauseMenu == null)
         {
@@ -143,6 +148,7 @@ public class Game extends Scene
     @Override
     public Scene nextScene()
     {
+        Mouse.setGrabbed(false);
         return this.pauseMenu;
     }
 
