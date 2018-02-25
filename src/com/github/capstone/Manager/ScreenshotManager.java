@@ -39,8 +39,8 @@ public class ScreenshotManager
     public void takeScreenshot()
     {
         GL11.glReadBuffer(GL11.GL_FRONT);
-        int width = Display.getDisplayMode().getWidth();
-        int height = Display.getDisplayMode().getHeight();
+        int width = Display.getWidth();
+        int height = Display.getHeight();
         int bpp = 4;
         ByteBuffer buffer = BufferUtils.createByteBuffer(width * height * bpp);
         GL11.glReadPixels(0, 0, width, height, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, buffer);
