@@ -81,7 +81,7 @@ public class Grid
     public void update(float delta)
     {
         Keybinds kb = Twotris.getInstance().keybinds;
-        if (Keyboard.isKeyDown(kb.moveLeft) && Helper.getTime() - lastKeypress > 250)
+        if (Keyboard.isKeyDown(kb.moveLeft) && Helper.getTime() - lastKeypress > 150)
         {
             if (canMove("left"))
             {
@@ -93,7 +93,7 @@ public class Grid
                 // TODO: play sound here
             }
         }
-        else if (Keyboard.isKeyDown(kb.moveRight) && Helper.getTime() - lastKeypress > 250)
+        else if (Keyboard.isKeyDown(kb.moveRight) && Helper.getTime() - lastKeypress > 150)
         {
             if (canMove("right"))
             {
@@ -105,7 +105,7 @@ public class Grid
                 // TODO: play sound here
             }
         }
-        else if (Keyboard.isKeyDown(kb.rotate) && Helper.getTime() - lastKeypress > 250)
+        else if (Keyboard.isKeyDown(kb.rotate) && Helper.getTime() - lastKeypress > 150)
         {
             // Create a rotated clone rectangle, and see where we end up
             boolean canRotate = true;
