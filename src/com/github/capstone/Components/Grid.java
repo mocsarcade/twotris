@@ -26,7 +26,13 @@ public class Grid
     private int score;
     private long lastKeypress;
     private Random rand;
-
+/**
+@return color the color located in the scheme, at the index provided. 
+@throws none
+@grid This constructor method creates a grid with 24 rows and 10 columns. Also, sets the hitbox, the height, width, x, y, size, number of pieces 
+involved, current type of tetromino being used through the use of a random integer from the available number of pieces, the active piece, 
+the next piece, and adds the active piece to the grid, and then makes sure the game is not over. 
+*/ 
     public Grid()
     {
         // The grid should be 24 rows tall, 10 wide:
@@ -52,8 +58,9 @@ public class Grid
         this.isGameOver = false;
     }
 
-    /**
-     * @return The current grid size
+	/**
+	 * @return gridSize The current grid size
+	 * @getGridSize
      */
     public int getGridSize()
     {
@@ -63,6 +70,7 @@ public class Grid
     /**
      * @param colNum the column which should be converted to the cartesian coordinate
      * @return an X value adapted from the row number given, based on grid size
+	 * @getXForCol
      */
     public int getXForCol(int colNum)
     {
@@ -72,11 +80,18 @@ public class Grid
     /**
      * @param rowNum the row which should be converted to the cartesian coordinate
      * @return a Y value adapted from the row number given, based on grid size
+	 * @getYforRow
      */
     public int getYForRow(int rowNum)
     {
         return this.hitbox.getY() + (rowNum * gridSize);
     }
+	/**
+	 * @param floating point number delta
+	 * @return none
+	 * @throws none
+	 * @update This method is used for updating the piece in the grid, and playing a sound if the piece cannot be moved/rotated. 
+	 */
 
     public void update(float delta)
     {
@@ -235,6 +250,12 @@ public class Grid
             }
         }
     }
+		/**
+		 * @param none
+		 * @return none
+		 * @throws none
+		 * @draw This method is used for drawing the piece, setting the color, and size/shape. 
+		 */
 
     public void draw()
     {
@@ -279,6 +300,7 @@ public class Grid
 
     /**
      * @return true if the game has ended
+	 * @isGameOver This method checks if the game is over or not. 
      */
     public boolean isGameOver()
     {
@@ -288,7 +310,7 @@ public class Grid
     /**
      * @param row the row to obliterate
      * @return the sum of the scores of each piece in the row destroyed
-     * @obliterate removes <code>row</code> both graphically, and in the back-end <code>pieceMatrix</code>
+     * @obliterate This method	removes <code>row</code> both graphically, and in the back-end <code>pieceMatrix</code>
      */
     private int obliterate(int row)
     {
@@ -336,7 +358,7 @@ public class Grid
     }
 
     /**
-     * @checkRows checks every row to in the grid to see if it is full, and obliterates it if so
+     * @checkRows This method checks every row to in the grid to see if it is full, and obliterates it if so. 
      */
     private void checkRows()
     {
@@ -356,6 +378,7 @@ public class Grid
     /**
      * @param row the row to check for completeness
      * @return true if the row in the pieceGrid is all true
+	 * @isRowFull This method checks if the row is full. 
      */
     private boolean isRowFull(int row)
     {
@@ -371,6 +394,7 @@ public class Grid
 
     /**
      * @return the Grid's current height
+	 * @getHeight This method retrieves the height of the grid
      */
     public int getHeight()
     {
@@ -379,6 +403,7 @@ public class Grid
 
     /**
      * @return the Grid's current width
+	 * @getWidth This method retrieves the width of the grid. 
      */
     public int getWidth()
     {
@@ -389,6 +414,7 @@ public class Grid
     /**
      * @param direction the direction to check
      * @return true if the current active piece can move <code>direction</code>
+	 * @canMove This method checks to see if the piece can move in the direction given. 
      */
     private boolean canMove(String direction)
     {
@@ -426,11 +452,23 @@ public class Grid
 
         return true;
     }
+/**
+ * @param none
+ * @return score the score of the game
+ * @throws none
+ * @getScore This method retrieves the score of the game being played.  
+ */ 
 
     public int getScore()
     {
         return this.score;
     }
+/**
+ * @param none
+ * @return none
+ * @throws none
+ * @reloadFont This method reloads the font in the game.  
+ */ 
 
     public void reloadFont()
     {
