@@ -149,5 +149,4 @@ public class OptionsKeybinds extends Scene
         back.reloadFont();
         next.reloadFont();
     }
-
 }
