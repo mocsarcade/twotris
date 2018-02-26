@@ -5,10 +5,10 @@ import com.github.capstone.Scene.Components.ButtonKeybind;
 import com.github.capstone.Scene.Scene;
 import com.github.capstone.Twotris;
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 
-import java.awt.Toolkit;
 import java.util.ArrayList;
 
 public class OptionsKeybinds extends Scene
@@ -26,12 +26,13 @@ public class OptionsKeybinds extends Scene
     public OptionsKeybinds(Scene lastScene)
     {
         this.buttons = new ArrayList<>();
-        this.buttons.add(new ButtonKeybind(0, 0, "Left", Twotris.getInstance().keybinds.moveLeft));
-        this.buttons.add(new ButtonKeybind(0, 0, "Right", Twotris.getInstance().keybinds.moveRight));
-        this.buttons.add(new ButtonKeybind(0, 0, "Rotate", Twotris.getInstance().keybinds.rotate));
-        this.buttons.add(new ButtonKeybind(0, 0, "Accel", Twotris.getInstance().keybinds.accelerate));
-        this.buttons.add(new ButtonKeybind(0, 0, "Place", Twotris.getInstance().keybinds.place));
-        this.buttons.add(new ButtonKeybind(0, 0, "Menu/Back", Twotris.getInstance().keybinds.menuBack));
+        this.buttons.add(new ButtonKeybind("Left", Twotris.getInstance().keybinds.moveLeft));
+        this.buttons.add(new ButtonKeybind("Right", Twotris.getInstance().keybinds.moveRight));
+        this.buttons.add(new ButtonKeybind("Rotate", Twotris.getInstance().keybinds.rotate));
+        this.buttons.add(new ButtonKeybind("Accel", Twotris.getInstance().keybinds.accelerate));
+        this.buttons.add(new ButtonKeybind("Place", Twotris.getInstance().keybinds.place));
+        this.buttons.add(new ButtonKeybind("Menu/Back", Twotris.getInstance().keybinds.menuBack));
+        this.buttons.add(new ButtonKeybind("Screenshot", Twotris.getInstance().keybinds.screenshot));
         back = new Button(256, 64, "Back");
         this.adjustButtons();
         this.next = lastScene;
@@ -57,29 +58,13 @@ public class OptionsKeybinds extends Scene
             GL11.glOrtho(0, Display.getWidth(), Display.getHeight(), 0, 1, -1);
         }
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, 0);
+
         updateButtons();
         drawButtons();
 
-        if (Keyboard.isKeyDown(Keyboard.KEY_F2))
+        if (Keyboard.isKeyDown(Twotris.getInstance().keybinds.screenshot))
         {
             Twotris.getInstance().screenshotManager.takeScreenshot();
-        }
-        if (Keyboard.isKeyDown(Keyboard.KEY_F11))
-        {
-            if (Display.isFullscreen())
-            {
-                Twotris.getInstance().setDisplayMode(800, 600, false);
-            }
-            else
-            {
-                Twotris.getInstance().setDisplayMode(Toolkit.getDefaultToolkit().getScreenSize().width, Toolkit.getDefaultToolkit().getScreenSize().height, true);
-            }
-            Display.setResizable(true);
-            GL11.glViewport(0, 0, Display.getWidth(), Display.getHeight());
-            GL11.glMatrixMode(GL11.GL_PROJECTION);
-            GL11.glLoadIdentity();
-            GL11.glOrtho(0, Display.getWidth(), Display.getHeight(), 0, 1, -1);
-            adjustButtons();
         }
 
         return !back.isClicked();

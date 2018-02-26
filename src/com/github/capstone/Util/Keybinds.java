@@ -20,6 +20,7 @@ public class Keybinds
     public int accelerate;
     public int place;
     public int menuBack;
+    public int screenshot;
 
     public Keybinds()
     {
@@ -47,6 +48,7 @@ public class Keybinds
             this.accelerate = Integer.parseInt(props.getProperty("accelerate", "" + Keyboard.KEY_LSHIFT));
             this.place = Integer.parseInt(props.getProperty("place", "" + Keyboard.KEY_GRAVE));
             this.menuBack = Integer.parseInt(props.getProperty("menuBack", "" + Keyboard.KEY_ESCAPE));
+            this.screenshot = Integer.parseInt(props.getProperty("screenshot", "" + Keyboard.KEY_F2));
 
             reader.close();
         }
@@ -85,6 +87,7 @@ public class Keybinds
         props.setProperty("accelerate", "" + Keyboard.KEY_LSHIFT);
         props.setProperty("place", "" + Keyboard.KEY_GRAVE);
         props.setProperty("menuBack", "" + Keyboard.KEY_ESCAPE);
+        props.setProperty("screenshot", "" + Keyboard.KEY_F2);
 
         this.moveLeft = Integer.parseInt(props.getProperty("moveLeft", "" + Keyboard.KEY_LEFT));
         this.moveRight = Integer.parseInt(props.getProperty("moveRight", "" + Keyboard.KEY_RIGHT));
@@ -92,6 +95,7 @@ public class Keybinds
         this.accelerate = Integer.parseInt(props.getProperty("accelerate", "" + Keyboard.KEY_LSHIFT));
         this.place = Integer.parseInt(props.getProperty("place", "" + Keyboard.KEY_GRAVE));
         this.menuBack = Integer.parseInt(props.getProperty("menuBack", "" + Keyboard.KEY_ESCAPE));
+        this.screenshot = Integer.parseInt(props.getProperty("screenshot", "" + Keyboard.KEY_F2));
 
         FileWriter writer = new FileWriter(configFile);
         props.store(writer, "Twotris Keybinds");
@@ -119,6 +123,7 @@ public class Keybinds
             props.setProperty("accelerate", "" + this.accelerate);
             props.setProperty("place", "" + this.place);
             props.setProperty("menuBack", "" + this.menuBack);
+            props.setProperty("screenshot", "" + this.screenshot);
 
             props.store(new FileWriter(configFile), "Twotris Keybinds");
             loadKeybinds();
