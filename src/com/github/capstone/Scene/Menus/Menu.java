@@ -55,7 +55,12 @@ public class Menu extends Scene
      */
     public void addButton(Button button, Scene scene)
     {
-        buttons.put(button, scene);
+        this.buttons.put(button, scene);
+    }
+
+    public void clearButtons()
+    {
+        this.buttons.clear();
     }
 
     /**
@@ -97,26 +102,9 @@ public class Menu extends Scene
             }
         }
 
-        if (Keyboard.isKeyDown(Keyboard.KEY_F2))
+        if (Keyboard.isKeyDown(Twotris.getInstance().keybinds.screenshot))
         {
             Twotris.getInstance().screenshotManager.takeScreenshot();
-        }
-        if (Keyboard.isKeyDown(Keyboard.KEY_F11))
-        {
-            if (Display.isFullscreen())
-            {
-                Twotris.getInstance().setDisplayMode(800, 600, false);
-            }
-            else
-            {
-                Twotris.getInstance().setDisplayMode(Toolkit.getDefaultToolkit().getScreenSize().width, Toolkit.getDefaultToolkit().getScreenSize().height, true);
-            }
-            Display.setResizable(true);
-            GL11.glViewport(0, 0, Display.getWidth(), Display.getHeight());
-            GL11.glMatrixMode(GL11.GL_PROJECTION);
-            GL11.glLoadIdentity();
-            GL11.glOrtho(0, Display.getWidth(), Display.getHeight(), 0, 1, -1);
-            adjustButtons();
         }
 
         if (Mouse.isButtonDown(0))

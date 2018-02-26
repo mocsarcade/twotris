@@ -20,4 +20,14 @@ public class MainMenu extends Menu
         this.addButton(new Button(256, 64, "Quit Game"), null);
         this.adjustButtons();
     }
+
+    @Override
+    public void resizeContents()
+    {
+        clearButtons();
+        this.addButton(new Button(256, 64, "Play Co-Op"), new Game());
+        this.addButton(new Button(256, 64, "Options"), new Options(this));
+        this.addButton(new Button(256, 64, "Quit Game"), null);
+        this.adjustButtons();
+    }
 }

@@ -53,7 +53,6 @@ public abstract class Scene
 
             keepGoing = drawFrame(delta);
 
-            // UPDATE DISPLAY
             Display.update();
             AudioManager.getInstance().update();
 
@@ -73,4 +72,8 @@ public abstract class Scene
      * @reloadFont This method is used for reloading the font, but is not implemented in the abstract.
      */
     public abstract void reloadFont();
+
+    public void resizeContents()
+    {
+    }
 }

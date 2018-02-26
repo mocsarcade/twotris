@@ -8,7 +8,6 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 
-import java.awt.*;
 import java.util.LinkedHashMap;
 
 public class Options extends Scene
@@ -68,26 +67,9 @@ public class Options extends Scene
         updateButtons();
         drawButtons();
 
-        if (Keyboard.isKeyDown(Keyboard.KEY_F2))
+        if (Keyboard.isKeyDown(Twotris.getInstance().keybinds.screenshot))
         {
             Twotris.getInstance().screenshotManager.takeScreenshot();
-        }
-        if (Keyboard.isKeyDown(Keyboard.KEY_F11))
-        {
-            if (Display.isFullscreen())
-            {
-                Twotris.getInstance().setDisplayMode(800, 600, false);
-            }
-            else
-            {
-                Twotris.getInstance().setDisplayMode(Toolkit.getDefaultToolkit().getScreenSize().width, Toolkit.getDefaultToolkit().getScreenSize().height, true);
-            }
-            Display.setResizable(true);
-            GL11.glViewport(0, 0, Display.getWidth(), Display.getHeight());
-            GL11.glMatrixMode(GL11.GL_PROJECTION);
-            GL11.glLoadIdentity();
-            GL11.glOrtho(0, Display.getWidth(), Display.getHeight(), 0, 1, -1);
-            adjustButtons();
         }
 
         if (Mouse.isButtonDown(0))
@@ -112,6 +94,10 @@ public class Options extends Scene
                     {
                         String prop = buttons.get(b).substring(0, buttons.get(b).indexOf(":"));
                         Twotris.getInstance().config.toggleOption(prop, b);
+                        if (b.getText().contains("Fullscreen"))
+                        {
+                            this.resizeContents();
+                        }
                     }
                 }
             }
@@ -207,4 +193,13 @@ public class Options extends Scene
         back.reloadFont();
     }
 
+    @Override
+    public void resizeContents()
+    {
+        this.last.resizeContents();
+        if (this.next != null)
+        {
+            this.next.resizeContents();
+        }
+    }
 }

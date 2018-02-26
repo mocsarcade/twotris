@@ -99,26 +99,9 @@ public class Game extends Scene
         // TODO: Insert working logic here
         grid.update(delta);
 
-        if (Keyboard.isKeyDown(Keyboard.KEY_F2))
+        if (Keyboard.isKeyDown(Twotris.getInstance().keybinds.screenshot))
         {
             Twotris.getInstance().screenshotManager.takeScreenshot();
-        }
-        if (Keyboard.isKeyDown(Keyboard.KEY_F11))
-        {
-            if (Display.isFullscreen())
-            {
-                Twotris.getInstance().setDisplayMode(800, 600, false);
-            }
-            else
-            {
-                Twotris.getInstance().setDisplayMode(Toolkit.getDefaultToolkit().getScreenSize().width, Toolkit.getDefaultToolkit().getScreenSize().height, true);
-            }
-            Display.setResizable(true);
-            GL11.glViewport(0, 0, Display.getWidth(), Display.getHeight());
-            GL11.glMatrixMode(GL11.GL_PROJECTION);
-            GL11.glLoadIdentity();
-            GL11.glOrtho(0, Display.getWidth(), Display.getHeight(), 0, 1, -1);
-            this.grid = new Grid();
         }
         if (Keyboard.isKeyDown(Twotris.getInstance().keybinds.menuBack))
         {
@@ -142,6 +125,10 @@ public class Game extends Scene
         {
             AudioManager.getInstance().play("pause");
             return false;
+        }
+        if(Display.wasResized())
+        {
+            this.grid = new Grid();
         }
 
         return !isGameOver;
@@ -172,5 +159,11 @@ public class Game extends Scene
         this.font = Helper.getFont();
         this.grid.reloadFont();
         this.pauseMenu.reloadFont();
+    }
+
+    @Override
+    public void resizeContents()
+    {
+        this.grid = new Grid();
     }
 }

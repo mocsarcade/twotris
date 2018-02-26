@@ -12,10 +12,11 @@ public class ButtonKeybind extends Button
 {
     private int keyValue;
     private String title;
+    private int stickyX, stickyY;
 
-    public ButtonKeybind(int x, int y, String title, int defaultVal)
+    public ButtonKeybind(String title, int defaultVal)
     {
-        super(x, y, title + ": " + Keyboard.getKeyName(defaultVal).substring(0, 1) + Keyboard.getKeyName(defaultVal).substring(1).toLowerCase());
+        super(0, 0, title + ": " + Keyboard.getKeyName(defaultVal).substring(0, 1) + Keyboard.getKeyName(defaultVal).substring(1).toLowerCase());
         this.title = title;
         this.keyValue = defaultVal;
     }
@@ -27,13 +28,14 @@ public class ButtonKeybind extends Button
         this.hovering = this.getHitBox().intersects(mouse);
         if (this.isClicked())
         {
+            this.stickyX = Mouse.getX();
+            this.stickyY = Display.getHeight() - Mouse.getY();
             this.buttonText = title + ": _";
             this.keyValue = -1;
         }
         if (this.keyValue == -1)
         {
-            Mouse.setGrabbed(true);
-
+            Mouse.setCursorPosition(stickyX, stickyY);
             while (Keyboard.next())
             {
                 if (Keyboard.next())
@@ -49,7 +51,6 @@ public class ButtonKeybind extends Button
             {
                 this.buttonText = title + ": " + intKeyToPrettyStr(this.keyValue);
                 updateKeybind(this.title, this.keyValue);
-                Mouse.setGrabbed(false);
             }
         }
     }
@@ -103,5 +104,10 @@ public class ButtonKeybind extends Button
             return true;
         }
         return false;
+    }
+
+    public int getKeyValue()
+    {
+        return this.keyValue;
     }
 }
