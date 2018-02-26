@@ -8,7 +8,10 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Rectangle;
+import org.newdawn.slick.TrueTypeFont;
+import org.newdawn.slick.opengl.TextureImpl;
 
+import javax.xml.soap.Text;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
@@ -26,6 +29,7 @@ public class Grid
     private int score;
     private long lastKeypress;
     private Random rand;
+    private TrueTypeFont font;
 
     public Grid()
     {
@@ -50,6 +54,7 @@ public class Grid
         this.nextPiece = new TetrominoGhost(this, nextType);
         this.pieces.add(this.activePiece);
         this.isGameOver = false;
+        this.font = Helper.getFont();
     }
 
     /**
@@ -238,6 +243,7 @@ public class Grid
 
     public void draw()
     {
+        GL11.glBindTexture(GL11.GL_TEXTURE_2D, 0);
         GL11.glColor3f(1F, 1F, 1F);
 
         GL11.glBegin(GL11.GL_LINES);
@@ -275,6 +281,9 @@ public class Grid
             t.draw();
         }
         this.nextPiece.draw();
+
+        TextureImpl.bindNone();
+        this.font.drawString(0, 0, "Score: " + this.score);
     }
 
     /**
