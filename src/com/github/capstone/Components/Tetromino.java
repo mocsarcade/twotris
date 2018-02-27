@@ -42,7 +42,7 @@ public class Tetromino
     }
 
     /**
-     * @moveToTop a lazy method to start all pieces to be ABOVE the grid, instead of within it
+     * @moveToTop According to code guru: a lazy method to start all pieces to be ABOVE the grid, instead of within it
      */
     private void moveToTop()
     {
@@ -216,20 +216,39 @@ public class Tetromino
         }
     }
 
+    /**
+     * @param none
+     * @return pieceMatrix The piece matrix in question.
+     * @throws none
+     * @getPieceMatrix This method retrieves the piece matrix.
+     */
     public TetrominoPiece[][] getPieceMatrix()
     {
         return this.pieceMatrix;
     }
 
+    /**
+     * @param none
+     * @return state the state of the piece.
+     * @throws none
+     * @getState This method retrieves the state of the piece.
+     */
     public State getState()
     {
         return this.state;
     }
 
+    /**
+     * @param state the new state to set the piece to
+     * @return none
+     * @throws none
+     * @setState This method sets the state of the piece in question
+     */
     public void setState(State state)
     {
         this.state = state;
     }
+
 
     /**
      * @param none
@@ -255,7 +274,9 @@ public class Tetromino
      * @param none
      * @return none
      * @throws none
-     * @rotate This method is used for rotating the piece, based on 0, 90, 180, and 270 degrees.  Each of the individual shapes is accorded a different case, based on the available positions that particular piece is able to have. Also, rotates the hitbox to accurately receive collision instances.
+     * @rotate This method is used for rotating the piece, based on 0, 90, 180, and 270 degrees.  Each of the individual shapes is accorded a
+     * different case, based on the available positions that particular piece is able to have. Also, rotates the hitbox to accurately
+     * receive collision instances.
      */
     public void rotate()
     {
@@ -444,6 +465,12 @@ public class Tetromino
         return this.hitBox;
     }
 
+    /**
+     * @param none
+     * @return color
+     * @throws none
+     * @getColor This method is used for getting the color the tetromino piece possesses.
+     */
     public Color getColor()
     {
         return this.color;

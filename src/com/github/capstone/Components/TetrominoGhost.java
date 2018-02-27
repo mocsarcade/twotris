@@ -7,15 +7,19 @@ import org.newdawn.slick.opengl.TextureImpl;
 
 public class TetrominoGhost extends Tetromino
 {
-    private Grid grid;
     private TrueTypeFont font;
 
-
+    /**
+     * @param grid the Grid for the ghost piece
+     * @param type the type of the next tetromino piece.
+     * @return none
+     * @throws none
+     * @TetrominoGhost This constructor method is used to create the ghost tetromino piece for the next piece selection.
+     */
     public TetrominoGhost(Grid grid, int type)
     {
         super(grid, type);
         this.font = Helper.getFont();
-        this.grid = grid;
         super.getHitBox().setLocation(Display.getWidth() - this.getHitBox().getWidth() - 16, 16);
         for (int i = 0; i < super.getPieceMatrix().length; i++)
         {
@@ -29,6 +33,12 @@ public class TetrominoGhost extends Tetromino
         }
     }
 
+    /**
+     * @param floating point number delta
+     * @return none
+     * @throws none
+     * @update This method is updating the hitbox and piece matrix the class is used for.
+     */
     @Override
     public void update(float delta)
     {
@@ -45,6 +55,12 @@ public class TetrominoGhost extends Tetromino
         }
     }
 
+    /**
+     * @param none
+     * @return none
+     * @throws none
+     * @draw This method is used for drawing the next piece space, and its font text.
+     */
     @Override
     public void draw()
     {
@@ -62,6 +78,12 @@ public class TetrominoGhost extends Tetromino
         font.drawString(this.getHitBox().getX() - font.getWidth("Next Piece:") - 8, 16, "Next Piece:");
     }
 
+    /**
+     * @param none
+     * @return none
+     * @throws none
+     * @reloadFont This method is used for reloading the font.
+     */
     public void reloadFont()
     {
         this.font = Helper.getFont();
