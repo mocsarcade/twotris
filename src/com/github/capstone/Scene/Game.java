@@ -13,9 +13,6 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.TrueTypeFont;
-import org.newdawn.slick.opengl.TextureImpl;
-
-import java.awt.Toolkit;
 
 public class Game extends Scene
 {
@@ -41,17 +38,17 @@ public class Game extends Scene
      */
     private void updatePauseMenu()
     {
-        pauseMenu = this.isGameOver ? new com.github.capstone.Scene.Menus.Menu("gui/game_over") : new Menu("gui/paused");
+        pauseMenu = this.isGameOver ? new Menu("gui/game_over") : new Menu("gui/paused");
         if (isGameOver)
         {
             pauseMenu.addSplashText(Display.getHeight() - 32, "Game Score: " + this.grid.getScore());
-            pauseMenu.addButton(new com.github.capstone.Scene.Components.Button(0, 0, "Play Again"), new Game());
-            pauseMenu.addButton(new com.github.capstone.Scene.Components.Button(0, 0, "Main Menu"), new MainMenu());
+            pauseMenu.addButton(new Button(0, 0, "Play Again"), new Game());
+            pauseMenu.addButton(new Button(0, 0, "Main Menu"), new MainMenu());
         }
         else
         {
-            pauseMenu.addButton(new com.github.capstone.Scene.Components.Button(0, 0, "Resume"), this);
-            pauseMenu.addButton(new com.github.capstone.Scene.Components.Button(0, 0, "Options"), new Options(this));
+            pauseMenu.addButton(new Button(0, 0, "Resume"), this);
+            pauseMenu.addButton(new Button(0, 0, "Options"), new Options(this));
             pauseMenu.addButton(new Button(0, 0, "Save & Quit"), new MainMenu());
         }
         pauseMenu.adjustButtons();
@@ -66,39 +63,25 @@ public class Game extends Scene
     @Override
     public boolean drawFrame(float delta)
     {
+        this.grid.update(delta);
+        GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
+        GL11.glClearColor(.09F, 0.09F, 0.09F, 0F);
+        this.grid.draw();
+
+        // Grab the mouse if it isn't and this scene is active
         if (!Mouse.isGrabbed())
         {
             Mouse.setGrabbed(true);
         }
+
         // Instantiate the menu if it hasn't been yet
-        if (this.pauseMenu == null)
+        this.isGameOver = grid.isGameOver();
+        if (this.pauseMenu == null || this.isGameOver)
         {
             this.updatePauseMenu();
         }
-        if (this.isGameOver)
-        {
-            updatePauseMenu();
-        }
-        if (Display.wasResized())
-        {
-            this.grid = new Grid();
-        }
 
-        GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
-        GL11.glClearColor(.09F, 0.09F, 0.09F, 0F);
-        // Screen resize handler
-        if (Display.wasResized())
-        {
-            GL11.glViewport(0, 0, Display.getWidth(), Display.getHeight());
-            GL11.glMatrixMode(GL11.GL_PROJECTION);
-            GL11.glLoadIdentity();
-            GL11.glOrtho(0, Display.getWidth(), Display.getHeight(), 0, 1, -1);
-        }
-        GL11.glBindTexture(GL11.GL_TEXTURE_2D, 0);
-
-        // TODO: Insert working logic here
-        grid.update(delta);
-
+        // Keypress handlers:
         if (Keyboard.isKeyDown(Twotris.getInstance().keybinds.screenshot))
         {
             Twotris.getInstance().screenshotManager.takeScreenshot();
@@ -109,28 +92,23 @@ public class Game extends Scene
             return false;
         }
 
-        // TODO: Put working draw code here:
-        grid.draw();
-
-        this.isGameOver = grid.isGameOver();
-        if (this.isGameOver)
-        {
-            updatePauseMenu();
-        }
-
-        TextureImpl.bindNone();
-        font.drawString(0, 0, "Score: " + grid.getScore());
-
+        // If the window isn't the active one, pause:
         if (!Display.isActive())
         {
             AudioManager.getInstance().play("pause");
             return false;
         }
-        if(Display.wasResized())
+
+        // Screen resize handler
+        if (Display.wasResized())
         {
+            GL11.glViewport(0, 0, Display.getWidth(), Display.getHeight());
+            GL11.glMatrixMode(GL11.GL_PROJECTION);
+            GL11.glLoadIdentity();
+            GL11.glOrtho(0, Display.getWidth(), Display.getHeight(), 0, 1, -1);
             this.grid = new Grid();
         }
-
+        
         return !isGameOver;
     }
 

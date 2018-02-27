@@ -3,6 +3,7 @@ package com.github.capstone.Components;
 import com.github.capstone.Util.Helper;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.TrueTypeFont;
+import org.newdawn.slick.opengl.TextureImpl;
 
 public class TetrominoGhost extends Tetromino
 {
@@ -66,9 +67,6 @@ public class TetrominoGhost extends Tetromino
     @Override
     public void draw()
     {
-        // Draw some text:
-        font.drawString(this.getHitBox().getX() - font.getWidth("Next Piece:") - 8, 16, "Next Piece:");
-
         for (TetrominoPiece[] column : super.getPieceMatrix())
         {
             for (TetrominoPiece row : column)
@@ -79,6 +77,8 @@ public class TetrominoGhost extends Tetromino
                 }
             }
         }
+        TextureImpl.bindNone();
+        font.drawString(this.getHitBox().getX() - font.getWidth("Next Piece:") - 8, 16, "Next Piece:");
     }
 /**
 @param none 
