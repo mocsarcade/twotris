@@ -42,7 +42,7 @@ public class Tetromino
     }
 
     /**
-     * @moveToTop According to code guru: a lazy method to start all pieces to be ABOVE the grid, instead of within it
+     * @moveToTop a lazy method to start all pieces to be ABOVE the grid, instead of within it
      */
     private void moveToTop()
     {
@@ -61,7 +61,7 @@ public class Tetromino
 
 
     /**
-     * @moveLeft This method moves the piece (and sub-pieces) left by <code>size</code> amount
+     * @moveLeft move the piece (and sub-pieces) left by <code>size</code> amount
      */
     public void moveLeft()
     {
@@ -79,7 +79,7 @@ public class Tetromino
     }
 
     /**
-     * @moveRight This method moves the piece (and sub-pieces) right by <code>size</code> amount
+     * @moveRight move the piece (and sub-pieces) right by <code>size</code> amount
      */
     public void moveRight()
     {
@@ -215,33 +215,17 @@ public class Tetromino
             this.getHitBox().translate(0, this.speed);
         }
     }
-/**
- * @param none
- * @return pieceMatrix The piece matrix in question.
- * @throws none
- * @getPieceMatrix This method retrieves the piece matrix. 
- */ 
+
     public TetrominoPiece[][] getPieceMatrix()
     {
         return this.pieceMatrix;
     }
-/**
- * @param none
- * @return state the state of the piece. 
- * @throws none
- * @getState This method retrieves the state of the piece.   
- */ 
 
     public State getState()
     {
         return this.state;
     }
-/**
- * @param none
- * @return none
- * @throws none
- * @setState This method sets the state of the piece in question  
- */ 
+
     public void setState(State state)
     {
         this.state = state;
@@ -271,9 +255,7 @@ public class Tetromino
      * @param none
      * @return none
      * @throws none
-     * @rotate 	This method is used for rotating the piece, based on 0, 90, 180, and 270 degrees.  Each of the individual shapes is accorded a 
-		different case, based on the available positions that particular piece is able to have. Also, rotates the hitbox to accurately
-		receive collision instances.
+     * @rotate This method is used for rotating the piece, based on 0, 90, 180, and 270 degrees.  Each of the individual shapes is accorded a different case, based on the available positions that particular piece is able to have. Also, rotates the hitbox to accurately receive collision instances.
      */
     public void rotate()
     {
@@ -461,12 +443,7 @@ public class Tetromino
     {
         return this.hitBox;
     }
-	/**
-     * @param none
-     * @return color
-     * @throws none
-     * @getColor This method is used for getting the color the tetromino piece possesses.
-     */
+
     public Color getColor()
     {
         return this.color;
@@ -475,9 +452,9 @@ public class Tetromino
 
     /**
      * @param none
+     * @state This offers two options, falling or idle.
      * @return none
      * @throws none
-	 * @state This offers two options, falling or idle.
      */
     public enum State
     {
@@ -486,10 +463,9 @@ public class Tetromino
 
     /**
      * @param none
+     * @type This method carries the various types of tetromino pieces available, with a private index variable to find the index of the piece given an integer.
      * @return none
      * @throws none
-	 * @type This method carries the various types of tetromino pieces available, with a private index variable to find the index of the
-		piece given an integer.
      */
     public enum Type
     {
