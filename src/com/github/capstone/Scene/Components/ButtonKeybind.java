@@ -28,8 +28,8 @@ public class ButtonKeybind extends Button
         this.hovering = this.getHitBox().intersects(mouse);
         if (this.isClicked())
         {
-            this.stickyX = Mouse.getX();
-            this.stickyY = Display.getHeight() - Mouse.getY();
+            this.stickyX = this.getHitBox().getX() + (this.getHitBox().getWidth() / 2);
+            this.stickyY = Display.getHeight() - (this.getHitBox().getY() + (this.getHitBox().getHeight() / 2));
             this.buttonText = title + ": _";
             this.keyValue = -1;
         }
@@ -84,6 +84,9 @@ public class ButtonKeybind extends Button
                 break;
             case "Menu/Back":
                 kb.menuBack = newVal;
+                break;
+            case "Screenshot":
+                kb.screenshot = newVal;
                 break;
         }
         kb.updateConfig();
