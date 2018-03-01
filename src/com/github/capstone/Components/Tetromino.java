@@ -280,178 +280,34 @@ public class Tetromino
      */
     public void rotate()
     {
-        switch (this.type)
+        int newHeight = this.hitBox.getWidth();
+        this.hitBox.setWidth(this.hitBox.getHeight());
+        this.hitBox.setHeight(newHeight);
+
+        this.rotation++;
+        if (this.rotation == 4)
         {
-            case L:
-                if (this.rotation == 0)
+            this.rotation = 0;
+        }
+        // Rotate the piece matrix:
+        TetrominoPiece[][] temp = new TetrominoPiece[this.pieceMatrix[0].length][this.pieceMatrix.length];
+        for (int i = 0; i < this.pieceMatrix[0].length; i++)
+        {
+            for (int j = 0; j < this.pieceMatrix.length; j++)
+            {
+                if (this.pieceMatrix[this.pieceMatrix.length - 1 - j][i] != null)
                 {
-                    this.pieceMatrix = new TetrominoPiece[][]{
-                            {new TetrominoPiece(this.getHitBox().getX(), this.getHitBox().getY(), size), new TetrominoPiece(this.getHitBox().getX() + size, this.getHitBox().getY(), size), new TetrominoPiece(this.getHitBox().getX() + (2 * size), this.getHitBox().getY(), size)},
-                            {new TetrominoPiece(this.getHitBox().getX(), this.getHitBox().getY() + size, size), null, null}
-                    };
-                    break;
+                    temp[i][j] = new TetrominoPiece(this.hitBox.getX() + (j * this.size), this.getHitBox().getY() + (i * this.size), this.size);
                 }
-                else if (this.rotation == 90)
+                else
                 {
-                    this.pieceMatrix = new TetrominoPiece[][]{
-                            {new TetrominoPiece(this.getHitBox().getX(), this.getHitBox().getY(), size), new TetrominoPiece(this.getHitBox().getX() + size, this.getHitBox().getY(), size)},
-                            {null, new TetrominoPiece(this.getHitBox().getX() + size, this.getHitBox().getY() + size, size)},
-                            {null, new TetrominoPiece(this.getHitBox().getX() + size, this.getHitBox().getY() + (2 * size), size)}
-                    };
-                    break;
+                    temp[i][j] = null;
                 }
-                else if (this.rotation == 180)
-                {
-                    this.pieceMatrix = new TetrominoPiece[][]{
-                            {null, null, new TetrominoPiece(this.getHitBox().getX() + (size * 2), this.getHitBox().getY(), size)},
-                            {new TetrominoPiece(this.getHitBox().getX(), this.getHitBox().getY() + size, size), new TetrominoPiece(this.getHitBox().getX() + size, this.getHitBox().getY() + size, size), new TetrominoPiece(this.getHitBox().getX() + (2 * size), this.getHitBox().getY() + size, size)}
-                    };
-                    break;
-                }
-                else if (this.rotation == 270)
-                {
-                    this.pieceMatrix = new TetrominoPiece[][]{
-                            {new TetrominoPiece(this.getHitBox().getX(), this.getHitBox().getY(), size), null},
-                            {new TetrominoPiece(this.getHitBox().getX(), this.getHitBox().getY() + size, size), null},
-                            {new TetrominoPiece(this.getHitBox().getX(), this.getHitBox().getY() + (2 * size), size), new TetrominoPiece(this.getHitBox().getX() + size, this.getHitBox().getY() + (2 * size), size)}
-                    };
-                    break;
-                }
-            case S:
-                if (this.rotation == 0 || this.rotation == 180)
-                {
-                    this.pieceMatrix = new TetrominoPiece[][]{
-                            {null, new TetrominoPiece(this.getHitBox().getX() + size, this.getHitBox().getY(), size), new TetrominoPiece(this.getHitBox().getX() + (2 * size), this.getHitBox().getY(), size)},
-                            {new TetrominoPiece(this.getHitBox().getX(), this.getHitBox().getY() + size, size), new TetrominoPiece(this.getHitBox().getX() + size, this.getHitBox().getY() + size, size), null}
-                    };
-                    break;
-                }
-                else if (this.rotation == 90 || this.rotation == 270)
-                {
-                    this.pieceMatrix = new TetrominoPiece[][]{
-                            {new TetrominoPiece(this.getHitBox().getX(), this.getHitBox().getY(), size), null, null},
-                            {new TetrominoPiece(this.getHitBox().getX(), this.getHitBox().getY() + size, size), new TetrominoPiece(this.getHitBox().getX() + size, this.getHitBox().getY() + size, size), null},
-                            {null, new TetrominoPiece(this.getHitBox().getX() + size, this.getHitBox().getY() + (2 * size), size), null}
-                    };
-                    break;
-                }
-            case J:
-                if (this.rotation == 0)
-                {
-                    this.pieceMatrix = new TetrominoPiece[][]{
-                            {new TetrominoPiece(this.getHitBox().getX(), this.getHitBox().getY(), size), null, null},
-                            {new TetrominoPiece(this.getHitBox().getX(), this.getHitBox().getY() + size, size), new TetrominoPiece(this.getHitBox().getX() + size, this.getHitBox().getY() + size, size), new TetrominoPiece(this.getHitBox().getX() + (2 * size), this.getHitBox().getY() + size, size)}
-                    };
-                    break;
-                }
-                else if (this.rotation == 90)
-                {
-                    this.pieceMatrix = new TetrominoPiece[][]{
-                            {new TetrominoPiece(this.getHitBox().getX(), this.getHitBox().getY(), size), new TetrominoPiece(this.getHitBox().getX() + size, this.getHitBox().getY(), size)},
-                            {new TetrominoPiece(this.getHitBox().getX(), this.getHitBox().getY() + size, size), null},
-                            {new TetrominoPiece(this.getHitBox().getX(), this.getHitBox().getY() + (2 * size), size), null}
-                    };
-                    break;
-                }
-                else if (this.rotation == 180)
-                {
-                    this.pieceMatrix = new TetrominoPiece[][]{
-                            {new TetrominoPiece(this.getHitBox().getX(), this.getHitBox().getY(), size), new TetrominoPiece(this.getHitBox().getX() + size, this.getHitBox().getY(), size), new TetrominoPiece(this.getHitBox().getX() + (2 * size), this.getHitBox().getY(), size)},
-                            {null, null, new TetrominoPiece(this.getHitBox().getX() + (2 * size), this.getHitBox().getY() + size, size)}
-                    };
-                    break;
-                }
-                else if (this.rotation == 270)
-                {
-                    this.pieceMatrix = new TetrominoPiece[][]{
-                            {null, new TetrominoPiece(this.getHitBox().getX() + size, this.getHitBox().getY(), size)},
-                            {null, new TetrominoPiece(this.getHitBox().getX() + size, this.getHitBox().getY() + size, size)},
-                            {new TetrominoPiece(this.getHitBox().getX(), this.getHitBox().getY() + (2 * size), size), new TetrominoPiece(this.getHitBox().getX() + size, this.getHitBox().getY() + (2 * size), size)}
-                    };
-                    break;
-                }
-            case T:
-                if (this.rotation == 0)
-                {
-                    this.pieceMatrix = new TetrominoPiece[][]{
-                            {null, new TetrominoPiece(this.getHitBox().getX() + size, this.getHitBox().getY(), size)},
-                            {new TetrominoPiece(this.getHitBox().getX(), this.getHitBox().getY() + size, size), new TetrominoPiece(this.getHitBox().getX() + size, this.getHitBox().getY() + size, size)},
-                            {null, new TetrominoPiece(this.getHitBox().getX() + size, this.getHitBox().getY() + (2 * size), size)}
-                    };
-                    break;
-                }
-                else if (this.rotation == 90)
-                {
-                    this.pieceMatrix = new TetrominoPiece[][]{
-                            {null, new TetrominoPiece(this.getHitBox().getX() + size, this.getHitBox().getY(), size)},
-                            {new TetrominoPiece(this.getHitBox().getX(), this.getHitBox().getY() + size, size), new TetrominoPiece(this.getHitBox().getX() + size, this.getHitBox().getY() + size, size), new TetrominoPiece(this.getHitBox().getX() + (2 * size), this.getHitBox().getY() + size, size)}
-                    };
-                    break;
-                }
-                else if (this.rotation == 180)
-                {
-                    this.pieceMatrix = new TetrominoPiece[][]{
-                            {new TetrominoPiece(this.getHitBox().getX(), this.getHitBox().getY(), size), null},
-                            {new TetrominoPiece(this.getHitBox().getX(), this.getHitBox().getY() + size, size), new TetrominoPiece(this.getHitBox().getX() + size, this.getHitBox().getY() + size, size)},
-                            {new TetrominoPiece(this.getHitBox().getX(), this.getHitBox().getY() + (2 * size), size), null}
-                    };
-                    break;
-                }
-                else if (this.rotation == 270)
-                {
-                    this.pieceMatrix = new TetrominoPiece[][]{
-                            {new TetrominoPiece(this.getHitBox().getX(), this.getHitBox().getY(), size), new TetrominoPiece(this.getHitBox().getX() + size, this.getHitBox().getY(), size), new TetrominoPiece(this.getHitBox().getX() + (2 * size), this.getHitBox().getY(), size)},
-                            {null, new TetrominoPiece(this.getHitBox().getX() + size, this.getHitBox().getY() + size, size), null}
-                    };
-                    break;
-                }
-            case O:
-                break;
-            case I:
-                if (this.rotation == 0 || this.rotation == 180)
-                {
-                    this.pieceMatrix = new TetrominoPiece[][]{
-                            {new TetrominoPiece(this.getHitBox().getX(), this.getHitBox().getY(), size)},
-                            {new TetrominoPiece(this.getHitBox().getX(), this.getHitBox().getY() + size, size)},
-                            {new TetrominoPiece(this.getHitBox().getX(), this.getHitBox().getY() + (2 * size), size)},
-                            {new TetrominoPiece(this.getHitBox().getX(), this.getHitBox().getY() + (3 * size), size)}
-                    };
-                    break;
-                }
-                else if (this.rotation == 90 || this.rotation == 270)
-                {
-                    this.pieceMatrix = new TetrominoPiece[][]{
-                            {new TetrominoPiece(this.getHitBox().getX(), this.getHitBox().getY(), size), new TetrominoPiece(this.getHitBox().getX() + size, this.getHitBox().getY(), size), new TetrominoPiece(this.getHitBox().getX() + (2 * size), this.getHitBox().getY(), size), new TetrominoPiece(this.getHitBox().getX() + (3 * size), this.getHitBox().getY(), size)}
-                    };
-                    break;
-                }
-            case Z:
-                if (this.rotation == 0 || this.rotation == 180)
-                {
-                    this.pieceMatrix = new TetrominoPiece[][]{
-                            {new TetrominoPiece(this.getHitBox().getX(), this.getHitBox().getY(), size), new TetrominoPiece(this.getHitBox().getX() + size, this.getHitBox().getY(), size), null},
-                            {null, new TetrominoPiece(this.getHitBox().getX() + size, this.getHitBox().getY() + size, size), new TetrominoPiece(this.getHitBox().getX() + (2 * size), this.getHitBox().getY() + size, size)}
-                    };
-                    break;
-                }
-                else if (this.rotation == 90 || this.rotation == 270)
-                {
-                    this.pieceMatrix = new TetrominoPiece[][]{
-                            {null, new TetrominoPiece(this.getHitBox().getX() + size, this.getHitBox().getY(), size)},
-                            {new TetrominoPiece(this.getHitBox().getX(), this.getHitBox().getY() + size, size), new TetrominoPiece(this.getHitBox().getX() + size, this.getHitBox().getY() + size, size)},
-                            {new TetrominoPiece(this.getHitBox().getX(), this.getHitBox().getY() + (2 * size), size), null}
-                    };
-                    break;
-                }
+            }
         }
 
-        // Increment rotation by 90 degrees unless it's going to be more than 360deg
-        this.rotation = this.rotation + 90 >= 360 ? 0 : this.rotation + 90;
+        this.pieceMatrix = temp;
 
-        // Rotate the hitbox too:
-        int w = this.hitBox.getWidth();
-        this.hitBox.setWidth(this.hitBox.getHeight());
-        this.hitBox.setHeight(w);
     }
 
     /**
