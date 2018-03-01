@@ -22,6 +22,7 @@ public class MainMenu extends Menu
         clearButtons();
         this.addButton(new Button(256, 64, "Play Co-Op"), new Game());
         this.addButton(new Button(256, 64, "Options"), new Options(this));
+        this.addButton(new Button(256, 64, "Tutorial"), new Page1(this));
         this.addButton(new Button(256, 64, "Quit Game"), null);
         this.adjustButtons();
     }
