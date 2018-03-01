@@ -54,7 +54,8 @@ public class GuidePage extends Scene
 
         this.nextButton.draw();
         this.title.draw();
-        this.drawTetromino();
+        this.updateTetrominos();
+        this.drawTetrominos();
 
         TextureImpl.bindNone();
         // Loop for handling newlines:
@@ -72,7 +73,6 @@ public class GuidePage extends Scene
             GL11.glMatrixMode(GL11.GL_PROJECTION);
             GL11.glLoadIdentity();
             GL11.glOrtho(0, Display.getWidth(), Display.getHeight(), 0, 1, -1);
-            createTetrominos();
         }
 
         if (this.nextButton.isClicked())
@@ -86,7 +86,7 @@ public class GuidePage extends Scene
         return true;
     }
 
-    private void drawTetromino()
+    private void drawTetrominos()
     {
         for (FakeTetromino fake : pieces)
         {
@@ -105,6 +105,18 @@ public class GuidePage extends Scene
         this.pieces.add(new FakeTetromino(6, size, 0, 2 * size, Display.getHeight() - (3 * size)));
         this.pieces.add(new FakeTetromino(5, size, 0, 3 * size, Display.getHeight() - size));
         this.pieces.add(new FakeTetromino(0, size, 2, 3 * size, Display.getHeight() - (4 * size)));
+    }
+
+    private void updateTetrominos()
+    {
+        int size = 32 + ((Display.getWidth() - 600) / 32);
+        this.pieces.set(0, new FakeTetromino(4, size, 0, 0, Display.getHeight() - (2 * size)));
+        this.pieces.set(1, new FakeTetromino(3, size, 2, 0, Display.getHeight() - (4 * size)));
+        this.pieces.set(2, new FakeTetromino(6, size, 0, 0, Display.getHeight() - (6 * size)));
+        this.pieces.set(3, new FakeTetromino(5, size, 1, 0, Display.getHeight() - (9 * size)));
+        this.pieces.set(4, new FakeTetromino(6, size, 0, 2 * size, Display.getHeight() - (3 * size)));
+        this.pieces.set(5, new FakeTetromino(5, size, 0, 3 * size, Display.getHeight() - size));
+        this.pieces.set(6, new FakeTetromino(0, size, 2, 3 * size, Display.getHeight() - (4 * size)));
     }
 
     @Override
