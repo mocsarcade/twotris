@@ -25,6 +25,9 @@ public class Button
     boolean hovering;
     private Texture sprite;
     private float wr, hr;
+    private boolean prevState = true;
+    private boolean clickedOnce = false;
+
 
     /**
      * @param w         The width of the button as an integer.
@@ -111,13 +114,11 @@ public class Button
         Rectangle mouse = new Rectangle(Mouse.getX(), Display.getHeight() - Mouse.getY(), 1, 1);
         if (box.intersects(mouse))
         {
-            while (Mouse.next())
+            if (this.clickedOnce)
             {
-                if (Mouse.getEventButtonState())
-                {
-                    AudioManager.getInstance().play("select");
-                    return true;
-                }
+                System.out.println("Clicked once");
+                AudioManager.getInstance().play("select");
+                return true;
             }
         }
 
@@ -134,6 +135,16 @@ public class Button
     {
         Rectangle mouse = new Rectangle(Mouse.getX(), Display.getHeight() - Mouse.getY(), 1, 1);
         this.hovering = box.intersects(mouse);
+        boolean state = Mouse.isButtonDown(0);
+        if (state != prevState && state)
+        {
+            clickedOnce = true;
+        }
+        else
+        {
+            clickedOnce = false;
+        }
+        prevState = state;
     }
 
     /**
@@ -228,4 +239,5 @@ public class Button
     {
         this.font = Helper.getFont();
     }
+
 }
