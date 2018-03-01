@@ -116,7 +116,6 @@ public class Button
         {
             if (this.clickedOnce)
             {
-                System.out.println("Clicked once");
                 AudioManager.getInstance().play("select");
                 return true;
             }

@@ -13,6 +13,8 @@ public class ButtonKeybind extends Button
     private int keyValue;
     private String title;
     private int stickyX, stickyY;
+    private boolean prevState = true;
+    private boolean clickedOnce = false;
 
     public ButtonKeybind(String title, int defaultVal)
     {
@@ -53,6 +55,16 @@ public class ButtonKeybind extends Button
                 updateKeybind(this.title, this.keyValue);
             }
         }
+        boolean state = Mouse.isButtonDown(0);
+        if (state != prevState && state)
+        {
+            clickedOnce = true;
+        }
+        else
+        {
+            clickedOnce = false;
+        }
+        prevState = state;
     }
 
     private String intKeyToPrettyStr(int keyVal)
@@ -101,7 +113,7 @@ public class ButtonKeybind extends Button
     public boolean isClicked()
     {
         Rectangle mouse = new Rectangle(Mouse.getX(), Display.getHeight() - Mouse.getY(), 1, 1);
-        if (this.getHitBox().intersects(mouse) && Mouse.isButtonDown(0) && this.keyValue > -1)
+        if (this.getHitBox().intersects(mouse) && this.clickedOnce && this.keyValue > -1)
         {
             AudioManager.getInstance().play("select");
             return true;
