@@ -20,7 +20,7 @@ public class TetrominoPiece
      * @throws none
      * @EntityPiece This constructor method is used constructing the piece’s hitbox.
      */
-    TetrominoPiece(int x, int y, int size)
+    public TetrominoPiece(int x, int y, int size)
     {
         this.hitbox = new Rectangle(x, y, size, size);
         this.sprite = Helper.loadTexture("piece");

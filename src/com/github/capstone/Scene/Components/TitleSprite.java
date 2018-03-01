@@ -31,9 +31,6 @@ public class TitleSprite
      */
     public void draw()
     {
-        this.hitBox.setX((Display.getWidth() / 2) - (this.hitBox.getWidth() / 2));
-        this.hitBox.setY(Display.getHeight() / 16);
-
         float x = (float) hitBox.getX();
         float y = (float) hitBox.getY();
         float w = (float) hitBox.getWidth();
@@ -62,6 +59,9 @@ public class TitleSprite
         GL11.glEnd();
 
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, 0);
+
+        this.hitBox.setX((Display.getWidth() / 2) - (this.hitBox.getWidth() / 2));
+        this.hitBox.setY(Display.getHeight() / 16);
     }
 
     /**

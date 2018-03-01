@@ -59,7 +59,6 @@ public class Tetromino
         }
     }
 
-
     /**
      * @moveLeft move the piece (and sub-pieces) left by <code>size</code> amount
      */
@@ -305,9 +304,7 @@ public class Tetromino
                 }
             }
         }
-
         this.pieceMatrix = temp;
-
     }
 
     /**

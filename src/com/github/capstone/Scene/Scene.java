@@ -6,7 +6,6 @@ import org.lwjgl.opengl.Display;
 
 public abstract class Scene
 {
-    private boolean doExit = false;
 
     // return false if the game should be quit
     public abstract boolean drawFrame(float delta);
@@ -20,17 +19,6 @@ public abstract class Scene
     public Scene nextScene()
     {
         return null;
-    }
-
-    /**
-     * @param none
-     * @return none
-     * @throws none
-     * @exit This exits the selection, setting doExit as true.
-     */
-    protected void exit()
-    {
-        doExit = true;
     }
 
     /**
@@ -56,7 +44,7 @@ public abstract class Scene
             Display.update();
             AudioManager.getInstance().update();
 
-            if (Display.isCloseRequested() || doExit)
+            if (Display.isCloseRequested())
             {
                 return false;
             }

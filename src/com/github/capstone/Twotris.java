@@ -44,7 +44,7 @@ public class Twotris
     {
         instance = this;
         this.config = new Config();
-        this.keybinds= new Keybinds();
+        this.keybinds = new Keybinds();
         this.screenshotManager = new ScreenshotManager();
         this.fullscreen = config.fullscreen;
         this.startWidth = this.fullscreen ? Toolkit.getDefaultToolkit().getScreenSize().width : 800;
