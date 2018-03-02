@@ -26,4 +26,10 @@ public class MainMenu extends Menu
         this.addButton(new Button(256, 64, "Quit Game"), null);
         this.adjustButtons();
     }
+
+    @Override
+    public void reloadFont()
+    {
+        resizeContents();
+    }
 }

@@ -21,6 +21,8 @@ public class TitleSprite
     {
         this.sprite = Helper.loadTexture(texture);
         this.hitBox = new Rectangle(0, 0, sprite.getImageWidth(), sprite.getImageHeight());
+        this.hitBox.setX((Display.getWidth() / 2) - (this.hitBox.getWidth() / 2));
+        this.hitBox.setY(Display.getHeight() / 16);
     }
 
     /**
