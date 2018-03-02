@@ -5,7 +5,6 @@ import com.github.capstone.Scene.Components.ButtonKeybind;
 import com.github.capstone.Scene.Scene;
 import com.github.capstone.Twotris;
 import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 
@@ -148,5 +147,9 @@ public class OptionsKeybinds extends Scene
     {
         back.reloadFont();
         next.reloadFont();
+        for (Button b : this.buttons)
+        {
+            b.reloadFont();
+        }
     }
 }
