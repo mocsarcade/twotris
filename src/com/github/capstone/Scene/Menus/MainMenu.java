@@ -6,12 +6,19 @@ import com.github.capstone.Scene.UserGuide.Page1;
 
 public class MainMenu extends Menu
 {
+    private Game game;
+    private Options options;
+    private Page1 tutorial;
+
     public MainMenu()
     {
         super("gui/title");
-        this.addButton(new Button(256, 64, "Play Co-Op"), new Game());
-        this.addButton(new Button(256, 64, "Options"), new Options(this));
-        this.addButton(new Button(256, 64, "Tutorial"), new Page1(this));
+        this.game = new Game();
+        this.options = new Options(this);
+        this.tutorial = new Page1(this);
+        this.addButton(new Button(256, 64, "Play Co-Op"), game);
+        this.addButton(new Button(256, 64, "Options"), options);
+        this.addButton(new Button(256, 64, "Tutorial"), tutorial);
         this.addButton(new Button(256, 64, "Quit Game"), null);
         this.adjustButtons();
     }
@@ -19,17 +26,18 @@ public class MainMenu extends Menu
     @Override
     public void resizeContents()
     {
-        clearButtons();
-        this.addButton(new Button(256, 64, "Play Co-Op"), new Game());
-        this.addButton(new Button(256, 64, "Options"), new Options(this));
-        this.addButton(new Button(256, 64, "Tutorial"), new Page1(this));
-        this.addButton(new Button(256, 64, "Quit Game"), null);
+        game.resizeContents();
+        options.resizeContents();
+        tutorial.resizeContents();
         this.adjustButtons();
     }
 
     @Override
     public void reloadFont()
     {
-        resizeContents();
+        super.reloadFont();
+        this.game.reloadFont();
+        this.options.reloadFont();
+        this.tutorial.reloadFont();
     }
 }

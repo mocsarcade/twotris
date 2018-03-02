@@ -17,6 +17,7 @@ public class Options extends Scene
     private LinkedHashMap<Button, String> buttons;
     private Scene last;
     private Scene next;
+    private boolean fontChanged;
 
     /**
      * @param lastscene The scene supplied.
@@ -32,6 +33,7 @@ public class Options extends Scene
         back = new Button(256, 64, "Back");
         this.adjustButtons();
         this.last = lastScene;
+        this.fontChanged = false;
     }
 
     /**
@@ -76,8 +78,12 @@ public class Options extends Scene
         {
             if (back.isClicked())
             {
-                this.reloadFont();
-                last.reloadFont();
+                if (this.fontChanged)
+                {
+                    this.reloadFont();
+                    last.reloadFont();
+                    this.fontChanged = false;
+                }
                 this.next = this.last;
                 return false;
             }
@@ -97,6 +103,10 @@ public class Options extends Scene
                         if (b.getText().contains("Fullscreen"))
                         {
                             this.resizeContents();
+                        }
+                        else if (b.getText().contains("Font"))
+                        {
+                            this.fontChanged = true;
                         }
                     }
                 }

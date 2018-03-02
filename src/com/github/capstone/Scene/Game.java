@@ -108,7 +108,7 @@ public class Game extends Scene
             GL11.glOrtho(0, Display.getWidth(), Display.getHeight(), 0, 1, -1);
             this.grid = new Grid();
         }
-        
+
         return !isGameOver;
     }
 
@@ -136,7 +136,10 @@ public class Game extends Scene
     {
         this.font = Helper.getFont();
         this.grid.reloadFont();
-        this.pauseMenu.reloadFont();
+        if (this.pauseMenu != null)
+        {
+            this.pauseMenu.reloadFont();
+        }
     }
 
     @Override
