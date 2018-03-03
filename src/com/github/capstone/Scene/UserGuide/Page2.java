@@ -10,7 +10,10 @@ public class Page2 extends GuidePage
         super(new Page3(menu));
         // TODO: Everyone needs to set this text below, and where they want the textX and textY to begin.
         this.textX = 16;
-        this.textY = (Display.getHeight() / 2) - (3 * this.font.getHeight());
-        this.pageContent = "Insert text here, friend. (Page 2 / 7)";
+        this.textY = (Display.getHeight()/ 8) - (3 * this.font.getHeight());
+        this.pageContent = "Beginning your game <br> <br> <br> <br> <br> <br>After initially starting the game, you arrive at the main menu. <br>"
+				+"This is where you can elect to begin a new game,<br>" + 
+				"head into the options menu to really show your style,<br>" +
+				"or exit the game \t \t  (Please don't go, we'll miss you!)"; 
     }
 }

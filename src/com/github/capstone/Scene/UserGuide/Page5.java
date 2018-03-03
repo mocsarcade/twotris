@@ -10,7 +10,8 @@ public class Page5 extends GuidePage
         super(new Page6(menu));
         // TODO: Everyone needs to set this text below, and where they want the textX and textY to begin.
         this.textX = 16;
-        this.textY = (Display.getHeight() / 2) - (3 * this.font.getHeight());
-        this.pageContent = "Insert text here, friend. (Page 5 / 7)";
+        this.textY = (Display.getHeight() / 8) - (3 * this.font.getHeight());
+        this.pageContent = "How to move <br> <br> <br> <br> <br>As the pieces fall, your goal is to move them (left : leftKey or right: rightKey) <br>" + 
+				"and rotate them (rotate: rotateKey) so that they fill in those rows at the bottom of the board.";
     }
 }

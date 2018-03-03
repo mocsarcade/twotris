@@ -12,6 +12,6 @@ public class Page1 extends GuidePage
         this.textX = 16;
         this.textY = (Display.getHeight() / 4);// - (3 * this.font.getHeight());
         this.pageContent = "Twotris is a highly customizable, student-made variant of a arcade<br>game classic. " +
-                "For those players who have yet to experience the fun,<br>here’s a quick walkthrough of our game!";
+                "For those players who have yet to experience the fun,<br>here is a quick walkthrough of our game!";
     }
 }
