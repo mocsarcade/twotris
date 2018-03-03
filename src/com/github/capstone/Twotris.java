@@ -15,13 +15,21 @@ import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.opengl.PNGDecoder;
 import org.newdawn.slick.util.ResourceLoader;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Toolkit;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.nio.ByteBuffer;
+import java.util.Random;
 
 
 public class Twotris
@@ -272,11 +280,12 @@ public class Twotris
      */
     private void initIcon()
     {
+        int rng = new Random().nextInt(7);
         try
         {
             Display.setIcon(new ByteBuffer[]{
-                    loadIcon(ResourceLoader.getResource("assets/icon/icon16.png".replace("/", File.separator))),
-                    loadIcon(ResourceLoader.getResource("assets/icon/icon32.png".replace("/", File.separator))),
+                    loadIcon(ResourceLoader.getResource("assets/icon/icon16_" + rng + ".png".replace("/", File.separator))),
+                    loadIcon(ResourceLoader.getResource("assets/icon/icon32_" + rng + ".png".replace("/", File.separator))),
                     });
         }
         catch (IOException e)
