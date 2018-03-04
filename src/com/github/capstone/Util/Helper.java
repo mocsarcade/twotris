@@ -2,6 +2,7 @@ package com.github.capstone.Util;
 
 import com.github.capstone.Twotris;
 import org.lwjgl.Sys;
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.util.Color;
 import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.opengl.Texture;
@@ -10,8 +11,10 @@ import org.newdawn.slick.util.ResourceLoader;
 
 import java.awt.Font;
 import java.awt.FontFormatException;
+import java.awt.font.TextAttribute;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Random;
 
 public class Helper
@@ -168,4 +171,26 @@ public class Helper
             return Font.getFont("Arial");
         }
     }
+
+    /**
+     * @param keyVal the Int value to convert
+     * @return the integer value converted to the actual legible key on a keyboard (like "LShift")
+     */
+    public static String keyBeautify(int keyVal)
+    {
+        String ret = Keyboard.getKeyName(keyVal);
+        ret = ret.substring(0, 1) + ret.substring(1).toLowerCase();
+        return ret;
+    }
+
+    /**
+     * @return A hashmap that can be used with .DeriveFont() to provide an underline
+     */
+    public static HashMap<TextAttribute, Integer> underlineAttribute()
+    {
+        HashMap<TextAttribute, Integer> ret = new HashMap<>();
+        ret.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
+        return ret;
+    }
+
 }
