@@ -329,6 +329,11 @@ public class Tetromino
         return this.color;
     }
 
+    public void recolor()
+    {
+        this.color = ColorPalette.getInstance().getColor(Twotris.getInstance().config.colorscheme, this.type.ordinal());
+    }
+
 
     /**
      * @param none

@@ -484,4 +484,13 @@ public class Grid
     {
         this.nextPiece.reloadFont();
     }
+
+    public void recolor()
+    {
+        for (Tetromino t : pieces)
+        {
+            t.recolor();
+        }
+        this.nextPiece.recolor();
+    }
 }

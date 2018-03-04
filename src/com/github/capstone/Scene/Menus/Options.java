@@ -1,6 +1,7 @@
 package com.github.capstone.Scene.Menus;
 
 import com.github.capstone.Scene.Components.Button;
+import com.github.capstone.Scene.Game;
 import com.github.capstone.Scene.Scene;
 import com.github.capstone.Twotris;
 import org.lwjgl.input.Keyboard;
@@ -18,6 +19,7 @@ public class Options extends Scene
     private Scene last;
     private Scene next;
     private boolean fontChanged;
+    private boolean colorChanged;
 
     /**
      * @param lastscene The scene supplied.
@@ -34,6 +36,7 @@ public class Options extends Scene
         this.adjustButtons();
         this.last = lastScene;
         this.fontChanged = false;
+        this.colorChanged = false;
     }
 
     /**
@@ -84,6 +87,19 @@ public class Options extends Scene
                     last.reloadFont();
                     this.fontChanged = false;
                 }
+                if (this.colorChanged)
+                {
+                    if (last instanceof MainMenu)
+                    {
+                        ((MainMenu) last).recolor();
+                    }
+                    else if (last instanceof Game)
+                    {
+                        ((Game) last).recolor();
+                    }
+
+                    this.colorChanged = false;
+                }
                 this.next = this.last;
                 return false;
             }
@@ -107,6 +123,10 @@ public class Options extends Scene
                         else if (b.getText().contains("Font"))
                         {
                             this.fontChanged = true;
+                        }
+                        else if (b.getText().contains("Color"))
+                        {
+                            this.colorChanged = true;
                         }
                     }
                 }
