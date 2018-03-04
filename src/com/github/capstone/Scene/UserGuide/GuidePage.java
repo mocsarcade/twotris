@@ -7,6 +7,7 @@ import com.github.capstone.Scene.Menus.MainMenu;
 import com.github.capstone.Scene.Scene;
 import com.github.capstone.Twotris;
 import com.github.capstone.Util.Helper;
+import com.github.capstone.Util.Textures;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
@@ -20,10 +21,13 @@ public class GuidePage extends Scene
 
     private Button nextButton;
     private ArrayList<FakeTetromino> pieces;
-    private TitleSprite title;
+    private TitleSprite titleSprite;
     private Scene next;
     private Scene mainMenu;
-    TrueTypeFont font;
+    private TrueTypeFont titleFont;
+    private TrueTypeFont font;
+    private String pageContentRaw;
+    String title;
     String pageContent;
     int textX = 0;
     int textY = 0;
@@ -32,9 +36,12 @@ public class GuidePage extends Scene
     GuidePage(Scene next)
     {
         this.font = Helper.getFont();
+        this.titleFont = new TrueTypeFont(Helper.getAWTFont().deriveFont(Helper.underlineAttribute()).deriveFont(32F), false);
         this.nextButton = new Button(0, 0, "Next");
-        this.title = new TitleSprite("gui/title");
+        this.titleSprite = new TitleSprite(Textures.TITLE);
         this.next = next;
+        this.title = "";
+        this.pageContent = "";
         if (next instanceof MainMenu)
         {
             this.mainMenu = next;
@@ -47,13 +54,13 @@ public class GuidePage extends Scene
     {
         this.nextButton.update();
         this.nextButton.getHitBox().setLocation(Display.getWidth() - this.nextButton.getHitBox().getWidth() - 16, Display.getHeight() - this.nextButton.getHitBox().getHeight() - 16);
-        this.title.getHitBox().setLocation(Display.getWidth() - this.title.getHitBox().getWidth(), 0);
+        this.titleSprite.getHitBox().setLocation(Display.getWidth() - this.titleSprite.getHitBox().getWidth(), 0);
 
         GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
         GL11.glClearColor(.09F, 0.09F, 0.09F, 0F);
 
         this.nextButton.draw();
-        this.title.draw();
+        this.titleSprite.draw();
         this.updateTetrominos();
         this.drawTetrominos();
 
@@ -65,6 +72,7 @@ public class GuidePage extends Scene
             font.drawString(textX, y, part);
             y += font.getHeight(part);
         }
+        titleFont.drawString(16, this.titleSprite.getHitBox().getY(), title);
 
         // Screen resize handler
         if (Display.wasResized())
@@ -123,12 +131,14 @@ public class GuidePage extends Scene
     public void reloadFont()
     {
         this.font = Helper.getFont();
+        this.titleFont = new TrueTypeFont(Helper.getAWTFont().deriveFont(Helper.underlineAttribute()).deriveFont(32F), false);
     }
 
     @Override
     public void resizeContents()
     {
-        createTetrominos();
+        this.createTetrominos();
+        this.cleanPageContent();
     }
 
     @Override
@@ -139,5 +149,44 @@ public class GuidePage extends Scene
             return this.mainMenu;
         }
         return next;
+    }
+
+    public void recolor()
+    {
+        this.updateTetrominos();
+    }
+
+    public void setTitle(String title)
+    {
+        this.title = title;
+    }
+
+    public void setPageContent(String content)
+    {
+        this.pageContentRaw = content;
+        this.cleanPageContent();
+    }
+
+    private void cleanPageContent()
+    {
+        int maxWidth = Display.getWidth();
+        int maxCharsPerLine = maxWidth / this.font.getWidth("_");
+        int startingPoint = 0;
+        StringBuilder sb = new StringBuilder();
+        while (startingPoint <= this.pageContentRaw.length())
+        {
+            if (startingPoint + maxCharsPerLine >= this.pageContentRaw.length())
+            {
+                sb.append(this.pageContentRaw.substring(startingPoint));
+            }
+            else
+            {
+                sb.append(this.pageContentRaw.substring(startingPoint, startingPoint + maxCharsPerLine));
+            }
+
+            sb.append("<br>");
+            startingPoint += maxCharsPerLine;
+        }
+        this.pageContent = sb.toString();
     }
 }
