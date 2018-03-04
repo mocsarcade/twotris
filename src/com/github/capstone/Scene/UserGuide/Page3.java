@@ -11,9 +11,9 @@ public class Page3 extends GuidePage
         this.textX = 16;
         this.textY = (Display.getHeight() / 4);
         this.title = "Starting a New Game";
-        this.pageContent = "Let's check out the options menu first. <br>" +
-                "This is where you can switch up the font choices and color <br>" +
-                "schemes, or adjust game-play keys or sound levels to exactly <br>" +
+        this.pageContent = "First, let's check out the options menu. <br>" +
+                "This is where you can switch up the font choices, color <br>" +
+                "schemes, game-play keys, or volume levels to exactly <br>" +
                 "    your liking.";
     }
 }

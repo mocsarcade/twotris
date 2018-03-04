@@ -12,7 +12,7 @@ public class Page6 extends GuidePage
         this.textY = (Display.getHeight() / 4);
         this.title = "Clearing a Row";
         this.pageContent = "Once you fill up those rows, it means they get eliminated! <br>" +
-                "With each eliminated row, you got points added to your score.<br>" +
+                "With each eliminated row, you get points added to your score.<br>" +
                 "Clearing multiple rows at once gives you a bonus multiplier. <br>" +
                 "    Try to get the highest score amongst your friends!";
     }

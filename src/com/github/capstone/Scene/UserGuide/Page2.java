@@ -14,6 +14,6 @@ public class Page2 extends GuidePage
         this.pageContent = "After initially starting the game, you arrive at the main menu. <br>"
                 + "This is where you can elect to begin a new game,<br>" +
                 "head into the options menu to really show your style,<br>" +
-                " or exit the game        (Please don't go, we'll miss you!)";
+                " or exit the game.        (Please don't go, we'll miss you!)";
     }
 }

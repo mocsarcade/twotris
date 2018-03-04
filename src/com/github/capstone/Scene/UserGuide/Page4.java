@@ -11,7 +11,7 @@ public class Page4 extends GuidePage
         this.textX = 16;
         this.textY = (Display.getHeight() / 4);
         this.title = "Learning to Play";
-        this.pageContent = "Alright, you've got the game setup just for you, now it's time to<br>" +
+        this.pageContent = "Alright, you've got the game set up just for you, now it's time to<br>" +
                 "learn how to play! You score points in Twotris by clearing the<br>" +
                 "rows on the gameboard. This is done using pieces<br>" +
                 "    (called Tetrominos) to fill the rows.";

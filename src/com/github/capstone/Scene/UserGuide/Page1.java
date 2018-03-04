@@ -11,7 +11,7 @@ public class Page1 extends GuidePage
         this.textX = 16;
         this.textY = (Display.getHeight() / 4);
         this.title = "Welcome to Twotris!";
-        this.pageContent = "Twotris is a highly customizable, student-made variant of a arcade<br>" +
+        this.pageContent = "Twotris is a highly customizable, student-made variant of an arcade<br>" +
                 "game classic. For those players who have yet to experience the<br>" +
                 "fun, here is a quick walkthrough of our game!";
     }
