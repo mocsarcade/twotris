@@ -26,7 +26,6 @@ public class GuidePage extends Scene
     private Scene mainMenu;
     private TrueTypeFont titleFont;
     private TrueTypeFont font;
-    private String pageContentRaw;
     String title;
     String pageContent;
     int textX = 0;
@@ -132,13 +131,17 @@ public class GuidePage extends Scene
     {
         this.font = Helper.getFont();
         this.titleFont = new TrueTypeFont(Helper.getAWTFont().deriveFont(Helper.underlineAttribute()).deriveFont(32F), false);
+        this.nextButton.reloadFont();
+        if (!(this.next instanceof MainMenu))
+        {
+            this.next.reloadFont();
+        }
     }
 
     @Override
     public void resizeContents()
     {
         this.createTetrominos();
-        this.cleanPageContent();
     }
 
     @Override
@@ -154,39 +157,5 @@ public class GuidePage extends Scene
     public void recolor()
     {
         this.updateTetrominos();
-    }
-
-    public void setTitle(String title)
-    {
-        this.title = title;
-    }
-
-    public void setPageContent(String content)
-    {
-        this.pageContentRaw = content;
-        this.cleanPageContent();
-    }
-
-    private void cleanPageContent()
-    {
-        int maxWidth = Display.getWidth();
-        int maxCharsPerLine = maxWidth / this.font.getWidth("_");
-        int startingPoint = 0;
-        StringBuilder sb = new StringBuilder();
-        while (startingPoint <= this.pageContentRaw.length())
-        {
-            if (startingPoint + maxCharsPerLine >= this.pageContentRaw.length())
-            {
-                sb.append(this.pageContentRaw.substring(startingPoint));
-            }
-            else
-            {
-                sb.append(this.pageContentRaw.substring(startingPoint, startingPoint + maxCharsPerLine));
-            }
-
-            sb.append("<br>");
-            startingPoint += maxCharsPerLine;
-        }
-        this.pageContent = sb.toString();
     }
 }
