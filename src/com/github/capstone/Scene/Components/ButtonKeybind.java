@@ -2,6 +2,7 @@ package com.github.capstone.Scene.Components;
 
 import com.github.capstone.Manager.AudioManager;
 import com.github.capstone.Twotris;
+import com.github.capstone.Util.Helper;
 import com.github.capstone.Util.Keybinds;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
@@ -51,7 +52,7 @@ public class ButtonKeybind extends Button
             }
             if (this.keyValue > -1)
             {
-                this.buttonText = title + ": " + intKeyToPrettyStr(this.keyValue);
+                this.buttonText = title + ": " + Helper.keyBeautify(this.keyValue);
                 updateKeybind(this.title, this.keyValue);
             }
         }
@@ -67,12 +68,6 @@ public class ButtonKeybind extends Button
         prevState = state;
     }
 
-    private String intKeyToPrettyStr(int keyVal)
-    {
-        String ret = Keyboard.getKeyName(keyVal);
-        ret = ret.substring(0, 1) + ret.substring(1).toLowerCase();
-        return ret;
-    }
 
     private void updateKeybind(String keybind, int newVal)
     {
@@ -119,10 +114,5 @@ public class ButtonKeybind extends Button
             return true;
         }
         return false;
-    }
-
-    public int getKeyValue()
-    {
-        return this.keyValue;
     }
 }
