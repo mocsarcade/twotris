@@ -3,6 +3,7 @@ package com.github.capstone.Scene.Menus;
 import com.github.capstone.Scene.Components.Button;
 import com.github.capstone.Scene.Game;
 import com.github.capstone.Scene.UserGuide.Page1;
+import com.github.capstone.Util.Textures;
 
 public class MainMenu extends Menu
 {
@@ -12,7 +13,7 @@ public class MainMenu extends Menu
 
     public MainMenu()
     {
-        super("gui/title");
+        super(Textures.TITLE);
         this.game = new Game();
         this.options = new Options(this);
         this.tutorial = new Page1(this);
@@ -39,5 +40,11 @@ public class MainMenu extends Menu
         this.game.reloadFont();
         this.options.reloadFont();
         this.tutorial.reloadFont();
+    }
+
+    public void recolor()
+    {
+        this.game.recolor();
+        this.tutorial.recolor();
     }
 }

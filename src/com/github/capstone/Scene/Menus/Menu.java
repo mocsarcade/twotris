@@ -13,8 +13,8 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.TrueTypeFont;
+import org.newdawn.slick.opengl.Texture;
 
-import java.awt.Toolkit;
 import java.util.LinkedHashMap;
 
 public class Menu extends Scene
@@ -31,10 +31,10 @@ public class Menu extends Scene
      * @throws none
      * @Menu This constructor method adds button to a linkedhashmap and creates a titlesprite.
      */
-    public Menu(String title)
+    public Menu(Texture texture)
     {
         this.buttons = new LinkedHashMap<>();
-        this.titleSprite = new TitleSprite(title);
+        this.titleSprite = new TitleSprite(texture);
         this.optTexts = new LinkedHashMap<>();
         this.font = Helper.getFont();
         try

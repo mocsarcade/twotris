@@ -1,6 +1,7 @@
 package com.github.capstone.Components;
 
 import com.github.capstone.Util.Helper;
+import com.github.capstone.Util.Textures;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Color;
 import org.lwjgl.util.Rectangle;
@@ -23,7 +24,7 @@ public class TetrominoPiece
     public TetrominoPiece(int x, int y, int size)
     {
         this.hitbox = new Rectangle(x, y, size, size);
-        this.sprite = Helper.loadTexture("piece");
+        this.sprite = Textures.TETRABIT;
         this.wr = 1.0F * sprite.getImageWidth() / sprite.getTextureWidth();
         this.hr = 1.0F * sprite.getImageHeight() / sprite.getTextureHeight();
     }

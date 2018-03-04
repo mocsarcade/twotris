@@ -8,6 +8,7 @@ import com.github.capstone.Scene.Menus.Menu;
 import com.github.capstone.Scene.Menus.Options;
 import com.github.capstone.Twotris;
 import com.github.capstone.Util.Helper;
+import com.github.capstone.Util.Textures;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
@@ -38,7 +39,7 @@ public class Game extends Scene
      */
     private void updatePauseMenu()
     {
-        pauseMenu = this.isGameOver ? new Menu("gui/game_over") : new Menu("gui/paused");
+        pauseMenu = this.isGameOver ? new Menu(Textures.GAME_OVER) : new Menu(Textures.PAUSED);
         if (isGameOver)
         {
             pauseMenu.addSplashText(Display.getHeight() - 32, "Game Score: " + this.grid.getScore());
@@ -146,5 +147,10 @@ public class Game extends Scene
     public void resizeContents()
     {
         this.grid = new Grid();
+    }
+
+    public void recolor()
+    {
+        grid.recolor();
     }
 }

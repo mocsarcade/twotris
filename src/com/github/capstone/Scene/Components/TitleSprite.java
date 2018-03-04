@@ -1,6 +1,5 @@
 package com.github.capstone.Scene.Components;
 
-import com.github.capstone.Util.Helper;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Rectangle;
@@ -12,14 +11,14 @@ public class TitleSprite
     private Rectangle hitBox;
 
     /**
-     * @param texture A string (the title of the textile file)
+     * @param texture A Texture object of the image to show
      * @return none
      * @throws none
      * @TitleSprite This constructor method takes a texture string and uses the helper to load that texture into the sprite, and also creates a hitbox for the sprite.
      */
-    public TitleSprite(String texture)
+    public TitleSprite(Texture texture)
     {
-        this.sprite = Helper.loadTexture(texture);
+        this.sprite = texture;
         this.hitBox = new Rectangle(0, 0, sprite.getImageWidth(), sprite.getImageHeight());
         this.hitBox.setX((Display.getWidth() / 2) - (this.hitBox.getWidth() / 2));
         this.hitBox.setY(Display.getHeight() / 16);

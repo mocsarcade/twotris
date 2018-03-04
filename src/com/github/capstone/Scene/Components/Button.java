@@ -2,6 +2,7 @@ package com.github.capstone.Scene.Components;
 
 import com.github.capstone.Manager.AudioManager;
 import com.github.capstone.Util.Helper;
+import com.github.capstone.Util.Textures;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
@@ -77,7 +78,7 @@ public class Button
      */
     public Button(int x, int y, String text)
     {
-        this.sprite = Helper.loadTexture("gui/button");
+        this.sprite = Textures.BUTTON;
         this.wr = 1.0F * sprite.getImageWidth() / sprite.getTextureWidth();
         this.hr = 1.0F * sprite.getImageHeight() / sprite.getTextureHeight();
         this.box = new Rectangle(x, y, sprite.getImageWidth(), sprite.getImageHeight());
