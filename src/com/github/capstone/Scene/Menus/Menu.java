@@ -6,13 +6,12 @@ import com.github.capstone.Scene.Components.TitleSprite;
 import com.github.capstone.Scene.Game;
 import com.github.capstone.Scene.Scene;
 import com.github.capstone.Twotris;
-import com.github.capstone.Util.Helper;
+import com.github.capstone.Util.Textures;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
-import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.opengl.Texture;
 
 import java.util.LinkedHashMap;
@@ -23,7 +22,6 @@ public class Menu extends Scene
     private LinkedHashMap<String, Integer[]> optTexts;
     private Scene nextScene;
     private TitleSprite titleSprite;
-    private TrueTypeFont font;
 
     /**
      * @param title The String include for the title.
@@ -36,7 +34,6 @@ public class Menu extends Scene
         this.buttons = new LinkedHashMap<>();
         this.titleSprite = new TitleSprite(texture);
         this.optTexts = new LinkedHashMap<>();
-        this.font = Helper.getFont();
         try
         {
             Mouse.setNativeCursor(null);
@@ -56,11 +53,6 @@ public class Menu extends Scene
     public void addButton(Button button, Scene scene)
     {
         this.buttons.put(button, scene);
-    }
-
-    public void clearButtons()
-    {
-        this.buttons.clear();
     }
 
     /**
@@ -88,7 +80,7 @@ public class Menu extends Scene
 
         for (String s : optTexts.keySet())
         {
-            this.font.drawString(optTexts.get(s)[0], optTexts.get(s)[1], s);
+            Textures.FONT.drawString(optTexts.get(s)[0], optTexts.get(s)[1], s);
         }
 
         if (Display.wasResized())
@@ -191,22 +183,6 @@ public class Menu extends Scene
         return nextScene;
     }
 
-    /**
-     * @param none
-     * @return none
-     * @throws none
-     * @reloadFont This method is used for reloading the fonts of all the button in keySet.
-     */
-    @Override
-    public void reloadFont()
-    {
-        for (Button b : buttons.keySet())
-        {
-            b.reloadFont();
-        }
-        this.font = Helper.getFont();
-    }
-
     public void addSplashText(int x, int y, String toDraw)
     {
         optTexts.put(toDraw, new Integer[]{x, y});
@@ -214,6 +190,6 @@ public class Menu extends Scene
 
     public void addSplashText(int y, String toDraw)
     {
-        addSplashText((Display.getWidth() / 2) - (this.font.getWidth(toDraw) / 2), y, toDraw);
+        addSplashText((Display.getWidth() / 2) - (Textures.FONT.getWidth(toDraw) / 2), y, toDraw);
     }
 }

@@ -34,8 +34,8 @@ public class GuidePage extends Scene
 
     GuidePage(Scene next)
     {
-        this.font = Helper.getFont();
-        this.titleFont = new TrueTypeFont(Helper.getAWTFont().deriveFont(Helper.underlineAttribute()).deriveFont(32F), false);
+        this.font = Textures.FONT;
+        this.titleFont = new TrueTypeFont(Textures.AWTFONT.deriveFont(Helper.underlineAttribute()).deriveFont(32F), false);
         this.nextButton = new Button(0, 0, "Next");
         this.titleSprite = new TitleSprite(Textures.TITLE);
         this.next = next;
@@ -124,18 +124,6 @@ public class GuidePage extends Scene
         this.pieces.set(4, new FakeTetromino(6, size, 0, 2 * size, Display.getHeight() - (3 * size)));
         this.pieces.set(5, new FakeTetromino(5, size, 0, 3 * size, Display.getHeight() - size));
         this.pieces.set(6, new FakeTetromino(0, size, 2, 3 * size, Display.getHeight() - (4 * size)));
-    }
-
-    @Override
-    public void reloadFont()
-    {
-        this.font = Helper.getFont();
-        this.titleFont = new TrueTypeFont(Helper.getAWTFont().deriveFont(Helper.underlineAttribute()).deriveFont(32F), false);
-        this.nextButton.reloadFont();
-        if (!(this.next instanceof MainMenu))
-        {
-            this.next.reloadFont();
-        }
     }
 
     @Override

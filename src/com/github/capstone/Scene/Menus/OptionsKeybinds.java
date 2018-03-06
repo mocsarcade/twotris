@@ -136,20 +136,4 @@ public class OptionsKeybinds extends Scene
         return next;
     }
 
-    /**
-     * @param none
-     * @return none
-     * @throws none
-     * @reloadFont This method is used for reloading the buttons’ from the keySet fonts as well as the back button.
-     */
-    @Override
-    public void reloadFont()
-    {
-        back.reloadFont();
-        next.reloadFont();
-        for (Button b : this.buttons)
-        {
-            b.reloadFont();
-        }
-    }
 }

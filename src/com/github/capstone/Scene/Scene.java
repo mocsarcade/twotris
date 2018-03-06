@@ -53,14 +53,6 @@ public abstract class Scene
         return true;
     }
 
-    /**
-     * @param none
-     * @return none
-     * @throws none
-     * @reloadFont This method is used for reloading the font, but is not implemented in the abstract.
-     */
-    public abstract void reloadFont();
-
     public void resizeContents()
     {
     }

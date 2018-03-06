@@ -1,14 +1,13 @@
 package com.github.capstone.Components;
 
 import com.github.capstone.Util.Helper;
+import com.github.capstone.Util.Textures;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.opengl.TextureImpl;
 
 public class TetrominoGhost extends Tetromino
 {
-    private TrueTypeFont font;
-
     /**
      * @param grid the Grid for the ghost piece
      * @param type the type of the next tetromino piece.
@@ -19,7 +18,6 @@ public class TetrominoGhost extends Tetromino
     public TetrominoGhost(Grid grid, int type)
     {
         super(grid, type);
-        this.font = Helper.getFont();
         super.getHitBox().setLocation(Display.getWidth() - this.getHitBox().getWidth() - 16, 16);
         for (int i = 0; i < super.getPieceMatrix().length; i++)
         {
@@ -75,17 +73,6 @@ public class TetrominoGhost extends Tetromino
             }
         }
         TextureImpl.bindNone();
-        font.drawString(this.getHitBox().getX() - font.getWidth("Next Piece:") - 8, 16, "Next Piece:");
-    }
-
-    /**
-     * @param none
-     * @return none
-     * @throws none
-     * @reloadFont This method is used for reloading the font.
-     */
-    public void reloadFont()
-    {
-        this.font = Helper.getFont();
+        Textures.FONT.drawString(this.getHitBox().getX() - Textures.FONT.getWidth("Next Piece:") - 8, 16, "Next Piece:");
     }
 }

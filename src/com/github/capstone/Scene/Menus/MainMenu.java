@@ -33,15 +33,6 @@ public class MainMenu extends Menu
         this.adjustButtons();
     }
 
-    @Override
-    public void reloadFont()
-    {
-        super.reloadFont();
-        this.game.reloadFont();
-        this.options.reloadFont();
-        this.tutorial.reloadFont();
-    }
-
     public void recolor()
     {
         this.game.recolor();

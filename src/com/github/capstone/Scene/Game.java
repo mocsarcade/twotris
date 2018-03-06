@@ -7,18 +7,15 @@ import com.github.capstone.Scene.Menus.MainMenu;
 import com.github.capstone.Scene.Menus.Menu;
 import com.github.capstone.Scene.Menus.Options;
 import com.github.capstone.Twotris;
-import com.github.capstone.Util.Helper;
 import com.github.capstone.Util.Textures;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
-import org.newdawn.slick.TrueTypeFont;
 
 public class Game extends Scene
 {
     private boolean isGameOver;
-    private TrueTypeFont font;
     private Menu pauseMenu;
     private Grid grid;
 
@@ -30,7 +27,6 @@ public class Game extends Scene
      */
     public Game()
     {
-        this.font = Helper.getFont();
         this.grid = new Grid();
     }
 
@@ -124,23 +120,6 @@ public class Game extends Scene
     {
         Mouse.setGrabbed(false);
         return this.pauseMenu;
-    }
-
-    /**
-     * @param none
-     * @return none
-     * @throws none
-     * @reloadFont This method is used for reloading the game’s font.
-     */
-    @Override
-    public void reloadFont()
-    {
-        this.font = Helper.getFont();
-        this.grid.reloadFont();
-        if (this.pauseMenu != null)
-        {
-            this.pauseMenu.reloadFont();
-        }
     }
 
     @Override

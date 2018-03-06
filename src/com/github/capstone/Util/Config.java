@@ -14,12 +14,8 @@ import com.github.capstone.Twotris;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 
-import java.awt.Toolkit;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.awt.*;
+import java.io.*;
 import java.util.Properties;
 
 public class Config
@@ -210,8 +206,8 @@ public class Config
         {
             this.font = font_options.getNextOption(this.font);
             button.setButtonText(font_label + ":" + this.font);
-            Helper.fontName = this.font.toLowerCase();
-            button.setFont(Helper.getFont());
+            Textures.fontName = this.font.toLowerCase();
+            Textures.reloadFont();
             this.updateConfig();
         }
         else if (option.equalsIgnoreCase("fullscreen"))

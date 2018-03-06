@@ -1,14 +1,12 @@
 package com.github.capstone.Scene.Components;
 
 import com.github.capstone.Manager.AudioManager;
-import com.github.capstone.Util.Helper;
 import com.github.capstone.Util.Textures;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Rectangle;
 import org.newdawn.slick.Color;
-import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureImpl;
 
@@ -22,7 +20,6 @@ public class Button
     private Rectangle box;
     private Color color;
     private Color textColor;
-    private TrueTypeFont font;
     boolean hovering;
     private Texture sprite;
     private float wr, hr;
@@ -65,7 +62,6 @@ public class Button
         this.buttonText = text;
         this.color = color;
         this.textColor = textColor;
-        this.font = Helper.getFont();
     }
 
     /**
@@ -85,7 +81,6 @@ public class Button
         this.buttonText = text;
         this.color = new Color(255, 255, 255);
         this.textColor = new Color(0, 182, 164);
-        this.font = Helper.getFont();
     }
 
     public String getText()
@@ -93,16 +88,6 @@ public class Button
         return this.buttonText;
     }
 
-    /**
-     * @param font TrueTypeFont supplied
-     * @return none
-     * @throws none
-     * @setFont This method sets the font given.
-     */
-    public void setFont(TrueTypeFont font)
-    {
-        this.font = font;
-    }
 
     /**
      * @param delta
@@ -204,7 +189,7 @@ public class Button
             GL11.glEnd();
         }
         TextureImpl.bindNone();
-        font.drawString(x + (w / 2) - (font.getWidth(buttonText) / 2), y + (h / 2) - (font.getHeight(buttonText) / 2), buttonText, textColor);
+        Textures.FONT.drawString(x + (w / 2) - (Textures.FONT.getWidth(buttonText) / 2), y + (h / 2) - (Textures.FONT.getHeight(buttonText) / 2), buttonText, textColor);
     }
 
     /**
@@ -228,16 +213,4 @@ public class Button
     {
         this.buttonText = newText;
     }
-
-    /**
-     * @param none
-     * @return none
-     * @throws none
-     * @reloadFont This method is used for reloading the button’s font.
-     */
-    public void reloadFont()
-    {
-        this.font = Helper.getFont();
-    }
-
 }

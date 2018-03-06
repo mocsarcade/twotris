@@ -4,6 +4,7 @@ import com.github.capstone.Scene.Components.Button;
 import com.github.capstone.Scene.Game;
 import com.github.capstone.Scene.Scene;
 import com.github.capstone.Twotris;
+import com.github.capstone.Util.Textures;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
@@ -83,8 +84,8 @@ public class Options extends Scene
             {
                 if (this.fontChanged)
                 {
-                    this.reloadFont();
-                    last.reloadFont();
+                    Textures.fontName = Twotris.getInstance().config.font.toLowerCase();
+                    Textures.reloadFont();
                     this.fontChanged = false;
                 }
                 if (this.colorChanged)
@@ -206,22 +207,6 @@ public class Options extends Scene
         return next;
     }
 
-    /**
-     * @param none
-     * @return none
-     * @throws none
-     * @reloadFont This method is used for reloading the buttons’ from the keySet fonts as well as the back button.
-     */
-    @Override
-    public void reloadFont()
-    {
-        for (Button b : buttons.keySet())
-        {
-            b.reloadFont();
-        }
-        keybinds.reloadFont();
-        back.reloadFont();
-    }
 
     @Override
     public void resizeContents()

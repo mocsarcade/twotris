@@ -4,6 +4,7 @@ import com.github.capstone.Manager.AudioManager;
 import com.github.capstone.Twotris;
 import com.github.capstone.Util.Helper;
 import com.github.capstone.Util.Keybinds;
+import com.github.capstone.Util.Textures;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
@@ -28,7 +29,6 @@ public class Grid
     private int score;
     private long lastKeypress;
     private Random rand;
-    private TrueTypeFont font;
 
     /**
      * @return none
@@ -60,7 +60,6 @@ public class Grid
         this.nextPiece = new TetrominoGhost(this, nextType);
         this.pieces.add(this.activePiece);
         this.isGameOver = false;
-        this.font = Helper.getFont();
     }
 
     /**
@@ -304,7 +303,7 @@ public class Grid
         this.nextPiece.draw();
 
         TextureImpl.bindNone();
-        this.font.drawString(0, 0, "Score: " + this.score);
+        Textures.FONT.drawString(0, 0, "Score: " + this.score);
     }
 
     /**
@@ -472,17 +471,6 @@ public class Grid
     public int getScore()
     {
         return this.score;
-    }
-
-    /**
-     * @param none
-     * @return none
-     * @throws none
-     * @reloadFont This method reloads the font in the game.
-     */
-    public void reloadFont()
-    {
-        this.nextPiece.reloadFont();
     }
 
     public void recolor()

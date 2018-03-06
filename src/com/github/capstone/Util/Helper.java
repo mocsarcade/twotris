@@ -19,8 +19,6 @@ import java.util.Random;
 
 public class Helper
 {
-    public static String fontName = Twotris.getInstance().config.font.toLowerCase();
-
     /**
      * @param none
      * @return Sys.getTime() * 1000) / Sys.getTimerResolution()
@@ -41,18 +39,6 @@ public class Helper
     public static String errTexture()
     {
         return "assets/textures/err.png".replace("/", File.separator);
-    }
-
-    /**
-     * @param none
-     * @return new Random Color
-     * @throws none
-     * @getRandomColor This method gathers a random number generator, then generates a random color by inputting random numbers into the red, green and blue value slots.
-     */
-    public static Color getRandomColor()
-    {
-        Random rand = new Random();
-        return new Color(rand.nextInt(256), rand.nextInt(256), rand.nextInt(256));
     }
 
     /**
@@ -82,97 +68,6 @@ public class Helper
     }
 
     /**
-     * @param none
-     * @return TrueTypeFont
-     * @throws none
-     * @getFont This method returns a TrueTypeFont  specified elsewhere, if unable to do so, the method uses Arial.
-     */
-    public static TrueTypeFont getFont()
-    {
-        try
-        {
-            File fontFile = new File("natives/fonts/fontname.ttf".replace("/", File.separator).replace("fontname", fontName)).getAbsoluteFile();
-            if (!fontFile.exists())
-            {
-                System.out.println("Font did not exist; copying...");
-                File extractedFontFolder = new File("natives/fonts".replace("/", File.separator));
-                if (!extractedFontFolder.exists())
-                {
-                    if (!extractedFontFolder.mkdir())
-                    {
-                        throw new RuntimeException();
-                    }
-                }
-                FileUtils.copyStream(ResourceLoader.getResourceAsStream("assets/fonts/fontname.ttf".replace("/", File.separator).replace("fontname", fontName)), new File("natives/fonts/fontname.ttf".replace("/", File.separator).replace("fontname", fontName)));
-            }
-
-            float fontSize = 32F;
-
-            if (fontName.toLowerCase().contains("t 'n j"))
-            {
-                fontSize = 18F;
-            }
-            else if (fontName.toLowerCase().contains("blocks"))
-            {
-                fontSize = 28F;
-            }
-            else if (fontName.toLowerCase().contains("chickenpox"))
-            {
-                fontSize = 28F;
-            }
-            else if (fontName.toLowerCase().contains("heavy"))
-            {
-                fontSize = 20F;
-            }
-            else if (fontName.toLowerCase().contains("pixelmecha"))
-            {
-                fontSize = 28F;
-            }
-            Font awtFont = Font.createFont(Font.TRUETYPE_FONT, fontFile).deriveFont(fontSize);
-            return new TrueTypeFont(awtFont, false);
-        }
-        catch (IOException | FontFormatException e)
-        {
-            e.printStackTrace();
-            return new TrueTypeFont(new Font("Arial", Font.PLAIN, 32), false);
-        }
-    }
-
-    /**
-     * @param none
-     * @return AWT Font
-     * @throws none
-     * @getFont This method returns an AWT Font specified elsewhere, if unable to do so, the method uses Arial.
-     */
-    public static Font getAWTFont()
-    {
-        try
-        {
-            File fontFile = new File("natives/fonts/fontname.ttf".replace("/", File.separator).replace("fontname", fontName)).getAbsoluteFile();
-            if (!fontFile.exists())
-            {
-                System.out.println("Font did not exist; copying...");
-                File extractedFontFolder = new File("natives/fonts".replace("/", File.separator));
-                if (!extractedFontFolder.exists())
-                {
-                    if (!extractedFontFolder.mkdir())
-                    {
-                        throw new RuntimeException();
-                    }
-                }
-                FileUtils.copyStream(ResourceLoader.getResourceAsStream("assets/fonts/fontname.ttf".replace("/", File.separator).replace("fontname", fontName)), new File("natives/fonts/fontname.ttf".replace("/", File.separator).replace("fontname", fontName)));
-            }
-
-            return Font.createFont(Font.TRUETYPE_FONT, fontFile).deriveFont(24F);
-        }
-        catch (IOException | FontFormatException e)
-        {
-            e.printStackTrace();
-            return Font.getFont("Arial");
-        }
-    }
-
-    /**
      * @param keyVal the Int value to convert
      * @return the integer value converted to the actual legible key on a keyboard (like "LShift")
      */
@@ -192,5 +87,4 @@ public class Helper
         ret.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
         return ret;
     }
-
 }
