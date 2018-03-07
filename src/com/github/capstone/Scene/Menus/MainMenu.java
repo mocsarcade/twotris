@@ -28,7 +28,6 @@ public class MainMenu extends Menu
     public void resizeContents()
     {
         game.resizeContents();
-        options.resizeContents();
         tutorial.resizeContents();
         this.adjustButtons();
     }
