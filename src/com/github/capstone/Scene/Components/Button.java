@@ -7,7 +7,6 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Rectangle;
 import org.newdawn.slick.Color;
-import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureImpl;
 
 /**
@@ -19,9 +18,8 @@ public class Button
     String buttonText;
     private Rectangle box;
     private Color color;
-    private Color textColor;
     boolean hovering;
-    private Texture sprite;
+    private boolean hasTexture;
     private float wr, hr;
     private boolean prevState = true;
     private boolean clickedOnce = false;
@@ -57,11 +55,10 @@ public class Button
      */
     private Button(int x, int y, int w, int h, String text, Color textColor, Color color)
     {
-        this.sprite = null;
+        this.hasTexture = false;
         this.box = new Rectangle(x, y, w, h);
         this.buttonText = text;
         this.color = color;
-        this.textColor = textColor;
     }
 
     /**
@@ -74,13 +71,12 @@ public class Button
      */
     public Button(int x, int y, String text)
     {
-        this.sprite = Textures.BUTTON;
-        this.wr = 1.0F * sprite.getImageWidth() / sprite.getTextureWidth();
-        this.hr = 1.0F * sprite.getImageHeight() / sprite.getTextureHeight();
-        this.box = new Rectangle(x, y, sprite.getImageWidth(), sprite.getImageHeight());
+        this.hasTexture = true;
+        this.wr = 1.0F * Textures.BUTTON_BG.getImageWidth() / Textures.BUTTON_BG.getTextureWidth();
+        this.hr = 1.0F * Textures.BUTTON_BG.getImageHeight() / Textures.BUTTON_BG.getTextureHeight();
+        this.box = new Rectangle(x, y, Textures.BUTTON_BG.getImageWidth(), Textures.BUTTON_BG.getImageHeight());
         this.buttonText = text;
         this.color = new Color(255, 255, 255);
-        this.textColor = new Color(0, 182, 164);
     }
 
     public String getText()
@@ -145,13 +141,39 @@ public class Button
         float w = (float) this.box.getWidth();
         float h = (float) this.box.getHeight();
 
-        if (this.sprite != null)
+        if (this.hasTexture)
         {
-            GL11.glBindTexture(GL11.GL_TEXTURE_2D, sprite.getTextureID());
+            // Background:
+            GL11.glBindTexture(GL11.GL_TEXTURE_2D, Textures.BUTTON_BG.getTextureID());
             GL11.glColor3f(1F, 1F, 1F);
             if (this.hovering)
             {
                 GL11.glColor3f(0.9F, 0.9F, 0.9F);
+            }
+            GL11.glBegin(GL11.GL_QUADS);
+
+            GL11.glTexCoord2f(0F, 0F);
+            GL11.glVertex2f(x, y);
+
+            GL11.glTexCoord2f(wr, 0F);
+            GL11.glVertex2f(x + w, y);
+
+            GL11.glTexCoord2f(wr, hr);
+            GL11.glVertex2f(x + w, y + h);
+
+            GL11.glTexCoord2f(0F, hr);
+            GL11.glVertex2f(x, y + h);
+
+
+            GL11.glEnd();
+            GL11.glBindTexture(GL11.GL_TEXTURE_2D, 0);
+
+            // Foreground:
+            GL11.glBindTexture(GL11.GL_TEXTURE_2D, Textures.BUTTON_FG.getTextureID());
+            GL11.glColor3f(Textures.BUTTON_FG_COLOR.r, Textures.BUTTON_FG_COLOR.g, Textures.BUTTON_FG_COLOR.b);
+            if (this.hovering)
+            {
+                GL11.glColor3f(Textures.BUTTON_FG_COLOR.r - 0.1F, Textures.BUTTON_FG_COLOR.g - 0.1F, Textures.BUTTON_FG_COLOR.b - 0.1F);
             }
             GL11.glBegin(GL11.GL_QUADS);
 
@@ -189,7 +211,7 @@ public class Button
             GL11.glEnd();
         }
         TextureImpl.bindNone();
-        Textures.FONT.drawString(x + (w / 2) - (Textures.FONT.getWidth(buttonText) / 2), y + (h / 2) - (Textures.FONT.getHeight(buttonText) / 2), buttonText, textColor);
+        Textures.FONT.drawString(x + (w / 2) - (Textures.FONT.getWidth(buttonText) / 2), y + (h / 2) - (Textures.FONT.getHeight(buttonText) / 2), buttonText, Textures.BUTTON_FG_COLOR);
     }
 
     /**

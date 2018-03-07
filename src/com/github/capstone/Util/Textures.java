@@ -1,6 +1,7 @@
 package com.github.capstone.Util;
 
 import com.github.capstone.Twotris;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.util.ResourceLoader;
@@ -17,10 +18,12 @@ public class Textures
     public static final Texture TITLE = Helper.loadTexture("gui/title");
     public static final Texture PAUSED = Helper.loadTexture("gui/paused");
     public static final Texture GAME_OVER = Helper.loadTexture("gui/game_over");
-    public static final Texture BUTTON = Helper.loadTexture("gui/button");
+    public static final Texture BUTTON_BG = Helper.loadTexture("gui/button_bg");
+    public static final Texture BUTTON_FG = Helper.loadTexture("gui/button_fg");
 
     public static TrueTypeFont FONT = loadFont();
     public static Font AWTFONT = loadAWTFont();
+    public static Color BUTTON_FG_COLOR = new Color(0, 182, 164);
 
     /**
      * @param none
