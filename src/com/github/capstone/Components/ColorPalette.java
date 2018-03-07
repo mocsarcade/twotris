@@ -63,6 +63,18 @@ public class ColorPalette
     }
 
     /**
+     * @param scheme the color scheme to be looked into.
+     * @param index  the index to be looked into in the scheme provided.
+     * @return color the color located in the scheme, at the index provided.
+     * @throws none
+     * @getColor This method retrieves the color found at the index provided in the scheme provided. .
+     */
+    public org.newdawn.slick.Color getSlickColor(String scheme, int index)
+    {
+        return new org.newdawn.slick.Color(colors.get(scheme)[index].getRed(), colors.get(scheme)[index].getGreen(), colors.get(scheme)[index].getBlue());
+    }
+
+    /**
      * @param colorStr the hex value of the color to be converted.
      * @return color the color converted from hex into RGB.
      * @throws none

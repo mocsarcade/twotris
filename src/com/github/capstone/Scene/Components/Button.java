@@ -1,6 +1,8 @@
 package com.github.capstone.Scene.Components;
 
+import com.github.capstone.Components.ColorPalette;
 import com.github.capstone.Manager.AudioManager;
+import com.github.capstone.Twotris;
 import com.github.capstone.Util.Textures;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
@@ -170,10 +172,10 @@ public class Button
 
             // Foreground:
             GL11.glBindTexture(GL11.GL_TEXTURE_2D, Textures.BUTTON_FG.getTextureID());
-            GL11.glColor3f(Textures.BUTTON_FG_COLOR.r, Textures.BUTTON_FG_COLOR.g, Textures.BUTTON_FG_COLOR.b);
+            GL11.glColor3f(ColorPalette.getInstance().getSlickColor(Twotris.getInstance().config.colorscheme, 0).r, ColorPalette.getInstance().getSlickColor(Twotris.getInstance().config.colorscheme, 0).g, ColorPalette.getInstance().getSlickColor(Twotris.getInstance().config.colorscheme, 0).b);
             if (this.hovering)
             {
-                GL11.glColor3f(Textures.BUTTON_FG_COLOR.r - 0.1F, Textures.BUTTON_FG_COLOR.g - 0.1F, Textures.BUTTON_FG_COLOR.b - 0.1F);
+                GL11.glColor3f(ColorPalette.getInstance().getSlickColor(Twotris.getInstance().config.colorscheme, 0).r - 0.1F, ColorPalette.getInstance().getSlickColor(Twotris.getInstance().config.colorscheme, 0).g - 0.1F, ColorPalette.getInstance().getSlickColor(Twotris.getInstance().config.colorscheme, 0).b - 0.1F);
             }
             GL11.glBegin(GL11.GL_QUADS);
 
@@ -211,7 +213,7 @@ public class Button
             GL11.glEnd();
         }
         TextureImpl.bindNone();
-        Textures.FONT.drawString(x + (w / 2) - (Textures.FONT.getWidth(buttonText) / 2), y + (h / 2) - (Textures.FONT.getHeight(buttonText) / 2), buttonText, Textures.BUTTON_FG_COLOR);
+        Textures.FONT.drawString(x + (w / 2) - (Textures.FONT.getWidth(buttonText) / 2), y + (h / 2) - (Textures.FONT.getHeight(buttonText) / 2), buttonText, ColorPalette.getInstance().getSlickColor(Twotris.getInstance().config.colorscheme, 0));
     }
 
     /**

@@ -1,5 +1,7 @@
 package com.github.capstone.Scene.Components;
 
+import com.github.capstone.Components.ColorPalette;
+import com.github.capstone.Twotris;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Rectangle;
@@ -38,7 +40,7 @@ public class TitleSprite
         float h = (float) hitBox.getHeight();
 
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, sprite.getTextureID());
-        GL11.glColor3f(1F, 1F, 1F);
+        GL11.glColor3f(ColorPalette.getInstance().getSlickColor(Twotris.getInstance().config.colorscheme, 0).r, ColorPalette.getInstance().getSlickColor(Twotris.getInstance().config.colorscheme, 0).g, ColorPalette.getInstance().getSlickColor(Twotris.getInstance().config.colorscheme, 0).b);
 
         // Allows the background to scale w/o blurring
         GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_NEAREST);

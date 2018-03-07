@@ -23,7 +23,6 @@ public class Textures
 
     public static TrueTypeFont FONT = loadFont();
     public static Font AWTFONT = loadAWTFont();
-    public static Color BUTTON_FG_COLOR = new Color(0, 182, 164);
 
     /**
      * @param none
