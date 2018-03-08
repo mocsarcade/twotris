@@ -62,14 +62,7 @@ public abstract class Scene
     public boolean isKeyPressed(int key)
     {
         boolean state = Keyboard.isKeyDown(key);
-        if (state != prevState && state)
-        {
-            clickedOnce = true;
-        }
-        else
-        {
-            clickedOnce = false;
-        }
+        clickedOnce = state != prevState && state;
         prevState = state;
         return this.clickedOnce;
     }
