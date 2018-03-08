@@ -8,7 +8,6 @@ import com.github.capstone.Scene.Menus.Menu;
 import com.github.capstone.Scene.Menus.Options;
 import com.github.capstone.Twotris;
 import com.github.capstone.Util.Textures;
-import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
@@ -79,11 +78,11 @@ public class Game extends Scene
         }
 
         // Keypress handlers:
-        if (Keyboard.isKeyDown(Twotris.getInstance().keybinds.screenshot))
+        if (this.isKeyPressed(Twotris.getInstance().keybinds.screenshot))
         {
             Twotris.getInstance().screenshotManager.takeScreenshot();
         }
-        if (Keyboard.isKeyDown(Twotris.getInstance().keybinds.menuBack))
+        if (this.isKeyPressed(Twotris.getInstance().keybinds.menuBack))
         {
             AudioManager.getInstance().play("pause");
             return false;

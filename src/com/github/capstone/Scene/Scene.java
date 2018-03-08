@@ -2,12 +2,14 @@ package com.github.capstone.Scene;
 
 import com.github.capstone.Manager.AudioManager;
 import com.github.capstone.Util.Helper;
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 
 public abstract class Scene
 {
+    private boolean prevState = true;
+    private boolean clickedOnce = false;
 
-    // return false if the game should be quit
     public abstract boolean drawFrame(float delta);
 
     /**
@@ -55,5 +57,20 @@ public abstract class Scene
 
     public void resizeContents()
     {
+    }
+
+    public boolean isKeyPressed(int key)
+    {
+        boolean state = Keyboard.isKeyDown(key);
+        if (state != prevState && state)
+        {
+            clickedOnce = true;
+        }
+        else
+        {
+            clickedOnce = false;
+        }
+        prevState = state;
+        return this.clickedOnce;
     }
 }
