@@ -35,7 +35,7 @@ public class Game extends Scene
      */
     private void updatePauseMenu()
     {
-        pauseMenu = this.isGameOver ? new Menu(Textures.GAME_OVER) : new Menu(Textures.PAUSED);
+        pauseMenu = this.isGameOver ? new Menu(Textures.GAME_OVER, true) : new Menu(Textures.PAUSED);
         if (isGameOver)
         {
             pauseMenu.addSplashText(Display.getHeight() - 32, "Game Score: " + this.grid.getScore());

@@ -11,6 +11,7 @@ public class TitleSprite
 {
     private Texture sprite;
     private Rectangle hitBox;
+    private boolean noOverlay;
 
     /**
      * @param texture A Texture object of the image to show
@@ -24,6 +25,12 @@ public class TitleSprite
         this.hitBox = new Rectangle(0, 0, sprite.getImageWidth(), sprite.getImageHeight());
         this.hitBox.setX((Display.getWidth() / 2) - (this.hitBox.getWidth() / 2));
         this.hitBox.setY(Display.getHeight() / 16);
+    }
+
+    public TitleSprite(Texture texture, boolean noOverlay)
+    {
+        this(texture);
+        this.noOverlay = noOverlay;
     }
 
     /**
@@ -40,7 +47,14 @@ public class TitleSprite
         float h = (float) hitBox.getHeight();
 
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, sprite.getTextureID());
-        GL11.glColor3f(ColorPalette.getInstance().getSlickColor(Twotris.getInstance().config.colorscheme, 0).r, ColorPalette.getInstance().getSlickColor(Twotris.getInstance().config.colorscheme, 0).g, ColorPalette.getInstance().getSlickColor(Twotris.getInstance().config.colorscheme, 0).b);
+        if (this.noOverlay)
+        {
+            GL11.glColor3f(1f, 1f, 1f);
+        }
+        else
+        {
+            GL11.glColor3f(ColorPalette.getInstance().getSlickColor(Twotris.getInstance().config.colorscheme, 0).r, ColorPalette.getInstance().getSlickColor(Twotris.getInstance().config.colorscheme, 0).g, ColorPalette.getInstance().getSlickColor(Twotris.getInstance().config.colorscheme, 0).b);
+        }
 
         // Allows the background to scale w/o blurring
         GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_NEAREST);
