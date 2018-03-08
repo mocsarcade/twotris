@@ -29,6 +29,26 @@ public class Menu extends Scene
      * @throws none
      * @Menu This constructor method adds button to a linkedhashmap and creates a titlesprite.
      */
+    public Menu(Texture texture, boolean noColorOverlay)
+    {
+        this.buttons = new LinkedHashMap<>();
+        this.titleSprite = new TitleSprite(texture, noColorOverlay);
+        this.optTexts = new LinkedHashMap<>();
+        try
+        {
+            Mouse.setNativeCursor(null);
+        }
+        catch (LWJGLException ignored)
+        {
+        }
+    }
+
+    /**
+     * @param title The String include for the title.
+     * @return none
+     * @throws none
+     * @Menu This constructor method adds button to a linkedhashmap and creates a titlesprite.
+     */
     public Menu(Texture texture)
     {
         this.buttons = new LinkedHashMap<>();

@@ -52,7 +52,7 @@ public class Config
         new ColorPalette();
         ColorPalette.getInstance().addColorPalette("Default", "00b6a3", "fa0012", "ffa500", "ec0868", "05e662", "c200fb", "ffffff");
         ColorPalette.getInstance().addColorPalette("Darker", "fa1200", "0562e6", "ff00a5", "00a3b6", "c2fb00", "ffffff", "ec6808");
-        ColorPalette.getInstance().addColorPalette("Greyscale", "444444", "666666", "888888", "aaaaaa", "cccccc", "dddddd", "eeeeee");
+        ColorPalette.getInstance().addColorPalette("Greyscale", "888888", "444444", "666666", "dddddd", "aaaaaa", "cccccc", "eeeeee");
         ColorPalette.getInstance().addColorPalette("Candybats", "b486a2", "d2fdf8", "aae2fb", "ebc2f9", "ffd1ec", "C585DB", "D675B1");
         ColorPalette.getInstance().addColorPalette("Storm", "416168", "99c6c6", "41546d", "b9bbb6", "d2d7dd", "bfcfd9", "7c7a7d");
         ColorPalette.getInstance().addColorPalette("Google", "3cba54", "f4c20d", "db3236", "4885ed", "7d7d7d", "a0a0a0", "f0f0f0");
