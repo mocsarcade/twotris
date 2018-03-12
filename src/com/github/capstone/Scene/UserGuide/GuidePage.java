@@ -26,6 +26,8 @@ public class GuidePage extends Scene
     private Scene mainMenu;
     private TrueTypeFont titleFont;
     private TrueTypeFont font;
+    private String drawString;
+    private int textTally = 0;
     String title;
     String pageContent;
     int textX = 0;
@@ -41,6 +43,7 @@ public class GuidePage extends Scene
         this.next = next;
         this.title = "";
         this.pageContent = "";
+        this.drawString = "";
         if (next instanceof MainMenu)
         {
             this.mainMenu = next;
@@ -66,7 +69,12 @@ public class GuidePage extends Scene
         TextureImpl.bindNone();
         // Loop for handling newlines:
         int y = textY;
-        for (String part : this.pageContent.split("<br>"))
+        if (drawString.length() != pageContent.length())
+        {
+            drawString += pageContent.substring(textTally, textTally + 1);
+            textTally++;
+        }
+        for (String part : this.drawString.split("<br>"))
         {
             font.drawString(textX, y, part);
             y += font.getHeight(part);
