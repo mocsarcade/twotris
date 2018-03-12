@@ -135,6 +135,19 @@ public class Menu extends Scene
             }
         }
 
+        if (this.isKeyPressed(Twotris.getInstance().keybinds.menuBack) && this.titleSprite.isPauseMenu())
+        {
+            for (Button b : buttons.keySet())
+            {
+                if (buttons.get(b) instanceof Game)
+                {
+                    this.nextScene = buttons.get(b);
+                    break;
+                }
+            }
+            return false;
+        }
+
         return true;
     }
 

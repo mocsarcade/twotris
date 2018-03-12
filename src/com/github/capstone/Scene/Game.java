@@ -77,13 +77,12 @@ public class Game extends Scene
         {
             this.updatePauseMenu();
         }
-
         // Keypress handlers:
         if (Keyboard.isKeyDown(Twotris.getInstance().keybinds.screenshot))
         {
             Twotris.getInstance().screenshotManager.takeScreenshot();
         }
-        if (Keyboard.isKeyDown(Twotris.getInstance().keybinds.menuBack))
+        if (this.isKeyPressed(Twotris.getInstance().keybinds.menuBack))
         {
             AudioManager.getInstance().play("pause");
             return false;

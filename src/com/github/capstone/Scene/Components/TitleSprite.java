@@ -2,6 +2,7 @@ package com.github.capstone.Scene.Components;
 
 import com.github.capstone.Components.ColorPalette;
 import com.github.capstone.Twotris;
+import com.github.capstone.Util.Textures;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Rectangle;
@@ -79,6 +80,11 @@ public class TitleSprite
 
         this.hitBox.setX((Display.getWidth() / 2) - (this.hitBox.getWidth() / 2));
         this.hitBox.setY(Display.getHeight() / 16);
+    }
+
+    public boolean isPauseMenu()
+    {
+        return this.sprite == Textures.PAUSED;
     }
 
     /**
