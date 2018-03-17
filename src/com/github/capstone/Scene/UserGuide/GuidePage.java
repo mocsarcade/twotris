@@ -6,12 +6,10 @@ import com.github.capstone.Scene.Components.TitleSprite;
 import com.github.capstone.Scene.Menus.MainMenu;
 import com.github.capstone.Scene.Scene;
 import com.github.capstone.Twotris;
-import com.github.capstone.Util.Helper;
 import com.github.capstone.Util.Textures;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
-import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.opengl.TextureImpl;
 
 import java.util.ArrayList;
@@ -24,8 +22,6 @@ public class GuidePage extends Scene
     private TitleSprite titleSprite;
     private Scene next;
     private Scene mainMenu;
-    private TrueTypeFont titleFont;
-    private TrueTypeFont font;
     private String drawString;
     private int textTally = 0;
     String title;
@@ -36,8 +32,6 @@ public class GuidePage extends Scene
 
     GuidePage(Scene next)
     {
-        this.font = Textures.FONT;
-        this.titleFont = new TrueTypeFont(Textures.AWTFONT.deriveFont(Helper.underlineAttribute()).deriveFont(32F), false);
         this.nextButton = new Button(0, 0, "Next");
         this.titleSprite = new TitleSprite(Textures.TITLE);
         this.next = next;
@@ -76,10 +70,10 @@ public class GuidePage extends Scene
         }
         for (String part : this.drawString.split("<br>"))
         {
-            font.drawString(textX, y, part);
-            y += font.getHeight(part);
+            Textures.FONT.drawString(textX, y, part);
+            y += Textures.FONT.getHeight(part);
         }
-        titleFont.drawString(16, this.titleSprite.getHitBox().getY(), title);
+        Textures.TITLE_FONT.drawString(16, this.titleSprite.getHitBox().getY(), title);
 
         // Screen resize handler
         if (Display.wasResized())
@@ -143,6 +137,8 @@ public class GuidePage extends Scene
     @Override
     public Scene nextScene()
     {
+        this.drawString = "";
+        this.textTally = 0;
         if (Keyboard.isKeyDown(Twotris.getInstance().keybinds.menuBack))
         {
             return this.mainMenu;

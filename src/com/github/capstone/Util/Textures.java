@@ -1,7 +1,6 @@
 package com.github.capstone.Util;
 
 import com.github.capstone.Twotris;
-import org.newdawn.slick.Color;
 import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.util.ResourceLoader;
@@ -23,6 +22,7 @@ public class Textures
 
     public static TrueTypeFont FONT = loadFont();
     public static Font AWTFONT = loadAWTFont();
+    public static TrueTypeFont TITLE_FONT = new TrueTypeFont(AWTFONT.deriveFont(Helper.underlineAttribute()).deriveFont(32F), false);
 
     /**
      * @param none
@@ -119,5 +119,6 @@ public class Textures
     {
         FONT = loadFont();
         AWTFONT = loadAWTFont();
+        TITLE_FONT = new TrueTypeFont(AWTFONT.deriveFont(Helper.underlineAttribute()).deriveFont(32F), false);
     }
 }
