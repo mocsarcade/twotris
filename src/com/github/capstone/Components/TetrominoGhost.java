@@ -1,9 +1,7 @@
 package com.github.capstone.Components;
 
-import com.github.capstone.Util.Helper;
 import com.github.capstone.Util.Textures;
 import org.lwjgl.opengl.Display;
-import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.opengl.TextureImpl;
 
 public class TetrominoGhost extends Tetromino

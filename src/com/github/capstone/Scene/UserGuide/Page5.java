@@ -18,5 +18,5 @@ public class Page5 extends GuidePage
                 "     - Right, using the " + Helper.keyBeautify(Twotris.getInstance().keybinds.moveRight) + " key<br>" +
                 "     - Rotate, using the " + Helper.keyBeautify(Twotris.getInstance().keybinds.rotate) + " key<br>" +
                 "    so that they fill in those rows at the bottom of the board.";
-}
+    }
 }

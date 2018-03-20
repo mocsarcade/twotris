@@ -1,6 +1,5 @@
 package com.github.capstone.Components;
 
-import com.github.capstone.Util.Helper;
 import com.github.capstone.Util.Textures;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Color;

@@ -7,8 +7,8 @@ import org.lwjgl.util.Rectangle;
 
 public class Tetromino
 {
-    int size;
     public int speed;
+    int size;
     private State state;
     private Type type;
     private TetrominoPiece[][] pieceMatrix;

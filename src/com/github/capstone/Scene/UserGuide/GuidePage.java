@@ -17,6 +17,10 @@ import java.util.ArrayList;
 public class GuidePage extends Scene
 {
 
+    String title;
+    String pageContent;
+    int textX = 0;
+    int textY = 0;
     private Button nextButton;
     private ArrayList<FakeTetromino> pieces;
     private TitleSprite titleSprite;
@@ -24,10 +28,6 @@ public class GuidePage extends Scene
     private Scene mainMenu;
     private String drawString;
     private int textTally = 0;
-    String title;
-    String pageContent;
-    int textX = 0;
-    int textY = 0;
 
 
     GuidePage(Scene next)
@@ -88,11 +88,7 @@ public class GuidePage extends Scene
         {
             return false;
         }
-        else if (Keyboard.isKeyDown(Twotris.getInstance().keybinds.menuBack))
-        {
-            return false;
-        }
-        return true;
+        else return !Keyboard.isKeyDown(Twotris.getInstance().keybinds.menuBack);
     }
 
     private void drawTetrominos()

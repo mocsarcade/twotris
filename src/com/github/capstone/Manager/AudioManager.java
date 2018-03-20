@@ -147,7 +147,8 @@ public class AudioManager
     }
 
     /**
-     * This class creates a handle on a loaded audio object, to play the same sound repeatedly without having to look it up each time. Uses the variables sound (Audio) and type (AudioType)
+     * This class creates a handle on a loaded audio object, to play the same sound repeatedly without having to look it up each time.
+     * Uses the variables sound (Audio) and type (AudioType)
      */
 
     public class AudioWrapper

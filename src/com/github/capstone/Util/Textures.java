@@ -11,15 +11,13 @@ import java.io.IOException;
 
 public class Textures
 {
-    public static String fontName = Twotris.getInstance().config.font.toLowerCase();
-
     public static final Texture TETRABIT = Helper.loadTexture("piece");
     public static final Texture TITLE = Helper.loadTexture("gui/title");
     public static final Texture PAUSED = Helper.loadTexture("gui/paused");
     public static final Texture GAME_OVER = Helper.loadTexture("gui/game_over");
     public static final Texture BUTTON_BG = Helper.loadTexture("gui/button_bg");
     public static final Texture BUTTON_FG = Helper.loadTexture("gui/button_fg");
-
+    public static String fontName = Twotris.getInstance().config.font.toLowerCase();
     public static TrueTypeFont FONT = loadFont();
     public static Font AWTFONT = loadAWTFont();
     public static TrueTypeFont TITLE_FONT = new TrueTypeFont(AWTFONT.deriveFont(Helper.underlineAttribute()).deriveFont(32F), false);

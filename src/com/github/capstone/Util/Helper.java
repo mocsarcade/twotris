@@ -1,21 +1,15 @@
 package com.github.capstone.Util;
 
-import com.github.capstone.Twotris;
 import org.lwjgl.Sys;
 import org.lwjgl.input.Keyboard;
-import org.lwjgl.util.Color;
-import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
 
-import java.awt.Font;
-import java.awt.FontFormatException;
 import java.awt.font.TextAttribute;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Random;
 
 public class Helper
 {

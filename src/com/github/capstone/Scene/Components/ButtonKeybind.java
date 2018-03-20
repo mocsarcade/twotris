@@ -57,14 +57,7 @@ public class ButtonKeybind extends Button
             }
         }
         boolean state = Mouse.isButtonDown(0);
-        if (state != prevState && state)
-        {
-            clickedOnce = true;
-        }
-        else
-        {
-            clickedOnce = false;
-        }
+        clickedOnce = state != prevState && state;
         prevState = state;
     }
 

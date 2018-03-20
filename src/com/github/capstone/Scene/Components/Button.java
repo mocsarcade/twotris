@@ -18,9 +18,9 @@ import org.newdawn.slick.opengl.TextureImpl;
 public class Button
 {
     String buttonText;
+    boolean hovering;
     private Rectangle box;
     private Color color;
-    boolean hovering;
     private boolean hasTexture;
     private float wr, hr;
     private boolean prevState = true;
@@ -119,14 +119,7 @@ public class Button
         Rectangle mouse = new Rectangle(Mouse.getX(), Display.getHeight() - Mouse.getY(), 1, 1);
         this.hovering = box.intersects(mouse);
         boolean state = Mouse.isButtonDown(0);
-        if (state != prevState && state)
-        {
-            clickedOnce = true;
-        }
-        else
-        {
-            clickedOnce = false;
-        }
+        clickedOnce = state != prevState && state;
         prevState = state;
     }
 
