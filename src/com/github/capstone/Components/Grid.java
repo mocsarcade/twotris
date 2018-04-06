@@ -1,6 +1,7 @@
 package com.github.capstone.Components;
 
 import com.github.capstone.Manager.AudioManager;
+import com.github.capstone.Manager.ScoreManager;
 import com.github.capstone.Twotris;
 import com.github.capstone.Util.Helper;
 import com.github.capstone.Util.Keybinds;
@@ -212,6 +213,10 @@ public class Grid
                 if (pieceGrid[0][col] > 0)
                 {
                     this.isGameOver = true;
+                    if (this.score > ScoreManager.getInstance().getHighScore())
+                    {
+                        ScoreManager.getInstance().updateHighScore(this.score);
+                    }
                     break;
                 }
             }
@@ -251,6 +256,10 @@ public class Grid
                     }
                 }
             }
+        }
+        if (this.score > ScoreManager.getInstance().getHighScore())
+        {
+            ScoreManager.getInstance().updateHighScore(this.score);
         }
     }
 

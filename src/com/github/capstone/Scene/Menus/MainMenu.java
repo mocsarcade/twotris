@@ -1,5 +1,6 @@
 package com.github.capstone.Scene.Menus;
 
+import com.github.capstone.Manager.ScoreManager;
 import com.github.capstone.Scene.Components.Button;
 import com.github.capstone.Scene.Game;
 import com.github.capstone.Scene.UserGuide.Page1;
@@ -17,6 +18,7 @@ public class MainMenu extends Menu
         this.game = new Game();
         this.options = new Options(this);
         this.tutorial = new Page1(this);
+        this.addSplashText(0, 0, "High Score: " + ScoreManager.getInstance().getHighScore());
         this.addButton(new Button(256, 64, "Play Co-Op"), game);
         this.addButton(new Button(256, 64, "Options"), options);
         this.addButton(new Button(256, 64, "Tutorial"), tutorial);
@@ -37,4 +39,6 @@ public class MainMenu extends Menu
         this.game.recolor();
         this.tutorial.recolor();
     }
+
+
 }
