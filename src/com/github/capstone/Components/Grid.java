@@ -27,6 +27,7 @@ public class Grid
     private int gridSize;
     private boolean isGameOver;
     private int score;
+    private int currentSpeed;
     private long lastKeypress;
     private Random rand;
 
@@ -60,6 +61,7 @@ public class Grid
         this.nextPiece = new TetrominoGhost(this, nextType);
         this.pieces.add(this.activePiece);
         this.isGameOver = false;
+        this.currentSpeed = 1;
     }
 
     /**
@@ -160,22 +162,13 @@ public class Grid
                 // TODO: Play a sound here or something
             }
         }
-
         if (Keyboard.isKeyDown(kb.accelerate))
         {
-            this.activePiece.speed = 3;
+            this.activePiece.speed = this.currentSpeed + 8;
         }
         else
         {
-            this.activePiece.speed = 1;
-        }
-        if (Keyboard.isKeyDown(kb.place))
-        {
-            this.activePiece.speed = 8;
-        }
-        else
-        {
-            this.activePiece.speed = 1;
+            this.activePiece.speed = this.currentSpeed;
         }
         for (Tetromino t : pieces)
         {
@@ -389,6 +382,7 @@ public class Grid
             }
         }
         this.score += numRowsObliterated * runningTally;
+        this.currentSpeed = 1 + (this.score / 1000);
     }
 
 
@@ -435,7 +429,6 @@ public class Grid
      */
     private boolean canMove(String direction)
     {
-
         // Create a rectangle clone and move it according to the movement we're wanting
         for (TetrominoPiece[] row : this.activePiece.getPieceMatrix())
         {

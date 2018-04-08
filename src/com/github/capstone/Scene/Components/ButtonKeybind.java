@@ -79,9 +79,6 @@ public class ButtonKeybind extends Button
             case "Accel":
                 kb.accelerate = newVal;
                 break;
-            case "Place":
-                kb.place = newVal;
-                break;
             case "Menu/Back":
                 kb.menuBack = newVal;
                 break;

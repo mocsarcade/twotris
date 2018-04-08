@@ -29,7 +29,6 @@ public class OptionsKeybinds extends Scene
         this.buttons.add(new ButtonKeybind("Right", Twotris.getInstance().keybinds.moveRight));
         this.buttons.add(new ButtonKeybind("Rotate", Twotris.getInstance().keybinds.rotate));
         this.buttons.add(new ButtonKeybind("Accel", Twotris.getInstance().keybinds.accelerate));
-        this.buttons.add(new ButtonKeybind("Place", Twotris.getInstance().keybinds.place));
         this.buttons.add(new ButtonKeybind("Menu/Back", Twotris.getInstance().keybinds.menuBack));
         this.buttons.add(new ButtonKeybind("Screenshot", Twotris.getInstance().keybinds.screenshot));
         back = new Button(256, 64, "Back");
