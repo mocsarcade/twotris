@@ -14,6 +14,15 @@ public class ScoreManager
         loadHighScore();
     }
 
+    public static ScoreManager getInstance()
+    {
+        if (instance == null)
+        {
+            instance = new ScoreManager();
+        }
+        return instance;
+    }
+
     public int getHighScore()
     {
         return this.highScore;
@@ -23,15 +32,6 @@ public class ScoreManager
     {
         this.highScore = newScore;
         saveHighScore();
-    }
-
-    public static ScoreManager getInstance()
-    {
-        if (instance == null)
-        {
-            instance = new ScoreManager();
-        }
-        return instance;
     }
 
     @SuppressWarnings("unchecked")
