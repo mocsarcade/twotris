@@ -17,10 +17,11 @@ public class Options extends Scene
     private Button back;
     private Button keybinds;
     private LinkedHashMap<Button, String> buttons;
-    private Scene last;
+    public Scene last;
     private Scene next;
     private boolean fontChanged;
     private boolean colorChanged;
+    private static Options instance;
 
     /**
      * @param lastscene The scene supplied.
@@ -38,6 +39,16 @@ public class Options extends Scene
         this.last = lastScene;
         this.fontChanged = false;
         this.colorChanged = false;
+    }
+
+    public static Options getInstance(Scene lastScene)
+    {
+        if (instance == null)
+        {
+            instance = new Options(lastScene);
+        }
+        instance.last = lastScene;
+        return instance;
     }
 
     /**

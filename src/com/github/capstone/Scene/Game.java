@@ -45,7 +45,7 @@ public class Game extends Scene
         else
         {
             pauseMenu.addButton(new Button(0, 0, "Resume"), this);
-            pauseMenu.addButton(new Button(0, 0, "Options"), new Options(this));
+            pauseMenu.addButton(new Button(0, 0, "Options"), Options.getInstance(this));
             pauseMenu.addButton(new Button(0, 0, "Save & Quit"), new MainMenu());
         }
         pauseMenu.adjustButtons();
@@ -118,6 +118,7 @@ public class Game extends Scene
     public Scene nextScene()
     {
         Mouse.setGrabbed(false);
+        Options.getInstance(this);
         return this.pauseMenu;
     }
 

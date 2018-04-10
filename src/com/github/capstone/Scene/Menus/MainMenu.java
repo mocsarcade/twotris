@@ -16,7 +16,7 @@ public class MainMenu extends Menu
     {
         super(Textures.TITLE);
         this.game = new Game();
-        this.options = new Options(this);
+        this.options = Options.getInstance(this);
         this.tutorial = new Page1(this);
         this.addSplashText(0, 0, "High Score: " + ScoreManager.getInstance().getHighScore());
         this.addButton(new Button(256, 64, "Play Co-Op"), game);
@@ -40,5 +40,10 @@ public class MainMenu extends Menu
         this.tutorial.recolor();
     }
 
-
+    @Override
+    public boolean drawFrame(float delta)
+    {
+        Options.getInstance(this);
+        return super.drawFrame(delta);
+    }
 }
