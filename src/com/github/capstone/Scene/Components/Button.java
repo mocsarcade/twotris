@@ -5,6 +5,7 @@ import com.github.capstone.Manager.AudioManager;
 import com.github.capstone.Twotris;
 import com.github.capstone.Util.Textures;
 import org.lwjgl.input.Mouse;
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Rectangle;
@@ -118,7 +119,7 @@ public class Button
     {
         Rectangle mouse = new Rectangle(Mouse.getX(), Display.getHeight() - Mouse.getY(), 1, 1);
         this.hovering = box.intersects(mouse);
-        boolean state = Mouse.isButtonDown(0);
+        boolean state = Mouse.isButtonDown(0) || Keyboard.isKeyDown(Twotris.getInstance().keybinds.accelerate);
         clickedOnce = state != prevState && state;
         prevState = state;
     }

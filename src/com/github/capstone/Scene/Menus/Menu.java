@@ -6,6 +6,7 @@ import com.github.capstone.Scene.Components.TitleSprite;
 import com.github.capstone.Scene.Game;
 import com.github.capstone.Scene.Scene;
 import com.github.capstone.Twotris;
+import com.github.capstone.Util.Helper;
 import com.github.capstone.Util.Textures;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
@@ -23,6 +24,8 @@ public class Menu extends Scene
     private Scene nextScene;
     private TitleSprite titleSprite;
 
+    private int curs; private long lastKeypress;
+
     /**
      * @param title The String include for the title.
      * @return none
@@ -34,6 +37,7 @@ public class Menu extends Scene
         this.buttons = new LinkedHashMap<>();
         this.titleSprite = new TitleSprite(texture, noColorOverlay);
         this.optTexts = new LinkedHashMap<>();
+        this.curs = 0;
         try
         {
             Mouse.setNativeCursor(null);
@@ -54,6 +58,7 @@ public class Menu extends Scene
         this.buttons = new LinkedHashMap<>();
         this.titleSprite = new TitleSprite(texture);
         this.optTexts = new LinkedHashMap<>();
+        this.curs = 0;
         try
         {
             Mouse.setNativeCursor(null);
@@ -119,7 +124,28 @@ public class Menu extends Scene
             Twotris.getInstance().screenshotManager.takeScreenshot();
         }
 
-        if (Mouse.isButtonDown(0))
+        //If left or right is pushed, move cursor
+        if (Keyboard.isKeyDown(Twotris.getInstance().keybinds.moveRight) && Helper.getTime() - lastKeypress > 150)
+        {
+            curs++;
+            if(curs >= buttons.keySet().size()) {
+              curs = 0;
+            }
+            moveMouseOver(curs);
+            lastKeypress = Helper.getTime();
+        }
+        if (Keyboard.isKeyDown(Twotris.getInstance().keybinds.moveLeft) && Helper.getTime() - lastKeypress > 150)
+        {
+            curs--;
+            if(curs < 0) {
+              curs = buttons.keySet().size()-1;
+            }
+            moveMouseOver(curs);
+            lastKeypress = Helper.getTime();
+        }
+
+        //Select button if left-click or A(cellerate) is pushed
+        if (Mouse.isButtonDown(0) || Keyboard.isKeyDown(Twotris.getInstance().keybinds.accelerate))
         {
             for (Button b : buttons.keySet())
             {
@@ -196,6 +222,19 @@ public class Menu extends Scene
             b.getHitBox().setLocation(x, lastY);
             lastY += b.getHitBox().getHeight() + 16;
         }
+    }
+
+    public void moveMouseOver(int curs) {
+      //Move mouse
+      int pos=0;
+      for (Button b : buttons.keySet())
+      {
+        if(pos==curs) {
+          Mouse.setCursorPosition((b.getHitBox().getX() + (b.getHitBox().getWidth() / 2)), Display.getHeight() - (b.getHitBox().getY() + (b.getHitBox().getHeight() / 2)));
+          break;
+        }
+        pos++;
+      }
     }
 
     /**

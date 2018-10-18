@@ -55,10 +55,15 @@ public class ButtonKeybind extends Button
                 this.buttonText = title + ": " + Helper.keyBeautify(this.keyValue);
                 updateKeybind(this.title, this.keyValue);
             }
+          // Set clickedOnce so game knows a key has been pressed already
+          clickedOnce = false;
+          prevState = true;
+        } else {
+          //If we aren't deciding a keybind, just input keys normally
+          boolean state = Mouse.isButtonDown(0) || Keyboard.isKeyDown(Twotris.getInstance().keybinds.accelerate);
+          clickedOnce = state != prevState && state;
+          prevState = state;
         }
-        boolean state = Mouse.isButtonDown(0);
-        clickedOnce = state != prevState && state;
-        prevState = state;
     }
 
 

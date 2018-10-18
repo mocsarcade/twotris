@@ -4,7 +4,9 @@ import com.github.capstone.Scene.Components.Button;
 import com.github.capstone.Scene.Components.ButtonKeybind;
 import com.github.capstone.Scene.Scene;
 import com.github.capstone.Twotris;
+import com.github.capstone.Util.Helper;
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 
@@ -15,6 +17,8 @@ public class OptionsKeybinds extends Scene
     private Button back;
     private Scene next;
     private ArrayList<ButtonKeybind> buttons;
+
+    private int curs; private long lastKeypress;
 
     /**
      * @param lastscene The scene supplied.
@@ -59,6 +63,35 @@ public class OptionsKeybinds extends Scene
 
         updateButtons();
         drawButtons();
+
+        //If left or right is pushed, move cursor
+        if (Keyboard.isKeyDown(Twotris.getInstance().keybinds.moveRight) && Helper.getTime() - lastKeypress > 150)
+        {
+            curs++;
+            if(curs >= buttons.size()+1) {
+              curs = 0;
+            }
+            if(curs < buttons.size()) {
+              moveMouseOver(curs);
+            } else if(curs == buttons.size()) {
+              moveMouseOver(back);
+            }
+            lastKeypress = Helper.getTime();
+        }
+        if (Keyboard.isKeyDown(Twotris.getInstance().keybinds.moveLeft) && Helper.getTime() - lastKeypress > 150)
+        {
+            curs--;
+            if(curs < 0) {
+              curs = buttons.size();
+            }
+            if(curs < buttons.size()) {
+              moveMouseOver(curs);
+            } else if(curs == buttons.size()) {
+              moveMouseOver(back);
+            }
+            lastKeypress = Helper.getTime();
+        }
+
 
         if (Keyboard.isKeyDown(Twotris.getInstance().keybinds.screenshot))
         {
@@ -123,6 +156,25 @@ public class OptionsKeybinds extends Scene
         }
         back.getHitBox().setLocation(16, Display.getHeight() - back.getHitBox().getHeight() - 16);
     }
+
+    public void moveMouseOver(int curs) {
+      //Move mouse
+      int pos=0;
+      for (Button b : buttons)
+      {
+        if(pos==curs) {
+          Mouse.setCursorPosition((b.getHitBox().getX() + (b.getHitBox().getWidth() / 2)), Display.getHeight() - (b.getHitBox().getY() + (b.getHitBox().getHeight() / 2)));
+          break;
+        }
+        pos++;
+      }
+    }
+
+    public void moveMouseOver(Button b) {
+      //Move mouse
+      Mouse.setCursorPosition((b.getHitBox().getX() + (b.getHitBox().getWidth() / 2)), Display.getHeight() - (b.getHitBox().getY() + (b.getHitBox().getHeight() / 2)));
+    }
+
 
     /**
      * @param none

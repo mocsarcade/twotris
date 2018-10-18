@@ -19,10 +19,14 @@ public class MainMenu extends Menu
         this.options = Options.getInstance(this);
         this.tutorial = new Page1(this);
         this.addSplashText(0, 0, "High Score: " + ScoreManager.getInstance().getHighScore());
-        this.addButton(new Button(256, 64, "Play Co-Op"), game);
-        this.addButton(new Button(256, 64, "Options"), options);
-        this.addButton(new Button(256, 64, "Tutorial"), tutorial);
-        this.addButton(new Button(256, 64, "Quit Game"), null);
+        //this.addButton(new Button(256, 64, "Play Co-Op"), game);
+        //this.addButton(new Button(256, 64, "Options"), options);
+        //this.addButton(new Button(256, 64, "Tutorial"), tutorial);
+        //this.addButton(new Button(256, 64, "Quit Game"), null);
+        this.addButton(new Button(0, 0, "Play Co-Op"), game);
+        this.addButton(new Button(0, 0, "Options"), options);
+        this.addButton(new Button(0, 0, "Tutorial"), tutorial);
+        this.addButton(new Button(0, 0, "Quit Game"), null);
         this.adjustButtons();
     }
 
