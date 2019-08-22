@@ -124,7 +124,8 @@ public class Options extends Scene
             lastKeypress = Helper.getTime();
         }
 
-        if (Mouse.isButtonDown(0) || Keyboard.isKeyDown(Twotris.getInstance().keybinds.accelerate))
+        if (Mouse.isButtonDown(0) || Keyboard.isKeyDown(Twotris.getInstance().keybinds.accelerate)
+            || Keyboard.isKeyDown(Twotris.getInstance().keybinds.rotate))
         {
             if (back.isClicked())
             {
