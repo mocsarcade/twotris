@@ -60,8 +60,7 @@ public class ButtonKeybind extends Button
           prevState = true;
         } else {
           //If we aren't deciding a keybind, just input keys normally
-          boolean state = Mouse.isButtonDown(0) || Keyboard.isKeyDown(Twotris.getInstance().keybinds.accelerate)
-              || Keyboard.isKeyDown(Twotris.getInstance().keybinds.rotate);
+          boolean state = Mouse.isButtonDown(0) || Keyboard.isKeyDown(Twotris.getInstance().keybinds.rotate);
           clickedOnce = state != prevState && state;
           prevState = state;
         }
