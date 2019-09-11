@@ -25,6 +25,7 @@ public class Config
     public String font;
     public boolean fullscreen;
     public boolean grid;
+    public boolean kiosk_mode;
     private LoopArrayList<String> font_options;
     private LoopArrayList<String> color_options;
     private String volume_label = "Volume";
@@ -102,6 +103,7 @@ public class Config
             this.font = props.getProperty(font_label, "Chickenpox");
             this.fullscreen = Boolean.parseBoolean(props.getProperty(fullscreen_label, "false"));
             this.grid = Boolean.parseBoolean(props.getProperty("Show_Grid", "false"));
+            this.kiosk_mode = Boolean.parseBoolean(props.getProperty("Kiosk_Mode", "false"));
 
             reader.close();
         }
@@ -145,6 +147,7 @@ public class Config
         this.font = props.getProperty(font_label, "Chickenpox");
         this.fullscreen = Boolean.parseBoolean(props.getProperty(fullscreen_label, "false"));
         this.grid = Boolean.parseBoolean(props.getProperty("Show_Grid", "false"));
+        this.kiosk_mode = Boolean.parseBoolean(props.getProperty("Kiosk_Mode", "false"));
 
         FileWriter writer = new FileWriter(configFile);
         props.store(writer, "Twotris Settings");

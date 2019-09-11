@@ -36,7 +36,8 @@ public class Options extends Scene
     {
         buttons = new LinkedHashMap<>();
         Twotris.getInstance().config.addButtonsToOptionsGUI(this);
-        keybinds = new Button(256, 64, "Keybinds");
+        if(!Twotris.getInstance().config.kiosk_mode)
+            keybinds = new Button(256, 64, "Keybinds");
         back = new Button(256, 64, "Back");
         this.adjustButtons();
         this.last = lastScene;
@@ -95,8 +96,11 @@ public class Options extends Scene
         //If left or right is pushed, move cursor
         if (Keyboard.isKeyDown(Twotris.getInstance().keybinds.moveRight) && Helper.getTime() - lastKeypress > 150)
         {
+            int num_menu_buttons = 2;
+            if(Twotris.getInstance().config.kiosk_mode)
+                num_menu_buttons = 1;
             curs++;
-            if(curs >= buttons.keySet().size()+2) {
+            if(curs >= buttons.keySet().size()+num_menu_buttons) {
               curs = 0;
             }
             if(curs < buttons.keySet().size()) {
@@ -104,28 +108,34 @@ public class Options extends Scene
             } else if(curs == buttons.keySet().size()) {
               moveMouseOver(back);
             } else if(curs == buttons.keySet().size()+1) {
-              moveMouseOver(keybinds);
+                if(!Twotris.getInstance().config.kiosk_mode)
+                    moveMouseOver(keybinds);
             }
             lastKeypress = Helper.getTime();
         }
         if (Keyboard.isKeyDown(Twotris.getInstance().keybinds.moveLeft) && Helper.getTime() - lastKeypress > 150)
         {
+            int num_menu_buttons = 2;
+            if(Twotris.getInstance().config.kiosk_mode)
+                num_menu_buttons = 1;
             curs--;
             if(curs < 0) {
-              curs = buttons.keySet().size()+1;
+              curs = buttons.keySet().size()+num_menu_buttons-1;
             }
             if(curs < buttons.keySet().size()) {
               moveMouseOver(curs);
             } else if(curs == buttons.keySet().size()) {
               moveMouseOver(back);
             } else if(curs == buttons.keySet().size()+1) {
-              moveMouseOver(keybinds);
+                if(!Twotris.getInstance().config.kiosk_mode)
+                    moveMouseOver(keybinds);
             }
             lastKeypress = Helper.getTime();
         }
 
         if (Mouse.isButtonDown(0) || Keyboard.isKeyDown(Twotris.getInstance().keybinds.rotate))
         {
+            System.out.println("Clicked rotate");
             if (back.isClicked())
             {
                 if (this.fontChanged)
@@ -150,7 +160,7 @@ public class Options extends Scene
                 this.next = this.last;
                 return false;
             }
-            else if (keybinds.isClicked())
+            else if (!Twotris.getInstance().config.kiosk_mode && keybinds.isClicked())
             {
                 this.next = new OptionsKeybinds(this);
                 return false;
@@ -192,7 +202,8 @@ public class Options extends Scene
     public void updateButtons()
     {
         back.update();
-        keybinds.update();
+        if(!Twotris.getInstance().config.kiosk_mode)
+            keybinds.update();
         for (Button b : buttons.keySet())
         {
             b.update();
@@ -209,7 +220,8 @@ public class Options extends Scene
     public void drawButtons()
     {
         back.draw();
-        keybinds.draw();
+        if(!Twotris.getInstance().config.kiosk_mode)
+            keybinds.draw();
 
         for (Button b : buttons.keySet())
         {
@@ -239,7 +251,9 @@ public class Options extends Scene
             }
         }
         back.getHitBox().setLocation(16, Display.getHeight() - back.getHitBox().getHeight() - 16);
-        keybinds.getHitBox().setLocation(Display.getWidth() - keybinds.getHitBox().getWidth() - 16, Display.getHeight() - back.getHitBox().getHeight() - 16);
+        
+        if(!Twotris.getInstance().config.kiosk_mode)
+            keybinds.getHitBox().setLocation(Display.getWidth() - keybinds.getHitBox().getWidth() - 16, Display.getHeight() - back.getHitBox().getHeight() - 16);
     }
 
     public void moveMouseOver(int curs) {
