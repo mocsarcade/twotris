@@ -79,7 +79,8 @@ public class Config
         options.addButton(volume_label + ":" + (int) (volume * 100));
         options.addButton(colorscheme_label + ":" + colorscheme);
         options.addButton(font_label + ":" + font);
-        options.addButton(fullscreen_label + ":" + fullscreen);
+        if(!Twotris.getInstance().config.kiosk_mode)
+            options.addButton(fullscreen_label + ":" + fullscreen);
         options.addButton(grid_label + ":" + grid);
     }
 
