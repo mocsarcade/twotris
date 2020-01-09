@@ -17,6 +17,7 @@ public class Keybinds
     public int moveLeft;
     public int moveRight;
     public int rotate;
+    public int rotateBack;
     public int accelerate;
     public int menuBack;
     public int screenshot;
@@ -44,6 +45,7 @@ public class Keybinds
             this.moveLeft = Integer.parseInt(props.getProperty("moveLeft", "" + Keyboard.KEY_LEFT));
             this.moveRight = Integer.parseInt(props.getProperty("moveRight", "" + Keyboard.KEY_RIGHT));
             this.rotate = Integer.parseInt(props.getProperty("rotate", "" + Keyboard.KEY_TAB));
+            this.rotateBack = Integer.parseInt(props.getProperty("rotateBack", "" + Keyboard.KEY_Q));
             this.accelerate = Integer.parseInt(props.getProperty("accelerate", "" + Keyboard.KEY_LSHIFT));
             this.menuBack = Integer.parseInt(props.getProperty("menuBack", "" + Keyboard.KEY_ESCAPE));
             this.screenshot = Integer.parseInt(props.getProperty("screenshot", "" + Keyboard.KEY_F2));
@@ -82,6 +84,7 @@ public class Keybinds
         props.setProperty("moveLeft", "" + Keyboard.KEY_LEFT);
         props.setProperty("moveRight", "" + Keyboard.KEY_RIGHT);
         props.setProperty("rotate", "" + Keyboard.KEY_TAB);
+        props.setProperty("rotateBack", "" + Keyboard.KEY_Q);
         props.setProperty("accelerate", "" + Keyboard.KEY_LSHIFT);
         props.setProperty("place", "" + Keyboard.KEY_GRAVE);
         props.setProperty("menuBack", "" + Keyboard.KEY_ESCAPE);
@@ -90,6 +93,7 @@ public class Keybinds
         this.moveLeft = Integer.parseInt(props.getProperty("moveLeft", "" + Keyboard.KEY_LEFT));
         this.moveRight = Integer.parseInt(props.getProperty("moveRight", "" + Keyboard.KEY_RIGHT));
         this.rotate = Integer.parseInt(props.getProperty("rotate", "" + Keyboard.KEY_TAB));
+        this.rotateBack = Integer.parseInt(props.getProperty("rotateBack", "" + Keyboard.KEY_Q));
         this.accelerate = Integer.parseInt(props.getProperty("accelerate", "" + Keyboard.KEY_LSHIFT));
         this.menuBack = Integer.parseInt(props.getProperty("menuBack", "" + Keyboard.KEY_ESCAPE));
         this.screenshot = Integer.parseInt(props.getProperty("screenshot", "" + Keyboard.KEY_F2));
@@ -117,6 +121,7 @@ public class Keybinds
             props.setProperty("moveLeft", "" + this.moveLeft);
             props.setProperty("moveRight", "" + this.moveRight);
             props.setProperty("rotate", "" + this.rotate);
+            props.setProperty("rotateBack", "" + this.rotateBack);
             props.setProperty("accelerate", "" + this.accelerate);
             props.setProperty("menuBack", "" + this.menuBack);
             props.setProperty("screenshot", "" + this.screenshot);

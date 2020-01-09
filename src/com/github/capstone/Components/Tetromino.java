@@ -270,23 +270,27 @@ public class Tetromino
     }
 
     /**
-     * @param none
+     * @param direc either 1 or -1 for rotating one of two ways
      * @return none
      * @throws none
      * @rotate This method is used for rotating the piece, based on 0, 90, 180, and 270 degrees.  Each of the individual shapes is accorded a
      * different case, based on the available positions that particular piece is able to have. Also, rotates the hitbox to accurately
      * receive collision instances.
      */
-    public void rotate()
+    public void rotate(short direc)
     {
         int newHeight = this.hitBox.getWidth();
         this.hitBox.setWidth(this.hitBox.getHeight());
         this.hitBox.setHeight(newHeight);
 
-        this.rotation++;
+        this.rotation += direc;
         if (this.rotation == 4)
         {
             this.rotation = 0;
+        }
+        if (this.rotation == -1)
+        {
+            this.rotation = 3;
         }
         // Rotate the piece matrix:
         TetrominoPiece[][] temp = new TetrominoPiece[this.pieceMatrix[0].length][this.pieceMatrix.length];
@@ -294,13 +298,24 @@ public class Tetromino
         {
             for (int j = 0; j < this.pieceMatrix.length; j++)
             {
-                if (this.pieceMatrix[this.pieceMatrix.length - 1 - j][i] != null)
-                {
-                    temp[i][j] = new TetrominoPiece(this.hitBox.getX() + (j * this.size), this.getHitBox().getY() + (i * this.size), this.size);
-                }
-                else
-                {
-                    temp[i][j] = null;
+                if(direc == 1) {
+                    if (this.pieceMatrix[this.pieceMatrix.length - 1 - j][i] != null)
+                    {
+                        temp[i][j] = new TetrominoPiece(this.hitBox.getX() + (j * this.size), this.getHitBox().getY() + (i * this.size), this.size);
+                    }
+                    else
+                    {
+                        temp[i][j] = null;
+                    }
+                } else {
+                    if (this.pieceMatrix[j][this.pieceMatrix[0].length - 1 - i] != null)
+                    {
+                        temp[i][j] = new TetrominoPiece(this.hitBox.getX() + (j * this.size), this.getHitBox().getY() + (i * this.size), this.size);
+                    }
+                    else
+                    {
+                        temp[i][j] = null;
+                    }
                 }
             }
         }

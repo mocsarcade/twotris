@@ -81,6 +81,9 @@ public class ButtonKeybind extends Button
             case "Rotate":
                 kb.rotate = newVal;
                 break;
+            case "Rotate Back":
+                kb.rotateBack = newVal;
+                break;
             case "Accel":
                 kb.accelerate = newVal;
                 break;

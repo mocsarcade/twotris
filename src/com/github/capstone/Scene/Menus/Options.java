@@ -135,7 +135,6 @@ public class Options extends Scene
 
         if (Mouse.isButtonDown(0) || Keyboard.isKeyDown(Twotris.getInstance().keybinds.rotate))
         {
-            System.out.println("Clicked rotate");
             if (back.isClicked())
             {
                 if (this.fontChanged)

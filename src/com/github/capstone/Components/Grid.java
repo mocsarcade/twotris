@@ -126,8 +126,14 @@ public class Grid
                 // TODO: play sound here
             }
         }
-        else if (Keyboard.isKeyDown(kb.rotate) && Helper.getTime() - lastKeypress > 150)
+        else if ((Keyboard.isKeyDown(kb.rotate) || Keyboard.isKeyDown(kb.rotateBack)) && Helper.getTime() - lastKeypress > 150)
         {
+            System.out.println("Clicked rotate");
+            short direc = 1;
+            if (Keyboard.isKeyDown(kb.rotateBack)) {
+                System.out.println("But it's actually rotateBACK");
+                direc = -1;
+            }
             // Create a rotated clone rectangle, and see where we end up
             boolean canRotate = true;
             Rectangle rotatedClone = new Rectangle(this.activePiece.getHitBox().getX(), this.activePiece.getHitBox().getY(), this.activePiece.getHitBox().getHeight(), this.activePiece.getHitBox().getWidth());
@@ -154,7 +160,7 @@ public class Grid
             }
             if (canRotate)
             {
-                this.activePiece.rotate();
+                this.activePiece.rotate(direc);
                 lastKeypress = Helper.getTime();
             }
             else

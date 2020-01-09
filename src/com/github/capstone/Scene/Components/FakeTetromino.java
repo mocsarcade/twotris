@@ -29,7 +29,7 @@ public class FakeTetromino
         this.rotation = 0;
         for (int i = 0; i < rotation; i++)
         {
-            rotate();
+            rotate((short) 1);
         }
         this.color = ColorPalette.getInstance().getColor(Twotris.getInstance().config.colorscheme, this.type.ordinal());
     }
@@ -126,20 +126,20 @@ public class FakeTetromino
     }
 
     /**
-     * @param none
+     * @param direc either 1 or -1 for rotating one of two ways
      * @return none
      * @throws none
      * @rotate This method is used for rotating the piece, based on 0, 90, 180, and 270 degrees.  Each of the individual shapes is accorded a
      * different case, based on the available positions that particular piece is able to have. Also, rotates the hitbox to accurately
      * receive collision instances.
      */
-    public void rotate()
+    public void rotate(short direc)
     {
         int newHeight = this.hitBox.getWidth();
         this.hitBox.setWidth(this.hitBox.getHeight());
         this.hitBox.setHeight(newHeight);
 
-        this.rotation++;
+        this.rotation += direc;
         if (this.rotation == 4)
         {
             this.rotation = 0;
