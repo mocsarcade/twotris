@@ -119,7 +119,7 @@ public class Button
     {
         Rectangle mouse = new Rectangle(Mouse.getX(), Display.getHeight() - Mouse.getY(), 1, 1);
         this.hovering = box.intersects(mouse);
-        boolean state = Mouse.isButtonDown(0) || Keyboard.isKeyDown(Twotris.getInstance().keybinds.rotate);
+        boolean state = Mouse.isButtonDown(0) || Keyboard.isKeyDown(Twotris.getInstance().keybinds.rotate) || Keyboard.isKeyDown(Twotris.getInstance().keybinds.rotateBack);
         clickedOnce = state != prevState && state;
         prevState = state;
     }

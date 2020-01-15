@@ -145,7 +145,7 @@ public class Menu extends Scene
         }
 
         //Select button if left-click or A(cellerate) is pushed
-        if (Mouse.isButtonDown(0) || Keyboard.isKeyDown(Twotris.getInstance().keybinds.rotate))
+        if (Mouse.isButtonDown(0) || Keyboard.isKeyDown(Twotris.getInstance().keybinds.rotate) || Keyboard.isKeyDown(Twotris.getInstance().keybinds.rotateBack))
         {
             for (Button b : buttons.keySet())
             {
